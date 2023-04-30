@@ -11,10 +11,18 @@
 {
   _id: ObjectId,
   username: String,
-  name: String,
   email: String,
-  profile_image: String,
   created_at: Date
+}
+
+//Collection users_profile
+{
+  _id: ObjectId,
+  user_id: ObjectId,
+  profile_image: String,
+  website_url: String,
+  location: String,
+  bio: String
 }
 
 

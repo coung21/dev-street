@@ -1,12 +1,13 @@
 const express = require('express');
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const dotenv = require('dotenv');
-dotenv.config();
+const passport = require('./config/passport')
 const auth = require('./routes/auth')
+dotenv.config();
 
 //server
 const app = express();
@@ -18,6 +19,7 @@ app.use(cors())
 app.use(helmet());
 app.use(morgan('dev'));
 
+app.use(passport.initialize())
 
 //api
 app.get('/', (req, res) => {

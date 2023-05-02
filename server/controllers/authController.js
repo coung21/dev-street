@@ -20,7 +20,18 @@ const userLogin = async (req, res) => {
   }
 }
 
+const newToken = async (req, res) => {
+  const {token_identifier} = req.body
+  try {
+    const result = await authService.newToken(token_identifier)
+    res.status(200).json(result)
+  } catch (error) {
+            console.log(error.message);
+  }
+}
+
 module.exports = {
   userRegister,
-  userLogin
+  userLogin,
+  newToken
 }

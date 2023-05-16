@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const userModel = require('../models/user.model');
+const resizePicture = require('../helpers/resizePicture')
 
 passport.use(
   new GoogleStrategy(
@@ -15,7 +16,7 @@ passport.use(
         id: profile.id,
         username: profile.displayName,
         email: profile.email,
-        avatar: profile.picture,
+        avatar: resizePicture(profile.picture, 200),
       };
 
       //if user was exist

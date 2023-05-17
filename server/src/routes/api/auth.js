@@ -11,8 +11,13 @@ router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     failureRedirect: '/login',
+    successRedirect: '/success'
   }),
   AuthController.googleAuth
 );
+
+router.get('/ok' ,(req, res) => {
+  res.send('ok')
+})
 
 module.exports = router;

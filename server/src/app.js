@@ -9,11 +9,12 @@ const passport = require('./config/passport');
 const app = express();
 
 //config lib middleware
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors());
 app.use(compression());
 app.use(
   session({
@@ -22,12 +23,13 @@ app.use(
     saveUninitialized: true,
   })
 );
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 //init database
 require('./db/db.mongo');
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 //init route
 app.use('/', require('./routes/index'));

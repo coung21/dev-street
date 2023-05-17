@@ -6,27 +6,27 @@
 500
 */
 
-class BadRequest extends Error() {
+class BadRequest extends Error {
   constructor(message) {
-    this.message = message;
+    super(message)
     this.status = 400;
   }
 }
-class Unauthorize extends Error() {
+class Unauthorize extends Error {
   constructor(message = 'Unauthorize') {
-    this.message = message;
+    super(message)
     this.status = 401;
   }
 }
-class ConflictRequest extends Error() {
+class ConflictRequest extends Error {
   constructor(message) {
-    this.message = message;
+    super(message)
     this.status = 403;
   }
 }
-class IntervelServer extends Error() {
+class IntervelServer extends Error {
   constructor(message = 'Interval server error') {
-    this.message = message;
+    super(message)
     this.status = 500;
   }
 }

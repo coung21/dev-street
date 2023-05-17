@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const passport = require('../../config/passport');
+const AuthController = require('../../controllers/auth.controller')
 
 router.get(
   '/auth/google',
@@ -11,15 +12,7 @@ router.get(
   passport.authenticate('google', {
     failureRedirect: '/login',
   }),
-  (req, res) => {
-    const user = {
-      id: req.user.googleId,
-      name: req.user.username,
-      email: req.user.email,
-      avatar: req.user.avatar,
-    };
-    res.status(200).json(user);
-  }
+  AuthController.googleAuth
 );
 
 module.exports = router;

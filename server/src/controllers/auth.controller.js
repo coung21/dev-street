@@ -1,5 +1,7 @@
-const Response = require('../utils/apiResponse')
-const AuthService = require('../services/auth.service')
+const fs = require('fs');
+const path = require('path');
+const Response = require('../utils/apiResponse');
+const AuthService = require('../services/auth.service');
 
 class AuthController {
   //SIGN UP
@@ -16,9 +18,12 @@ class AuthController {
   //VERIFY EMAIL
   static async VerifyEmail(req, res) {
     try {
-      const {email, code} = req.query
-      const response = await AuthService.verifyEmail(email, code)
-      return Response.success(res, '', 200, response);
+      const { email, code } = req.query;
+      await AuthService.verifyEmail(email, code);
+      const template = path.join('src', 'template', 'successfulSignup.html');
+      const emailTemplate = fs.readFileSync(template, 'utf8');
+      res.setHeader('Content-type', 'text/html');
+      return res.send(emailTemplate);
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
@@ -42,5 +47,4 @@ class AuthController {
   }
 }
 
-
-module.exports = AuthController
+module.exports = AuthController;

@@ -9,7 +9,7 @@ const {
   IntervelServer,
 } = require('../utils/errResponse.utils');
 const { generateTokenPair } = require('../utils/generateTokensPair');
-const {sendVerificationEmail} = require('../helpers/emaiSender')
+const {sendVerificationEmail} = require('../helpers/emailSender')
 
 class AuthService {
   //SIGNUP
@@ -40,7 +40,6 @@ class AuthService {
       registeredUser.isVerify = true;
       registeredUser.verificationCode = null;
       await registeredUser.save();
-      return 'Sign up succesfully';
     }
   }
 

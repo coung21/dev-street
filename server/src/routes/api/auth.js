@@ -8,6 +8,8 @@ router.post('/auth/signup', AuthController.SignUp)
 
 router.get('/auth/verify-email', AuthController.VerifyEmail)
 
+router.post('/auth/signin', AuthController.SignIn)
+
 router.get(
   '/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] })

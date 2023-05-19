@@ -9,11 +9,11 @@ const {
   IntervelServer,
 } = require('../utils/errResponse.utils');
 const { generateTokenPair } = require('../utils/generateTokensPair');
-const {sendVerificationEmail} = require('../helpers/emailSender')
+const { sendVerificationEmail } = require('../helpers/emailSender');
 
 class AuthService {
   //SIGNUP
-  static async SignUp(username,email ,password) {
+  static async SignUp(username, email, password) {
     const foundUser = await userModel.findOne({ email });
     if (foundUser) throw new ConflictRequest('This email already exist');
 
@@ -43,6 +43,41 @@ class AuthService {
     }
   }
 
+  //SIGN IN
+  static async SignIn(email, password) {
+    const foundUser = await userModel.findOne({ email });
+    if (!foundUser) {
+      throw new ConflictRequest('This account is not exist');
+    } else if (foundUser.isVerify === false) {
+      throw new BadRequest('Your account is not be verified');
+    }
+
+    const isMatch = await bcrypt.compare(password, foundUser.password);
+    if (!isMatch) throw new BadRequest('Password incorrect');
+
+    //generate keys
+    const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
+      modulusLength: 4096,
+      publicKeyEncoding: {
+        type: 'pkcs1',
+        format: 'pem',
+      },
+      privateKeyEncoding: {
+        type: 'pkcs1',
+        format: 'pem',
+      },
+    });
+
+    const tokens = await generateTokenPair(
+      { id: foundUser._id, email },
+      privateKey
+    );
+    if (!tokens) throw new IntervelServer('Someting went wrong - Server Error');
+    return {
+      user: getData({object: foundUser, fields: ['_id', 'username', 'email', 'avatar']}),
+      tokens
+    }
+  }
 
   //AUTHENTICAION WITH GOOGLE
   static async googleAuth(email) {

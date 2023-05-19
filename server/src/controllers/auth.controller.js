@@ -9,7 +9,7 @@ class AuthController {
     try {
       const { username, email, password } = req.body;
       const response = await AuthService.SignUp(username, email, password);
-      return Response.success(res, '', 200, response);
+      return Response.success(res, '', 201, response);
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
@@ -26,6 +26,17 @@ class AuthController {
       return res.send(emailTemplate);
     } catch (error) {
       return Response.fail(res, error.status, error.message);
+    }
+  }
+
+  //SIGN IN
+  static async SignIn(req, res){
+    try {
+      const {email, password} = req.body
+      const user = await AuthService.SignIn(email, password)
+      return Response.success(res, user, 200, 'Sign in successfully')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message)
     }
   }
 

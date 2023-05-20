@@ -40,6 +40,27 @@ class AuthController {
     }
   }
 
+  //FORGOT PASS
+  static async ForgotPassword(req, res){
+    try {
+      const {email} = req.body
+      const response = await AuthService.ForgotPassword(email)
+      return Response.success(res, '', 200, response)
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+
+  //RESET PASS
+  static async ResetPassword(req, res){
+    try {
+      const response = await AuthService.ResetPassword(req.body.newPassword, req.params.token)
+      return Response.success(res, '', 200, response)
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+
   //GOOGLE AUTH
   static async googleAuth(req, res) {
     try {

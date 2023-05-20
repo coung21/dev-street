@@ -43,4 +43,25 @@ const sendVerificationEmail = (userEmail, verificationCode) => {
     });
 }
 
-module.exports = {sendVerificationEmail}
+const sendResetPasswordEmail = (userEmail, resetToken) => {
+  const template = path.join('src', 'template', 'resetPasswordTemplate.html');
+  const emailTemplate = fs.readFileSync(template, 'utf8');
+  const emailContent = emailTemplate.replace('{OTP_CODE}', resetToken);
+
+  transporter
+    .sendMail({
+      from: 'Dev Street <cuongdev@gmail.com>', // sender address
+      to: userEmail, // list of receivers
+      subject: 'Reset Your Password', // Subject line
+      html: emailContent,
+    })
+    .then(() => {
+      console.log(`A reset password email has just been sent for ${userEmail}`);
+    })
+    .catch((err) => {
+      console.log('Cannot send email');
+      console.log(err);
+    });
+}
+
+module.exports = {sendVerificationEmail, sendResetPasswordEmail}

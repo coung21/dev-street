@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const passport = require('../../config/passport');
+const passport = require('../../services/passport.service');
 const AuthController = require('../../controllers/auth.controller')
 
 
@@ -9,6 +9,10 @@ router.post('/auth/signup', AuthController.SignUp)
 router.get('/auth/verify-email', AuthController.VerifyEmail)
 
 router.post('/auth/signin', AuthController.SignIn)
+
+router.post('/auth/forgot', AuthController.ForgotPassword)
+
+router.post('/auth/reset/:token', AuthController.ResetPassword)
 
 router.get(
   '/auth/google',

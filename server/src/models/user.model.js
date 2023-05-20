@@ -15,13 +15,19 @@ const userSchema = new mongoose.Schema(
     verificationCode: { type: String, allowNull: true },
     isVerify: {
       type: Boolean,
-      default: function() {
+      default: function () {
         return this.provider !== 'Email' ? true : false;
       },
-      require: true
+      require: true,
     },
-    provider: { type: String, enum: ['Email', 'Google', 'Facebook'], default: 'Email' },
-    googleId: { type: String},
+    provider: {
+      type: String,
+      enum: ['Email', 'Google', 'Facebook'],
+      default: 'Email',
+    },
+    googleId: { type: String },
+    resetPasswordToken: { type: String, allowNull: true},
+    resetPasswordExpires: {type: Date, allowNull: true},
   },
   {
     collection: COLLECTION,

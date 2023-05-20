@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression');
 const session = require('express-session');
-const passport = require('./config/passport');
+const passport = require('./services/passport.service');
 const app = express();
 
 //config lib middleware

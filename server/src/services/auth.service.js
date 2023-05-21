@@ -21,6 +21,11 @@ class AuthService {
     if (foundUser) throw new ConflictRequest('This email already exist');
 
     const verificationCode = Math.random().toString(36).substring(2, 8);
+    try {
+      await sendVerificationEmail(email, verificationCode);
+    } catch (error) {
+      throw new BadRequest('This email is not exist')
+    }
     await userModel.create({
       username,
       email,
@@ -28,7 +33,6 @@ class AuthService {
       verificationCode,
     });
 
-    sendVerificationEmail(email, verificationCode);
     return 'A Verification Email Has Been Send For You.';
   }
 

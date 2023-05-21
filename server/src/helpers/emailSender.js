@@ -1,13 +1,13 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
-
-
-
+const { BadRequest } = require('../utils/errResponse.utils');
+const { error } = require('console');
+const { reject } = require('lodash');
 
 let transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: "465",
+  host: 'smtp.gmail.com',
+  port: '465',
   secure: true,
   service: 'gmail',
   auth: {
@@ -16,8 +16,7 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-const sendVerificationEmail = (userEmail, verificationCode) => {
-
+const sendVerificationEmail = async (userEmail, verificationCode) => {
   const template = path.join('src', 'template', 'emailTemplate.html');
 
   const emailTemplate = fs.readFileSync(template, 'utf8');
@@ -26,42 +25,36 @@ const sendVerificationEmail = (userEmail, verificationCode) => {
     '{{verificationUrl}}',
     verificationUrl
   );
-  
-  transporter
-    .sendMail({
-      from: 'Dev Street <cuongdev@gmail.com>', // sender address
-      to: userEmail, // list of receivers
-      subject: 'Account Verification', // Subject line
-      html: emailContent
-    })
-    .then(() => {
-      console.log(`A verification email has just been sent for ${userEmail}`);
-    })
-    .catch((err) => {
-      console.log('Cannot send email');
-      console.log(err);
-    });
-}
 
-const sendResetPasswordEmail = (userEmail, resetToken) => {
+  try {
+    await transporter.sendMail({
+      from: 'Dev Street <cuongdev@gmail.com>', // địa chỉ người gửi
+      to: userEmail, // danh sách người nhận
+      subject: 'Account Verification', // tiêu đề email
+      html: emailContent, // nội dung email
+    });
+    console.log(`A verification email has just been sent for ${userEmail}`);
+  } catch (err) {
+    throw new Error('Failed to send verification email');
+  }
+};
+
+const sendResetPasswordEmail = async (userEmail, resetToken) => {
   const template = path.join('src', 'template', 'resetPasswordTemplate.html');
   const emailTemplate = fs.readFileSync(template, 'utf8');
   const emailContent = emailTemplate.replace('{OTP_CODE}', resetToken);
 
-  transporter
-    .sendMail({
+  try {
+    await transporter.sendMail({
       from: 'Dev Street <cuongdev@gmail.com>', // sender address
       to: userEmail, // list of receivers
       subject: 'Reset Your Password', // Subject line
       html: emailContent,
-    })
-    .then(() => {
-      console.log(`A reset password email has just been sent for ${userEmail}`);
-    })
-    .catch((err) => {
-      console.log('Cannot send email');
-      console.log(err);
     });
-}
+    console.log(`A reset password email has just been sent for ${userEmail}`);
+  } catch (error) {
+    throw new Error('Failed to send verification email');
+  }
+};
 
-module.exports = {sendVerificationEmail, sendResetPasswordEmail}
+module.exports = { sendVerificationEmail, sendResetPasswordEmail };

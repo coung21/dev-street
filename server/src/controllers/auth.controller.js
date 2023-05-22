@@ -77,6 +77,15 @@ class AuthController {
       return Response.fail(res, error.status, error.message);
     }
   }
+
+  static async LogOut(req, res){
+    try {
+      const response = await AuthService.LogOut(req.id)
+      return Response.success(res, '', 200, response)
+    } catch (error) {
+      return Response.fail(res, error.status, error.message)
+    }
+  }
 }
 
 module.exports = AuthController;

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('../../services/passport.service');
 const AuthController = require('../../controllers/auth.controller')
-
+const authMiddleware = require('../../middlewares/auth.middleware')
 
 
 router.post('/auth/signup', AuthController.SignUp)
@@ -13,6 +13,8 @@ router.post('/auth/signin', AuthController.SignIn)
 router.post('/auth/forgot', AuthController.ForgotPassword)
 
 router.post('/auth/reset/:token', AuthController.ResetPassword)
+
+router.post('/auth/logout',authMiddleware ,AuthController.LogOut)
 
 router.get(
   '/auth/google',
@@ -28,9 +30,8 @@ router.get(
   AuthController.googleAuth
 );
 
-router.get('/ok' ,(req, res) => {
-  const {ok} = req.query
-  res.json({ok})
+router.get('/ok', authMiddleware ,(req, res) => {
+  res.json('ok')
 })
 
 module.exports = router;

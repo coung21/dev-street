@@ -13,6 +13,7 @@ const {
   sendVerificationEmail,
   sendResetPasswordEmail,
 } = require('../helpers/emailSender');
+const keyTokenService = require('./keyToken.service')
 
 class AuthService {
   //SIGNUP
@@ -84,6 +85,7 @@ class AuthService {
       privateKey
     );
     if (!tokens) throw new IntervelServer('Someting went wrong - Server Error');
+    await keyTokenService.createKeyToken(foundUser._id, tokens.refreshToken,  publicKey,privateKey)
     return {
       user: getData({
         object: foundUser,
@@ -168,6 +170,13 @@ class AuthService {
       }),
       tokens,
     };
+  }
+
+  // LOGOUT
+  static async LogOut(id){
+    if(!id) throw new Unauthorize('Invalid request')
+    await keyTokenService.delKeyToken(id)
+    return 'Log out successfully'
   }
 }
 

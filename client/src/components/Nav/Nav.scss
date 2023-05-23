@@ -1,0 +1,84 @@
+@use '../../scss/' as *;
+
+.nav {
+  @include flex(space-between, center);
+  background-color: white;
+  box-shadow: 2px 0px 2px gray;
+  height: 54px;
+  width: 100%;
+  padding: 0 50px;
+  @include moblie{
+    padding: 0 20px;
+  }
+  .nav-left {
+    @include flex(space-between, center);
+    width: 35%;
+    gap: 20px;
+    &__logo {
+      width: 50px;
+      height: 45px;
+    }
+
+    &__search {
+      position: relative;
+      height: 38px;
+      width: 100%;
+      @include moblie{
+        display: none;
+      }
+    }
+
+    &__search input {
+      width: 100%;
+      height: 100%;
+      text-indent: 14px;
+      font-size: 14px;
+      font-weight: 200;
+      border-radius: 5px;
+      border: 1px solid gray;
+    }
+
+    &__search input:focus-visible {
+      outline: 2px solid $primary-color;
+      border: none;
+    }
+
+    &--icon{
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-size: 22px;
+    }
+  }
+
+  .nav-right {
+    @include flex(space-between, center);
+    gap: 10px;
+    .btn {
+      padding: 7px 15px;
+      border-radius: 5px;
+      background-color: transparent;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      &--primary {
+        color: $primary-color;
+        font-weight: 600;
+        border: 1px solid $primary-color;
+      }
+      &--secondary {
+        border: none;
+      }
+      &--primary:hover {
+        background-color: $primary-color;
+        color: white;
+        text-decoration: underline;
+      }
+      &--secondary:hover {
+        color: $primary-color;
+        text-decoration: underline;
+        background-color: $hover-tighter-color;
+      }
+    }
+  }
+}

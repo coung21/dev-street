@@ -1,13 +1,15 @@
 import React from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Header from '../components/Nav/Nav'
-
+import RootLayout from '../pages/RootLayout'
+import SignUp from '../pages/SignUp/SignUp'
 function Router() {
   return (
     <>
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Header />}/>
+        <Route path='/' element={<RootLayout />}>
+          <Route path='/signup' element={<SignUp />}/>
+        </Route>
       </Routes>
     </BrowserRouter>
     </>

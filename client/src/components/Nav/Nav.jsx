@@ -5,7 +5,7 @@ import {BiSearch} from 'react-icons/bi'
 
 function Header() {
   return (
-    <div className='nav'>
+    <nav className='nav'>
       {/* left */}
       <div className='nav-left'>
         <img src={logo} className='nav-left__logo' alt='logo' />
@@ -20,7 +20,7 @@ function Header() {
         <button className='btn btn--secondary'>Sign in</button>
         <button className='btn btn--primary'>Sign up</button>
       </div>
-    </div>
+    </nav>
   );
 }
 

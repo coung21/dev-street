@@ -1,19 +1,32 @@
 import React from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {createBrowserRouter} from 'react-router-dom'
 import RootLayout from '../pages/RootLayout'
-import SignUp from '../pages/SignUp/SignUp'
-function Router() {
-  return (
-    <>
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<RootLayout />}>
-          <Route path='/signup' element={<SignUp />}/>
-        </Route>
-      </Routes>
-    </BrowserRouter>
-    </>
-  )
-}
+import SignUp from '../pages/Enter/SignUp'
+import PrivateRoutes from './PrivateRoutes'
+import Home from '../pages/Home/Home'
+import SignIn from '../pages/Enter/SignIn'
 
-export default Router
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children:[
+      {
+        path: '/',
+        element: <PrivateRoutes />,
+        children: [
+          {index: true, element: <Home />}
+        ]
+      },
+      {
+        path: '/signup',
+        element: <SignUp />
+      },
+      {
+        path: '/signin',
+        element: <SignIn />
+      }
+    ]
+  }
+])
+
+export default router

@@ -1,6 +1,7 @@
 import React from 'react';
-import './SignUp.scss';
+import './Enter.scss';
 import { AiOutlineGoogle, AiFillFacebook } from 'react-icons/ai';
+import {Link} from 'react-router-dom'
 
 function SignUp() {
   return (
@@ -24,14 +25,17 @@ function SignUp() {
           <span>Continue with your email address</span>
         </div>
         <form id='email-form' className='registration__actions--email'>
-          <label htmlFor="email">Email</label>
-          <input id='email' type="text" />
-          <label htmlFor="password">Password</label>
-          <input id='password' type="text" />
-          <label htmlFor="confirm">Confirm Password</label>
-          <input id='confirm' type="text" />
+          <label htmlFor='email'>Email</label>
+          <input id='email' type='text' />
+          <label htmlFor='password'>Password</label>
+          <input id='password' type='password' />
+          <label htmlFor='confirm'>Confirm Password</label>
+          <input id='confirm' type='password' />
+        <button form='email-form'>Sign Up</button>
         </form>
-          <button form='email-form'>Sign Up</button>
+        <div className='registration__hr'>
+          <span>Already have an account? <Link to={'/signin'}>Sign In</Link></span>
+        </div>
       </div>
     </div>
   );

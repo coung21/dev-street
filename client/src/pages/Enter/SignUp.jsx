@@ -1,9 +1,23 @@
 import React from 'react';
 import './Enter.scss';
 import { AiOutlineGoogle, AiFillFacebook } from 'react-icons/ai';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
 
 function SignUp() {
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm({ mode: 'onTouched' });
+  function onSubmit(data) {
+    const { confirm, ...signupData } = data;
+    console.log(signupData);
+  }
+  const watchPasswordValue = watch('password');
   return (
     <div className='card registration'>
       <div className='registration__content'>
@@ -24,19 +38,76 @@ function SignUp() {
         <div className='registration__hr'>
           <span>Continue with your email address</span>
         </div>
-        <form id='email-form' className='registration__actions--email'>
+        <form
+          id='email-form'
+          className='registration__actions--email'
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <label htmlFor='email'>Email</label>
-          <input id='email' type='text' />
+          <input
+            id='email'
+            type='text'
+            className={errors.email && 'error'}
+            {...register('email', {
+              required: {
+                value: true,
+                message: 'Email is required',
+              },
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Invalid email format',
+              },
+            })}
+          />
+          {errors.email && (
+            <span className='feedback-error'>{errors.email.message}</span>
+          )}
           <label htmlFor='password'>Password</label>
-          <input id='password' type='password' />
+          <input
+            id='password'
+            type='password'
+            className={errors.password && 'error'}
+            {...register('password', {
+              required: {
+                value: true,
+                message: 'Password is required',
+              },
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
+          />
+          {errors.password && (
+            <span className='feedback-error'>{errors.password.message}</span>
+          )}
           <label htmlFor='confirm'>Confirm Password</label>
-          <input id='confirm' type='password' />
-        <button form='email-form'>Sign Up</button>
+          <input
+            id='confirm'
+            type='password'
+            className={errors.confirm && 'error'}
+            {...register('confirm', {
+              required: {
+                value: true,
+                message: 'Confirm password is required',
+              },
+              validate: (value) =>
+                value === watchPasswordValue || 'Password do not match',
+            })}
+          />
+          {errors.confirm && (
+            <span className='feedback-error'>{errors.confirm.message}</span>
+          )}
+          <button id='enter' form='email-form'>Sign Up</button>
         </form>
         <div className='registration__hr'>
-          <span>Already have an account? <Link to={'/signin'}>Sign In</Link></span>
+          <span>
+            Already have an account? <Link to={'/signin'}>Sign In</Link>
+          </span>
         </div>
       </div>
+      <DevTool control={control} />
     </div>
   );
 }

@@ -1,9 +1,17 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {useForm} from 'react-hook-form'
+import {DevTool} from '@hookform/devtools'
 import './Enter.scss';
 import { AiOutlineGoogle, AiFillFacebook } from 'react-icons/ai';
+import { signin } from "../../api/userApi";
 
 function SignIn() {
+  const {register, handleSubmit, formState: {errors}, control} = useForm({mode: 'onTouched'})
+ async function onSubmit(data){
+    const response = await signin(data)
+    console.log(response.data)
+  }
   return (
     <div className='card registration'>
       <div className='registration__content'>
@@ -24,19 +32,49 @@ function SignIn() {
         <div className='registration__hr'>
           <span>Continue with your email address</span>
         </div>
-        <form className='registration__actions--email'>
+        <form id='email-form' onSubmit={handleSubmit(onSubmit)} className='registration__actions--email'>
           <label htmlFor='email'>Email</label>
-          <input id='email' type='text' />
+          <input
+            id='email'
+            type='text'
+            className={errors.email && 'error'}
+            {...register('email', {
+              required: {
+                value: true,
+                message: 'Email is required',
+              },
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: 'Invalid email format',
+              },
+            })}
+            />
+            {errors.email && <span className='feedback-error'>{errors.email.message}</span>}
           <label htmlFor='password'>Password</label>
-          <input id='password' type='password' />
-          <button>Sign In</button>
+          <input
+            id='password'
+            className={errors.password && 'error'}
+            type='password'
+            {...register('password', {
+              required: {
+                value: true,
+                message: 'Password is required',
+              },
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
+          />
+            {errors.password && <span className='feedback-error'>{errors.password.message}</span>}
         </form>
-          <span className='registration__actions--forgot'>
-        <Link to={'/password/new'}>
-            I forgot my password
-        </Link>
-          </span>
+          <button id='enter' form='email-form'>Sign In</button>
+        <span className='registration__actions--forgot'>
+          <Link to={'/password/new'}>I forgot my password</Link>
+        </span>
       </div>
+      <DevTool control={control} />
     </div>
   );
 }

@@ -1,16 +1,24 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
-import {DevTool} from '@hookform/devtools'
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { DevTool } from '@hookform/devtools';
 import './Enter.scss';
 import { AiOutlineGoogle, AiFillFacebook } from 'react-icons/ai';
-import { signin } from "../../api/userApi";
+import {useDispatch} from 'react-redux'
+import authAction from '../../store/actions/authAction'
 
 function SignIn() {
-  const {register, handleSubmit, formState: {errors}, control} = useForm({mode: 'onTouched'})
- async function onSubmit(data){
-    const response = await signin(data)
-    console.log(response.data)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({ mode: 'onTouched' });
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  async function onSubmit(data) {
+    await dispatch(authAction.login(data))
+    navigate("/")
   }
   return (
     <div className='card registration'>
@@ -32,7 +40,11 @@ function SignIn() {
         <div className='registration__hr'>
           <span>Continue with your email address</span>
         </div>
-        <form id='email-form' onSubmit={handleSubmit(onSubmit)} className='registration__actions--email'>
+        <form
+          id='email-form'
+          onSubmit={handleSubmit(onSubmit)}
+          className='registration__actions--email'
+        >
           <label htmlFor='email'>Email</label>
           <input
             id='email'
@@ -49,8 +61,10 @@ function SignIn() {
                 message: 'Invalid email format',
               },
             })}
-            />
-            {errors.email && <span className='feedback-error'>{errors.email.message}</span>}
+          />
+          {errors.email && (
+            <span className='feedback-error'>{errors.email.message}</span>
+          )}
           <label htmlFor='password'>Password</label>
           <input
             id='password'
@@ -67,9 +81,13 @@ function SignIn() {
               },
             })}
           />
-            {errors.password && <span className='feedback-error'>{errors.password.message}</span>}
+          {errors.password && (
+            <span className='feedback-error'>{errors.password.message}</span>
+          )}
         </form>
-          <button id='enter' form='email-form'>Sign In</button>
+        <button id='enter' form='email-form'>
+          Sign In
+        </button>
         <span className='registration__actions--forgot'>
           <Link to={'/password/new'}>I forgot my password</Link>
         </span>
@@ -79,4 +97,4 @@ function SignIn() {
   );
 }
 
-export default SignIn
+export default SignIn;

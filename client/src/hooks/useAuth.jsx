@@ -1,7 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React, { } from 'react';
 
 function useAuth() {
-  return {}
+  const authData = {
+    accessToken: localStorage.getItem('accessToken'),
+    refreshToken: localStorage.getItem('refreshToken')
+  }
+  return { authData };
 }
 
-export default useAuth
+export default useAuth;

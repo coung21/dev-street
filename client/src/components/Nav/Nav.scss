@@ -83,6 +83,10 @@
         text-decoration: underline;
         background-color: $hover-tighter-color;
       }
+      @include moblie{
+        font-size: 12px;
+        padding: 7px 10px;
+      }
     }
   }
 }

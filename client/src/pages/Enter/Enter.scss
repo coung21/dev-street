@@ -21,16 +21,17 @@
       margin-bottom: 1rem;
 
       .google {
-        background-color: #24763a;
+        background-color: $bg-color;
+        color: $txt-color;
         &:hover {
-          background-color: #2f974b;
+          background-color: #dddddd;
         }
       }
 
       .facebook {
-        background-color: #156cda;
+        background-color: #3959ac;
         &:hover {
-          background-color: #1778f2;
+          background-color: #4d6ab4;
         }
       }
     }

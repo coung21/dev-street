@@ -25,6 +25,10 @@
       flex-wrap: wrap;
       gap: 10px;
       padding: 0 2rem;
+      @include moblie{
+        gap: 0;
+        padding: 0 0rem
+      }
       li{
         display: flex;
         align-items: center;

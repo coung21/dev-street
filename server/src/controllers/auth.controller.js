@@ -30,32 +30,35 @@ class AuthController {
   }
 
   //SIGN IN
-  static async SignIn(req, res){
+  static async SignIn(req, res) {
     try {
-      const {email, password} = req.body
-      const user = await AuthService.SignIn(email, password)
-      return Response.success(res, user, 200, 'Sign in successfully')
+      const { email, password } = req.body;
+      const user = await AuthService.SignIn(email, password);
+      return Response.success(res, user, 200, 'Sign in successfully');
     } catch (error) {
-      return Response.fail(res, error.status, error.message)
+      return Response.fail(res, error.status, error.message);
     }
   }
 
   //FORGOT PASS
-  static async ForgotPassword(req, res){
+  static async ForgotPassword(req, res) {
     try {
-      const {email} = req.body
-      const response = await AuthService.ForgotPassword(email)
-      return Response.success(res, '', 200, response)
+      const { email } = req.body;
+      const response = await AuthService.ForgotPassword(email);
+      return Response.success(res, '', 200, response);
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
   }
 
   //RESET PASS
-  static async ResetPassword(req, res){
+  static async ResetPassword(req, res) {
     try {
-      const response = await AuthService.ResetPassword(req.body.newPassword, req.params.token)
-      return Response.success(res, '', 200, response)
+      const response = await AuthService.ResetPassword(
+        req.body.newPassword,
+        req.params.token
+      );
+      return Response.success(res, '', 200, response);
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
@@ -72,18 +75,25 @@ class AuthController {
       };
 
       const user = await AuthService.googleAuth(reqData.email);
-      return Response.success(res, user, 200);
+      // Response.success(res, user, 200);
+      return res.redirect(
+        `http://localhost:5173/success?accessToken=${
+          user.tokens.accessToken
+        }&refreshToken=${user.tokens.refreshToken}&userData=${JSON.stringify(
+          user.user
+        )}`
+      );
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
   }
 
-  static async LogOut(req, res){
+  static async LogOut(req, res) {
     try {
-      const response = await AuthService.LogOut(req.id)
-      return Response.success(res, '', 200, response)
+      const response = await AuthService.LogOut(req.id);
+      return Response.success(res, '', 200, response);
     } catch (error) {
-      return Response.fail(res, error.status, error.message)
+      return Response.fail(res, error.status, error.message);
     }
   }
 }

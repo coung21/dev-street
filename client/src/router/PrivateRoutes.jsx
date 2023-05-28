@@ -4,8 +4,9 @@ import useAuth from '../hooks/useAuth'
 
 function PrivateRoutes() {
    const { authData } = useAuth();
+   console.log(authData.user)
   return (
-    <>{authData.accessToken && authData.refreshToken ? <Outlet /> : <Navigate to={'/signin'} />}</>
+    <>{authData.user ? <Outlet /> : <Navigate to={'/signin'} />}</>
   )
 }
 

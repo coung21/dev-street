@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
 import './Enter.scss';
-import { AiOutlineGoogle, AiFillFacebook } from 'react-icons/ai';
+import { AiFillFacebook } from 'react-icons/ai';
+import {FcGoogle} from 'react-icons/fc'
 import {useDispatch} from 'react-redux'
 import authAction from '../../store/actions/authAction'
 
@@ -16,9 +17,13 @@ function SignIn() {
   } = useForm({ mode: 'onTouched' });
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
   async function onSubmit(data) {
     await dispatch(authAction.login(data))
-    navigate("/")
+    navigate('/')
+  }
+  function googleLogin(){
+    window.location.href =`${import.meta.env.VITE_BASE_URL}/auth/google`
   }
   return (
     <div className='card registration'>
@@ -28,8 +33,8 @@ function SignIn() {
       </div>
       <div className='registration__actions'>
         <div className='registration__actions--providers'>
-          <button className='google'>
-            <AiOutlineGoogle size={17} style={{ marginRight: '0.5rem' }} />
+          <button onClick={googleLogin} className='google'>
+            <FcGoogle size={17} style={{ marginRight: '0.5rem' }} />
             Continue with Google
           </button>
           <button className='facebook'>

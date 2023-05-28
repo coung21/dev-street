@@ -5,7 +5,7 @@ class Response{
     return res.status(statusCode).json({message, data})
   }
   static fail(res, statusCode = 500, message ='Error'){
-    return res.status(statusCode).json({message})
+    return res.status(statusCode).json({status: statusCode, message})
   }
 }
 

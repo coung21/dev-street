@@ -5,7 +5,13 @@ const DOCUMENT = 'User';
 
 const userSchema = new mongoose.Schema(
   {
-    username: { type: String, require: true },
+    username: {
+      type: String,
+      require: true,
+      default: function () {
+        return this.email.split('@')[0];
+      },
+    },
     name: { type: String },
     email: { type: String, require: true, unique: true },
     password: { type: String, allowNull: true, default: null },
@@ -18,14 +24,14 @@ const userSchema = new mongoose.Schema(
     joinDate: { type: Date, default: Date.now() },
     skills: { type: String },
     location: { type: String },
-    work: {type: String},
-    education:{type: String},
-    posts: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
-    comments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Comment'}],
-    followers: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    following: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    followedTags : [{type: mongoose.Schema.Types.ObjectId, ref: 'Tag'}],
-    bookmarked: [{type: mongoose.Schema.Types.ObjectId, ref: 'Post'}],
+    work: { type: String },
+    education: { type: String },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    followedTags: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tag' }],
+    bookmarked: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     verificationCode: { type: String, allowNull: true },
     isVerify: {
       type: Boolean,
@@ -45,7 +51,6 @@ const userSchema = new mongoose.Schema(
   },
   {
     collection: COLLECTION,
-    timestamps: true,
   }
 );
 

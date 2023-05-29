@@ -17,7 +17,7 @@ const keyTokenService = require('./keyToken.service')
 
 class AuthService {
   //SIGNUP
-  static async SignUp(username, email, password) {
+  static async SignUp(email, password) {
     const foundUser = await userModel.findOne({ email });
     if (foundUser) throw new ConflictRequest('This email already exist');
 
@@ -28,7 +28,6 @@ class AuthService {
       throw new BadRequest('This email is not exist')
     }
     await userModel.create({
-      username,
       email,
       password: await bcrypt.hash(password, 10),
       verificationCode,

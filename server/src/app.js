@@ -7,7 +7,7 @@ const compression = require('compression');
 const session = require('express-session');
 const passport = require('./services/passport.service');
 const app = express();
-
+const server = require('http').createServer(app)
 //config lib middleware
 
 app.use(cors());
@@ -48,4 +48,4 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || 'Interval Server Error' });
 });
 
-module.exports = app;
+module.exports = server;

@@ -13,16 +13,28 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    resetError(state){
+      state.error = false
+    }
   },
   extraReducers: builder => {
-    builder.addCase(authThunk.login.fulfilled, (state, action) => {
-      state.user = action.payload.user
-      state.tokens = action.payload.tokens
-    }).addCase(authThunk.login.rejected, (state, action) => {
-      // console.log(action.payload.message)
-      state.error = true
-    })
+    builder
+      .addCase(authThunk.login.pending, (state) => {
+        state.loading = true;
+        state.error = false;
+      })
+      .addCase(authThunk.login.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.tokens = action.payload.tokens;
+        state.loading = false;
+      })
+      .addCase(authThunk.login.rejected, (state, action) => {
+        state.loading = false;
+        state.message = action.error.message;
+        state.error = true
+      });
   }
 })
 
+export const resetErrorState = authSlice.actions 
 export default authSlice.reducer

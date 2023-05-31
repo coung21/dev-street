@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const userModel = require('../models/user.model');
-const resizePicture = require('../helpers/resizePicture')
+const resizePicture = require('../helpers/image')
 
 passport.use(
   new GoogleStrategy(

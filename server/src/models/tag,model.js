@@ -13,4 +13,4 @@ const tagSchema = new mongoose.Schema({
   followers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
 }, {collection: COLLECTION});
 
-module.exports = mongoose.model(DOCCUMENT, tagSchema); //returns a constructor function
+module.exports = mongoose.model(DOCCUMENT, tagSchema); 

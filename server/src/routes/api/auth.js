@@ -4,17 +4,19 @@ const AuthController = require('../../controllers/auth.controller')
 const authMiddleware = require('../../middlewares/auth.middleware')
 
 
-router.post('/auth/signup', AuthController.SignUp)
+router.post('/auth/signup', AuthController.signUp)
 
-router.get('/auth/verify-email', AuthController.VerifyEmail)
+router.get('/auth/verify-email', AuthController.verifyEmail)
 
-router.post('/auth/signin', AuthController.SignIn)
+router.post('/auth/signin', AuthController.signIn)
 
-router.post('/auth/forgot', AuthController.ForgotPassword)
+router.post('/auth/forgot', AuthController.forgotPassword)
 
-router.post('/auth/reset/:token', AuthController.ResetPassword)
+router.post('/auth/reset/:token', AuthController.resetPassword)
 
-router.post('/auth/logout',authMiddleware ,AuthController.LogOut)
+router.post('/auth/logout', authMiddleware ,AuthController.logOut)
+
+router.get('/auth/newtoken' ,AuthController.newToken);
 
 router.get(
   '/auth/google',
@@ -29,7 +31,9 @@ router.get(
   AuthController.googleAuth
 );
 
-// router.get('/google/success', AuthController.googleAuth);
+router.get('/ok', authMiddleware,(req, res) => {
+  res.send('ok')
+})
 
 
 module.exports = router;

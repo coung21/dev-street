@@ -5,7 +5,7 @@ const AuthService = require('../services/auth.service');
 
 class AuthController {
   //SIGN UP
-  static async SignUp(req, res) {
+  static async signUp(req, res) {
     try {
       const { email, password } = req.body;
       const response = await AuthService.SignUp(email, password);
@@ -16,7 +16,7 @@ class AuthController {
   }
 
   //VERIFY EMAIL
-  static async VerifyEmail(req, res) {
+  static async verifyEmail(req, res) {
     try {
       const { email, code } = req.query;
       await AuthService.verifyEmail(email, code);
@@ -30,18 +30,28 @@ class AuthController {
   }
 
   //SIGN IN
-  static async SignIn(req, res) {
+  static async signIn(req, res) {
     try {
       const { email, password } = req.body;
-      const user = await AuthService.SignIn(email, password);
-      return Response.success(res, user, 200, 'Sign in successfully');
+      const user = await AuthService.signIn(email, password);
+
+      const options = {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
+      };
+
+      res.cookie('accessToken', user.tokens.accessToken, options);
+      res.cookie('refreshToken', user.tokens.refreshToken, options);
+      res.cookie('userId', user.user._id, options);
+
+      return Response.success(res, user.user, 200, 'Sign in successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
   }
 
   //FORGOT PASS
-  static async ForgotPassword(req, res) {
+  static async forgotPassword(req, res) {
     try {
       const { email } = req.body;
       const response = await AuthService.ForgotPassword(email);
@@ -52,7 +62,7 @@ class AuthController {
   }
 
   //RESET PASS
-  static async ResetPassword(req, res) {
+  static async resetPassword(req, res) {
     try {
       const response = await AuthService.ResetPassword(
         req.body.newPassword,
@@ -88,10 +98,29 @@ class AuthController {
     }
   }
 
-  static async LogOut(req, res) {
+  static async logOut(req, res) {
     try {
-      const response = await AuthService.LogOut(req.id);
+      const response = await AuthService.logOut(req.id);
+      res.clearCookie('accessToken');
+      res.clearCookie('refreshToken');
+      res.clearCookie('userId');
       return Response.success(res, '', 200, response);
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+
+  static async newToken(req, res) {
+    try {
+      const userId = req.cookies.userId;
+      const newToken = await AuthService.newToken(userId);
+      const options = {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
+      };
+      res.cookie('accessToken', newToken.accessToken, options);
+      res.cookie('refreshToken', newToken.refreshToken, options);
+      return res.send('got new token')
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }

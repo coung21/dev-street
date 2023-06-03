@@ -12,6 +12,16 @@ class UserController {
       return Response.fail(res, error.status, error.message)
     }
   }
+  // static async editProfile(req, res){
+  //   try {
+  //     const {username} = req.params
+  //     const id = req.id
+  //     const user = await UserService.
+  //     return Response.success(res, user, 200, 'success')
+  //   } catch (error) {
+  //     return Response.fail(res, error.status, error.message)
+  //   }
+  // }
 
 }
 

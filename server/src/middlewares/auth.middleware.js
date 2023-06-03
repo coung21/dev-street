@@ -1,21 +1,31 @@
 const jwt = require('jsonwebtoken');
 const keyTokenModel = require('../models/keyToken.model');
+const UserModel = require('../models/user.model');
 const { Unauthorize } = require('../utils/errResponse.utils');
-const Response = require('../utils/apiResponse')
+const Response = require('../utils/apiResponse');
 
 const verifyToken = async (req, res, next) => {
-  try {
-    const accessToken = req.headers.authorization.split(' ')[1];
-    const userId = req.headers['x-client-id'];
-    if (!accessToken || !userId) throw new Unauthorize('Unauthorize');
+  const accessToken = req.cookies.accessToken;
+  const userId = req.cookies.userId;
 
-    const userToken = await keyTokenModel.findOne({ user: userId });
-    const publicKey = userToken.publicKey;
-    const decode = await jwt.verify(accessToken, publicKey);
-    req.id = decode.id;
+  if (!accessToken || !userId) {
+    throw new Unauthorize('Unauthorize');
+  }
+
+  const keytoken = await keyTokenModel.findOne({ user: userId });
+  const publicKey = keytoken.publicKey;
+
+  try {
+    const decodeToken = await jwt.verify(accessToken, publicKey);
+    req.id = decodeToken.id;
     next();
   } catch (error) {
-    return Response.fail(res, 401, 'Unauthorize')
+    if(error.message === 'invalid signature'){
+      res.clearCookie('accessToken')
+      res.clearCookie('refreshToken')
+      res.clearCookie('userId')
+    }
+      return Response.fail(res, 403, error.message)
   }
 };
 

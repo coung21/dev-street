@@ -5,6 +5,7 @@ const helmet = require('helmet');
 const cors = require('cors');
 const compression = require('compression');
 const session = require('express-session');
+const cookieParser = require('cookie-parser')
 const passport = require('./services/passport.service');
 const app = express();
 const server = require('http').createServer(app)
@@ -12,6 +13,7 @@ const server = require('http').createServer(app)
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 app.use(helmet());

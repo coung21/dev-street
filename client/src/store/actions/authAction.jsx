@@ -8,7 +8,7 @@ class authThunk{
         localStorage.setItem('user', JSON.stringify(response.data.user))
         localStorage.setItem('accessToken', response.data.tokens.accessToken)
         localStorage.setItem('refreshToken', response.data.tokens.refreshToken)
-        // return response.data
+        return response.data
       } catch (error) {
             throw new Error(error.response.data.message);
             // console.log(error.response)

@@ -8,16 +8,16 @@ const {
   Unauthorize,
   IntervelServer,
 } = require('../utils/errResponse.utils');
-const { generateTokenPair } = require('../utils/generateTokensPair');
+const { generateTokenPair, generateKeyPair } = require('../utils/generateKeyToken');
 const {
   sendVerificationEmail,
   sendResetPasswordEmail,
 } = require('../helpers/emailSender');
-const keyTokenService = require('./keyToken.service')
+const keyTokenService = require('./keyToken.service');
 
 class AuthService {
   //SIGNUP
-  static async SignUp(email, password) {
+  static async signUp(email, password) {
     const foundUser = await userModel.findOne({ email });
     if (foundUser) throw new ConflictRequest('This email already exist');
 
@@ -25,7 +25,7 @@ class AuthService {
     try {
       await sendVerificationEmail(email, verificationCode);
     } catch (error) {
-      throw new BadRequest('This email is not exist')
+      throw new BadRequest('This email is not exist');
     }
     await userModel.create({
       email,
@@ -51,7 +51,7 @@ class AuthService {
   }
 
   //SIGN IN
-  static async SignIn(email, password) {
+  static async signIn(email, password) {
     const foundUser = await userModel.findOne({ email });
     if (!foundUser) {
       throw new ConflictRequest('This account is not exist');
@@ -67,24 +67,18 @@ class AuthService {
     if (!isMatch) throw new BadRequest('Password incorrect');
 
     //generate keys
-    const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-      modulusLength: 4096,
-      publicKeyEncoding: {
-        type: 'pkcs1',
-        format: 'pem',
-      },
-      privateKeyEncoding: {
-        type: 'pkcs1',
-        format: 'pem',
-      },
-    });
-
+    const { publicKey, privateKey } = generateKeyPair();
     const tokens = await generateTokenPair(
       { id: foundUser._id, email },
       privateKey
     );
     if (!tokens) throw new IntervelServer('Someting went wrong - Server Error');
-    await keyTokenService.createKeyToken(foundUser._id, tokens.refreshToken,  publicKey,privateKey)
+    await keyTokenService.createKeyToken(
+      foundUser._id,
+      tokens.refreshToken,
+      publicKey,
+      privateKey
+    );
     return {
       user: getData({
         object: foundUser,
@@ -95,7 +89,7 @@ class AuthService {
   }
 
   //FORGOT PASSWORD
-  static async ForgotPassword(email) {
+  static async forgotPassword(email) {
     if (!email) throw new BadRequest('You have to enter your email');
 
     const existingUser = await userModel.findOne({ email });
@@ -118,7 +112,7 @@ class AuthService {
   }
 
   //RESET PASSWORD
-  static async ResetPassword(password, token) {
+  static async resetPassword(password, token) {
     if (!password) throw new BadRequest('You have to enter new password');
 
     const resetUser = await userModel.findOne({
@@ -146,17 +140,7 @@ class AuthService {
     const foundUser = await userModel.findOne({ email });
 
     //generateKey
-    const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
-      modulusLength: 4096,
-      publicKeyEncoding: {
-        type: 'pkcs1',
-        format: 'pem',
-      },
-      privateKeyEncoding: {
-        type: 'pkcs1',
-        format: 'pem',
-      },
-    });
+    const { publicKey, privateKey } = generateKeyPair();
     const tokens = await generateTokenPair(
       { id: foundUser._id, email },
       privateKey
@@ -172,10 +156,20 @@ class AuthService {
   }
 
   // LOGOUT
-  static async LogOut(id){
-    if(!id) throw new Unauthorize('Invalid request')
-    await keyTokenService.delKeyToken(id)
-    return 'Log out successfully'
+  static async logOut(id) {
+    if (!id) throw new Unauthorize('Invalid request');
+    await keyTokenService.delKeyToken(id);
+    return 'Log out successfully';
+  }
+
+  //GET NEW TOKENS
+  static async newToken(id) {
+    if (!id) throw new Unauthorize('Invalid request');
+    const user = await userModel.findOne({_id: id})
+    const { publicKey, privateKey } = generateKeyPair();
+    const {accessToken , refreshToken} = await generateTokenPair({id, email: user.email}, privateKey)
+    await keyTokenService.createKeyToken(id, refreshToken, publicKey, privateKey)
+    return {accessToken, refreshToken}
   }
 }
 

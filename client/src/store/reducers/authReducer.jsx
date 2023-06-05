@@ -3,7 +3,6 @@ import authThunk from '../actions/authAction'
 
 const initialState = {
   user: {},
-  tokens: {},
   error: false,
   message: '',
   loading: false
@@ -25,8 +24,7 @@ const authSlice = createSlice({
         state.error = false;
       })
       .addCase(authThunk.login.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.tokens = action.payload.tokens;
+        state.user = action.payload;
         state.loading = false;
       })
       .addCase(authThunk.login.rejected, (state, action) => {

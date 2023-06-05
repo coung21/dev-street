@@ -8,8 +8,10 @@ const verifyToken = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   const userId = req.cookies.userId;
 
+  console.log(accessToken, userId)
+
   if (!accessToken || !userId) {
-    throw new Unauthorize('Unauthorize');
+    return res.status(403).json({message: 'Unauthorize'})
   }
 
   const keytoken = await keyTokenModel.findOne({ user: userId });

@@ -11,7 +11,13 @@ const app = express();
 const server = require('http').createServer(app)
 //config lib middleware
 
-app.use(cors());
+app.use(
+  cors({
+    origin: `http://localhost:5173`,
+    methods: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'],
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));

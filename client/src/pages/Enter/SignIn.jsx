@@ -10,6 +10,7 @@ import authAction from '../../store/actions/authAction';
 import { resetErrorState } from '../../store/reducers/authReducer';
 import Toaster from '../../components/Toaster/Toaster';
 import { AnimatePresence } from 'framer-motion';
+import api from '../../api/api';
 function SignIn() {
   const {
     register,
@@ -28,13 +29,17 @@ function SignIn() {
       dispatch(resetErrorState.resetError())
     },3000)
     if(error === false){
-      navigate('/');
+      console.log('ngon')
     }
   }
   function googleLogin() {
     window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
   }
 
+  async function test(){
+    const res = await api.get('/ok')
+    console.log(res)
+  }
   return (
     <>
       <div className='card registration'>
@@ -48,7 +53,7 @@ function SignIn() {
               <FcGoogle size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Google
             </button>
-            <button className='facebook'>
+            <button className='facebook' onClick={test}>
               <AiFillFacebook size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Facebook
             </button>

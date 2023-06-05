@@ -85,14 +85,19 @@ class AuthController {
       };
 
       const user = await AuthService.googleAuth(reqData.email);
-      // Response.success(res, user, 200);
-      return res.redirect(
-        `http://localhost:5173/success?accessToken=${
-          user.tokens.accessToken
-        }&refreshToken=${user.tokens.refreshToken}&userData=${JSON.stringify(
-          user.user
-        )}`
-      );
+      const options = {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
+      };
+
+      res.cookie('accessToken', user.tokens.accessToken, options);
+      res.cookie('refreshToken', user.tokens.refreshToken, options);
+      res.cookie('userId', user.user._id, options);
+      return Response.success(res, user, 200);
+      // return res.redirect(
+      //   `http://localhost:5173/`
+      // );
+     
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }

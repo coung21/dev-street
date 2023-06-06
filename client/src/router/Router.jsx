@@ -5,7 +5,6 @@ import SignUp from '../pages/Enter/SignUp';
 import PrivateRoutes from './PrivateRoutes';
 import Home from '../pages/Home/Home';
 import SignIn from '../pages/Enter/SignIn';
-import SuccessPage from '../pages/ResponsePages/SuccesPage';
 
 const router = createBrowserRouter([
   {
@@ -26,10 +25,6 @@ const router = createBrowserRouter([
       },
     ],
   },
-  {
-    path: '/success',
-    element: <SuccessPage />
-  }
 ]);
 
 export default router;

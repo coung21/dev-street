@@ -1,16 +1,15 @@
 import React from 'react';
+import './Enter.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { DevTool } from '@hookform/devtools';
-import './Enter.scss';
 import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import authAction from '../../store/actions/authAction';
-import { resetErrorState } from '../../store/reducers/authReducer';
 import Toaster from '../../components/Toaster/Toaster';
 import { AnimatePresence } from 'framer-motion';
-import api from '../../api/api';
+import Loading from '../../components/Loading/Loading'
 function SignIn() {
   const {
     register,
@@ -21,25 +20,20 @@ function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { message, error } = useSelector((state) => state.auth);
+  const { error, message } = useSelector((state) => state.loadingError);
+  // const { message } = useSelector((state) => state.auth);
 
   async function onSubmit(data) {
-    await dispatch(authAction.login(data));
-    setTimeout(() => {
-      dispatch(resetErrorState.resetError())
-    },3000)
+    dispatch(authAction.login(data));
     if(error === false){
       console.log('ngon')
+      navigate('/')
     }
   }
   function googleLogin() {
     window.location.href = `${import.meta.env.VITE_BASE_URL}/auth/google`;
   }
 
-  async function test(){
-    const res = await api.get('/ok')
-    console.log(res)
-  }
   return (
     <>
       <div className='card registration'>
@@ -53,7 +47,7 @@ function SignIn() {
               <FcGoogle size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Google
             </button>
-            <button className='facebook' onClick={test}>
+            <button className='facebook'>
               <AiFillFacebook size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Facebook
             </button>

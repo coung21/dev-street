@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import authAction from '../../store/actions/authAction';
 import Toaster from '../../components/Toaster/Toaster';
 import { AnimatePresence } from 'framer-motion';
-import Loading from '../../components/Loading/Loading'
 function SignIn() {
   const {
     register,
@@ -26,7 +25,6 @@ function SignIn() {
   async function onSubmit(data) {
     dispatch(authAction.login(data));
     if(error === false){
-      console.log('ngon')
       navigate('/')
     }
   }

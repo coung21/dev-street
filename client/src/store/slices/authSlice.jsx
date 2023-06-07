@@ -2,8 +2,10 @@ import {createSlice} from '@reduxjs/toolkit'
 import authThunk from '../actions/authAction'
 
 const initialState = {
-  user: {},
-}
+  user: localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user'))
+    : null,
+};
 
 const authSlice = createSlice({
   name: 'auth',

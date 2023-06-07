@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react'
-import axios from 'axios'
+import './Home.scss'
+import LeftSidebar from '../../components/Sidebar/LeftSidebar/LeftSidebar'
+
 
 function Home() {
  
   return (
-    <div>Home</div>
+    <div className='home-layout'>
+      <LeftSidebar />
+    </div>
   )
 }
 

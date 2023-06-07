@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Nav from '../../components/Nav/Nav';
+import Nav from '../../components/Nav/Header';
 import Footer from '../../components/Footer/Footer';
 import Loading from '../../components/Loading/Loading';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,0 +1,15 @@
+@use '../../scss/' as *;
+
+.home-layout{
+  display: grid;
+  grid-template-columns: 240px 2fr 1fr;
+  width: 100%;
+  gap: 1rem;
+  max-width: 1280px;
+  @include tablet{
+    grid-template-columns: 2fr 5fr;
+  }
+  @include moblie{
+    grid-template-columns: 100%;
+  }
+}

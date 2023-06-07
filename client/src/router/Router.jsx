@@ -2,18 +2,18 @@ import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../pages/RootLayout/RootLayout';
 import SignUp from '../pages/Enter/SignUp';
-import PrivateRoutes from './PrivateRoutes';
 import Home from '../pages/Home/Home';
 import SignIn from '../pages/Enter/SignIn';
+import {useSelector} from 'react-redux'
 
-const router = createBrowserRouter([
-  {
-    element: <RootLayout />,
-    children: [
+function Router(){
+  const {user} = useSelector(state => state.auth)
+  let routes;
+  if(user) {
+    routes = [
       {
         path: '/',
-        element: <PrivateRoutes />,
-        children: [{ index: true, element: <Home /> }],
+        element: <Home />,
       },
       {
         path: '/signup',
@@ -23,8 +23,30 @@ const router = createBrowserRouter([
         path: '/signin',
         element: <SignIn />,
       },
-    ],
+    ]
+  } else {
+    routes = [
+      {
+        path: '/',
+        element: <Home />,
+      },
+      {
+        path: '/signup',
+        element: <SignUp />,
+      },
+      {
+        path: '/signin',
+        element: <SignIn />,
+      },
+    ]
+  }
+const router = createBrowserRouter([
+  {
+    element: <RootLayout />,
+    children: routes
   },
 ]);
+  return {router}
+}
 
-export default router;
+export default Router;

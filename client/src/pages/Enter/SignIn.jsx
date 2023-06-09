@@ -6,7 +6,7 @@ import { DevTool } from '@hookform/devtools';
 import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
-import authAction from '../../store/actions/authAction';
+import Auth from '../../store/actions/authAction';
 import Toaster from '../../components/Toaster/Toaster';
 import { AnimatePresence } from 'framer-motion';
 function SignIn() {
@@ -23,7 +23,7 @@ function SignIn() {
   // const { message } = useSelector((state) => state.auth);
 
   async function onSubmit(data) {
-    dispatch(authAction.login(data));
+    dispatch(Auth.login(data));
     if(error === false){
       navigate('/')
     }

@@ -93,7 +93,7 @@ class AuthController {
       res.cookie('accessToken', user.tokens.accessToken, options);
       res.cookie('refreshToken', user.tokens.refreshToken, options);
       res.cookie('userId', user.user._id, options);
-      return Response.success(res, user, 200);
+      return Response.success(res, user.user, 200);
       // return res.redirect(
       //   `http://localhost:5173/`
       // );

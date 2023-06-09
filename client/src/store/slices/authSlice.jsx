@@ -11,19 +11,19 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    googleAuth: (state, action) => {
+      state.user = action.payload
+    }
   },
   extraReducers: builder => {
     builder
-      .addCase(authThunk.login.pending, (state) => {
-      })
+      .addCase(authThunk.login.pending, (state) => {})
       .addCase(authThunk.login.fulfilled, (state, action) => {
         state.user = action.payload;
       })
-      .addCase(authThunk.login.rejected, (state, action) => {
-        
-      });
+      .addCase(authThunk.login.rejected, (state, action) => {})
   }
 })
 
-export const resetErrorState = authSlice.actions 
+export const authActions = authSlice.actions 
 export default authSlice.reducer

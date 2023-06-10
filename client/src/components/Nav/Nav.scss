@@ -11,11 +11,20 @@
   height: 54px;
   width: 100%;
   padding: 0 50px;
-  @include moblie{
+  @include mobile{
     padding: 0 20px;
   }
   .nav-left {
-    @include flex(space-between, center);
+    @include desktops{
+      @include flex(space-between, center);
+    }
+    @include tablet{
+      @include flex(space-between, center);
+    }
+    @include mobile{
+      @include flex(flex-start, center);
+      gap: 0.3rem;
+    }
     width: 35%;
     gap: 20px;
     &__logo {
@@ -27,7 +36,7 @@
       position: relative;
       height: 38px;
       width: 100%;
-      @include moblie{
+      @include mobile{
         display: none;
       }
     }
@@ -52,6 +61,21 @@
       right: 8px;
       top: 8px;
       font-size: 22px;
+    }
+
+    &__menu{
+      padding: 6px;
+      background-color: transparent;
+      border: none;
+      border-radius: 4px;
+      display: none;
+      &:hover{
+        background-color: rgba($color: $primary-color, $alpha: 0.1);
+        color: $primary-color;
+      }
+      @include mobile{
+        display: inline-block
+      }
     }
   }
 
@@ -107,10 +131,16 @@
           border-radius: 9999px;
         }
        }
-      @include moblie{
+      @include mobile{
         font-size: 12px;
         padding: 7px 10px;
       }
     }
   }
 }
+
+ .create-post {
+  @include mobile{
+    display: none;
+  }
+ }

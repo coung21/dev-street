@@ -7,7 +7,7 @@ function LoggedNavLink({user}) {
   return (
     <>
       <Link>
-        <button className='btn btn--primary'>Create Post</button>
+        <button className='btn create-post btn--primary'>Create Post</button>
       </Link>
       <Link>
         <button className='btn--notification'>

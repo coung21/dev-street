@@ -9,7 +9,7 @@
   @include tablet{
     grid-template-columns: 2fr 5fr;
   }
-  @include moblie{
+  @include mobile{
     grid-template-columns: 100%;
   }
 }

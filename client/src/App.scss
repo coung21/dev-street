@@ -12,6 +12,8 @@ body{
   font-weight: 400;
   background-color: $bg-color;
   color: $txt-color;
+}
+#root{
   padding-top: 56px;
 }
 
@@ -32,7 +34,7 @@ body{
   padding: 1rem;
   grid-template-columns: 100%;
   place-items: center;
-  @include moblie{
+  @include mobile{
     padding: 0;
   }
 }

@@ -1,0 +1,42 @@
+@use '../../../scss/' as *;
+
+.sidebar-popup {
+  position: absolute;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba($color: #000000, $alpha: 0.5 );
+
+  .popup-nav {
+    width: 280px;
+      height: 100%;
+      overflow-y: scroll;
+      background-color: white;
+    &__header {
+      
+      @include flex(space-between, center);
+      min-height: 56px;
+      padding: 0 0.5rem 0 1rem;
+
+      h2 {
+        word-break: break-word;
+      }
+
+      .close {
+        background-color: transparent;
+        border: none;
+        padding: 0.5rem;
+        &:hover{
+          background-color: rgba($color: $primary-color, $alpha: 0.1);
+          color: $primary-color;
+          border-radius: 5px;
+        }
+      }
+
+      // &__body{
+      //   width: 300px;
+      //   background-color: white;
+      // }
+    }
+  }
+}

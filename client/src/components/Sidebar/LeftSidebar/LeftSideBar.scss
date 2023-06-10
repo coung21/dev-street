@@ -4,46 +4,7 @@
   display: block;
   width: 100%;
   font-size: 1rem;
-  @include moblie{
+  @include mobile{
     display: none;
-  }
-  ul{
-    list-style: none;
-    margin-bottom: 1rem;
-  }
-
-  .sidebar-link{
-    text-decoration: none;
-    color: $txt-color;
-    padding: 8px 16px;
-    width: 100%;
-    border-radius: 5px;
-    @include flex(none, center);
-    &__icon{
-      margin-right: 0.3rem;
-    }
-  }
-  .sidebar-link:hover{
-    text-decoration: underline;
-    color: $primary-color;
-    background-color: rgba($color: $primary-color, $alpha: 0.1);
-  }
-
-
-  .social{
-    width: 100%;
-    margin-bottom: 1rem;
-    @include flex(flex-start, center);
-
-    a{
-      padding: 8px;
-      color: $txt-color;
-      border-radius: 5px;
-    }
-    a:hover{
-      color: $primary-color;
-      background-color: rgba($color: $primary-color, $alpha: 0.1);
-
-    }
   }
 }

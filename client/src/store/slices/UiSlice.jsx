@@ -1,7 +1,8 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const initialState = {
-  hamburger: false
+  hamburger: false,
+  dropdown: false,
 }
 
 const UiSlice = createSlice({
@@ -10,6 +11,9 @@ const UiSlice = createSlice({
   reducers: {
     toggleHamburger: (state) => {
       state.hamburger = !state.hamburger
+    },
+    toggleDropdown: (state, action) => {
+      state.dropdown = action.payload
     }
   }
 })

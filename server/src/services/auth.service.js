@@ -82,7 +82,7 @@ class AuthService {
     return {
       user: getData({
         object: foundUser,
-        fields: ['_id', 'username', 'email', 'avatar'],
+        fields: ['_id', 'username', 'name', 'email', 'avatar'],
       }),
       tokens,
     };
@@ -149,7 +149,7 @@ class AuthService {
     return {
       user: getData({
         object: foundUser,
-        fields: ['_id', 'username', 'email', 'avatar'],
+        fields: ['_id', 'username', 'name' ,'email', 'avatar'],
       }),
       tokens,
     };

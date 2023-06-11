@@ -1,0 +1,69 @@
+@use '../../scss/' as *;
+
+.dropdown {
+  position: absolute;
+  min-width: 250px;
+  display: inline-block;
+  right: 4%;
+  top: 100%;
+  left: auto;
+  z-index: 500;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #d6d6d7;
+  margin-top: -2px;
+  width: max-content;
+  @include small-moblie{
+    display: block;
+    width: 92%;
+    margin: 0 auto;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    .user-profile-link{
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #d6d6d7;
+      display: flex;
+      & a{
+        flex-direction: column;
+        width: 100%;
+      }
+    }
+    .signout-link{
+      border-top: 1px solid #d6d6d7;
+      padding-top: 8px;
+      margin-top: 8px;
+    }
+
+  }
+
+  li {
+    // padding: 8px 16px;
+   
+  }
+
+  a {
+    color: $txt-color;
+    display: block;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 8px 16px;
+    @include flex(flex-start, flex-start);
+    &:hover {
+        text-decoration: underline;
+        background-color: rgba($color: $primary-color, $alpha: 0.1);
+        color: $primary-color;
+      }
+    span {
+      font-weight: 500;
+    }
+
+    small {
+      font-size: 0.875rem;
+      opacity: 0.75;
+    }
+  }
+}

@@ -43,7 +43,6 @@ class AuthController {
       res.cookie('accessToken', user.tokens.accessToken, options);
       res.cookie('refreshToken', user.tokens.refreshToken, options);
       res.cookie('userId', user.user._id, options);
-
       return Response.success(res, user.user, 200, 'Sign in successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
@@ -83,7 +82,7 @@ class AuthController {
         email: req.user.email,
         avatar: req.user.avatar,
       };
-
+      
       const user = await AuthService.googleAuth(reqData.email);
       const options = {
         httpOnly: true,

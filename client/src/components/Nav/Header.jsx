@@ -7,10 +7,13 @@ import GuestNavLink from './NavLinks/GuestNavLink'
 import LoggedNavLink from './NavLinks/LoggedNavLink'
 import {useSelector, useDispatch} from 'react-redux'
 import {UIActions} from '../../store/slices/UiSlice'
+import Dropdown from '../Dropdown/Dropdown';
 function Header() {
   const dispatch = useDispatch()
   const {user} = useSelector(state => state.auth)
+  const {dropdown} = useSelector((state) => state.Ui);
   return (
+    <div className='nav-container'>
     <nav className='nav'>
       {/* left */}
       <div className='nav-left'>
@@ -26,6 +29,9 @@ function Header() {
         {!user ? <GuestNavLink /> : <LoggedNavLink user={user}/>}
       </div>
     </nav>
+    {dropdown && <Dropdown />}
+    
+    </div>
   );
 }
 

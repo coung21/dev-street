@@ -7,8 +7,6 @@ import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import Auth from '../../store/actions/authAction';
-import Toaster from '../../components/Toaster/Toaster';
-import { AnimatePresence } from 'framer-motion';
 function SignIn() {
   const {
     register,
@@ -107,9 +105,6 @@ function SignIn() {
         </div>
       </div>
       <DevTool control={control} />
-      <AnimatePresence>
-        {error && <Toaster message={message} success={false} />}
-      </AnimatePresence>
     </>
   );
 }

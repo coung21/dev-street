@@ -4,6 +4,7 @@ import RootLayout from '../pages/RootLayout/RootLayout';
 import SignUp from '../pages/Enter/SignUp';
 import Home from '../pages/Home/Home';
 import SignIn from '../pages/Enter/SignIn';
+import SignOut from '../pages/SignOut/SignOut';
 import {useSelector} from 'react-redux'
 
 function Router(){
@@ -23,6 +24,10 @@ function Router(){
         path: '/signin',
         element: <SignIn />,
       },
+      {
+        path: '/signout',
+        element: <SignOut />
+      }
     ]
   } else {
     routes = [
@@ -38,7 +43,11 @@ function Router(){
         path: '/signin',
         element: <SignIn />,
       },
-    ]
+      {
+        path: '/signout',
+        element: <SignOut />,
+      },
+    ];
   }
 const router = createBrowserRouter([
   {

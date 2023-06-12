@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import '../Nav.scss';
 import { BiBell } from 'react-icons/bi';
@@ -8,6 +8,9 @@ import { UIActions } from '../../../store/slices/UiSlice';
 function LoggedNavLink({ user }) {
   const dispatch = useDispatch();
   const {dropdown} = useSelector((state) => state.Ui);
+  const handleToggleDropdown = useCallback(() => {
+    dispatch(UIActions.toggleDropdown(!dropdown));
+  }, [dispatch, dropdown]);
   return (
     <>
       <Link>
@@ -20,10 +23,10 @@ function LoggedNavLink({ user }) {
       </Link>
       <button
         className='btn--profile'
-        onClick={() => dispatch(UIActions.toggleDropdown(!dropdown))}
-        onBlur={() => dispatch(UIActions.toggleDropdown(false))}
+        onClick={handleToggleDropdown
+        }
       >
-        <img src={user.avatar} alt='' />
+        <img id='profileRef' src={user.avatar} alt='' />
       </button>
     </>
   );

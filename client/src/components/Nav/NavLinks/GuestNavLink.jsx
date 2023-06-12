@@ -8,7 +8,7 @@ function GuestNavLink() {
       <Link to={'/signin'}>
         <button className='btn btn--secondary'>Sign in</button>
       </Link>
-      <Link to={'signup'}>
+      <Link to={'/signup'}>
         <button className='btn btn--primary'>Sign up</button>
       </Link>
     </>

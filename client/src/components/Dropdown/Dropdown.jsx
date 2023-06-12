@@ -1,35 +1,58 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import './Dropdown.scss';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useDispatch, useSelector } from 'react-redux';
+import { UIActions } from '../../store/slices/UiSlice';
 
 function Dropdown() {
+  const dispatch = useDispatch();
+  const dropdownRef = useRef(null);
+  const handleItemClick = () => {
+    dispatch(UIActions.toggleDropdown(false));
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && event.target.id !== 'profileRef') {
+        dispatch(UIActions.toggleDropdown(false));
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <motion.div
+    id='dropdown'
       className='dropdown'
-      initial={{ opacity: 0,}}
-      animate={{ opacity: 1,}}
-      exit={{ opacity: 0,}}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}
+      ref={dropdownRef}
     >
       <ul>
-        <li className='user-profile-link'>
+        <li className='user-profile-link' onClick={handleItemClick}>
           <Link>
-            <span>Duong COng cuong</span>
+            <span>Duong Cong Cuong</span>
             <small>@cuong</small>
           </Link>
         </li>
-        <li>
+        <li onClick={handleItemClick}>
           <Link>Create Post</Link>
         </li>
-        <li>
+        <li onClick={handleItemClick}>
           <Link>Reading List</Link>
         </li>
-        <li>
+        <li onClick={handleItemClick}>
           <Link>Settings</Link>
         </li>
-        <li className='signout-link'>
-          <Link>Sign Out</Link>
+        <li className='signout-link' onClick={handleItemClick}>
+          <Link to={'/signout'}>Sign Out</Link>
         </li>
       </ul>
     </motion.div>

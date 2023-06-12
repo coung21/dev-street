@@ -22,6 +22,11 @@ const authSlice = createSlice({
         state.user = action.payload;
       })
       .addCase(authThunk.login.rejected, (state, action) => {})
+      .addCase(authThunk.logout.pending, (state) => {})
+      .addCase(authThunk.logout.rejected, (state) => {})
+      .addCase(authThunk.logout.fulfilled, (state) => {
+        state.user = null
+      })
   }
 })
 

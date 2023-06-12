@@ -108,6 +108,8 @@ class AuthController {
       res.clearCookie('accessToken');
       res.clearCookie('refreshToken');
       res.clearCookie('userId');
+      res.clearCookie('connect.sid')
+      console.log('logedout')
       return Response.success(res, '', 200, response);
     } catch (error) {
       return Response.fail(res, error.status, error.message);

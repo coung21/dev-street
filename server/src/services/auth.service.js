@@ -8,7 +8,10 @@ const {
   Unauthorize,
   IntervelServer,
 } = require('../utils/errResponse.utils');
-const { generateTokenPair, generateKeyPair } = require('../utils/generateKeyToken');
+const {
+  generateTokenPair,
+  generateKeyPair,
+} = require('../utils/generateKeyToken');
 const {
   sendVerificationEmail,
   sendResetPasswordEmail,
@@ -146,10 +149,16 @@ class AuthService {
       privateKey
     );
     if (!tokens) throw new IntervelServer('Someting went wrong - Server Error');
+    await keyTokenService.createKeyToken(
+      foundUser._id,
+      tokens.refreshToken,
+      publicKey,
+      privateKey
+    );
     return {
       user: getData({
         object: foundUser,
-        fields: ['_id', 'username', 'name' ,'email', 'avatar'],
+        fields: ['_id', 'username', 'name', 'email', 'avatar'],
       }),
       tokens,
     };
@@ -165,11 +174,19 @@ class AuthService {
   //GET NEW TOKENS
   static async newToken(id) {
     if (!id) throw new Unauthorize('Invalid request');
-    const user = await userModel.findOne({_id: id})
+    const user = await userModel.findOne({ _id: id });
     const { publicKey, privateKey } = generateKeyPair();
-    const {accessToken , refreshToken} = await generateTokenPair({id, email: user.email}, privateKey)
-    await keyTokenService.createKeyToken(id, refreshToken, publicKey, privateKey)
-    return {accessToken, refreshToken}
+    const { accessToken, refreshToken } = await generateTokenPair(
+      { id, email: user.email },
+      privateKey
+    );
+    await keyTokenService.createKeyToken(
+      id,
+      refreshToken,
+      publicKey,
+      privateKey
+    );
+    return { accessToken, refreshToken };
   }
 }
 

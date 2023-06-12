@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import { signin } from '../../api/userApi';
+import { signin, signout } from '../../api/userApi';
 import api from '../../api/api'
 
 class authThunk{
@@ -17,6 +17,19 @@ class authThunk{
       } catch (error) {
         throw new Error(error.response.data.message);
       }
+  })
+
+  static logout = createAsyncThunk('auth/logout' , async () => {
+    try {
+      const response = await signout()
+      console.log(response)
+      if(response.status === 200){
+        localStorage.removeItem('user')
+        return response.message
+      } 
+    } catch (error) {
+      throw new Error(error.response.data.message)
+    }
   })
 }
 

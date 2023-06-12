@@ -8,7 +8,7 @@ const verifyToken = async (req, res, next) => {
   const accessToken = req.cookies.accessToken;
   const userId = req.cookies.userId;
 
-  console.log(accessToken, userId)
+  console.log(userId)
 
   if (!accessToken || !userId) {
     return res.status(403).json({message: 'Unauthorize'})

@@ -26,6 +26,19 @@
   position: absolute;
 }
 
+.blue-dot{
+  background-color: #4284f4 !important;
+}
+.red-dot{
+  background-color: #eb4236 !important;
+}
+.yellow-dot{
+  background-color: #fcbc05 !important;
+}
+.green-dot{
+  background-color: #34a854 !important;
+}
+
 .loader .circle:nth-child(1) {
   top: 0;
   left: 0;

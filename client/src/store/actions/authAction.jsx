@@ -7,7 +7,7 @@ class authThunk{
     try {
         const response = await signin(payload)
         if(response.status === 200){
-          localStorage.setItem('user', JSON.stringify(response.data))
+          localStorage.setItem('current_user', JSON.stringify(response.data))
           // console.log(response.data)
           return response.data
         }
@@ -24,7 +24,7 @@ class authThunk{
       const response = await signout()
       console.log(response)
       if(response.status === 200){
-        localStorage.removeItem('user')
+        localStorage.removeItem('current_user')
         return response.message
       } 
     } catch (error) {

@@ -158,7 +158,26 @@ class AuthService {
     return {
       user: getData({
         object: foundUser,
-        fields: ['_id', 'username', 'name', 'email', 'avatar'],
+        fields: [
+          '_id',
+          'username',
+          'name',
+          'email',
+          'avatar',
+          'bio',
+          'links',
+          'joinDate',
+          'skills',
+          'location',
+          'work',
+          'education',
+          'posts',
+          'comments',
+          'followers',
+          'following',
+          'followedTags',
+          'bookmarked',
+        ],
       }),
       tokens,
     };

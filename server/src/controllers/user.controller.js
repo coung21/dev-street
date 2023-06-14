@@ -5,8 +5,8 @@ class UserController {
   //Get User Profile
   static async getUser(req, res){
     try {
-      const {username} = req.params
-      const user = await UserService.getUserInfo(username)
+      const {id} = req.params
+      const user = await UserService.getUserInfo(id)
       return Response.success(res, user, 200, 'success')
     } catch (error) {
       return Response.fail(res, error.status, error.message)

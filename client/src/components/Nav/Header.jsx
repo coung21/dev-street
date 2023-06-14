@@ -11,7 +11,7 @@ import Dropdown from '../Dropdown/Dropdown';
 import { Link } from 'react-router-dom';
 function Header() {
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
+  const { current_user } = useSelector((state) => state.auth);
   const { dropdown } = useSelector((state) => state.Ui);
   return (
     <div className='nav-container'>
@@ -34,7 +34,11 @@ function Header() {
         </div>
         {/* right */}
         <div className='nav-right'>
-          {!user ? <GuestNavLink /> : <LoggedNavLink user={user} />}
+          {!current_user ? (
+            <GuestNavLink />
+          ) : (
+            <LoggedNavLink user={current_user} />
+          )}
         </div>
       </nav>
       {dropdown && <Dropdown />}

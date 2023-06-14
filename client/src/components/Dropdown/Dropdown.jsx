@@ -8,7 +8,7 @@ import { UIActions } from '../../store/slices/UiSlice';
 function Dropdown() {
   const dispatch = useDispatch();
   const dropdownRef = useRef(null);
-  const {user} = useSelector(state => state.auth)
+  const { current_user } = useSelector((state) => state.auth);
   const handleItemClick = () => {
     dispatch(UIActions.toggleDropdown(false));
   };
@@ -28,7 +28,7 @@ function Dropdown() {
 
   return (
     <motion.div
-    id='dropdown'
+      id='dropdown'
       className='dropdown'
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -38,9 +38,9 @@ function Dropdown() {
     >
       <ul>
         <li className='user-profile-link' onClick={handleItemClick}>
-          <Link>
-            <span>{user.name || user.username}</span>
-            <small>@{user.username}</small>
+          <Link to={`/${current_user._id}`}>
+            <span>{current_user.name || current_user.username}</span>
+            <small>@{current_user.username}</small>
           </Link>
         </li>
         <li onClick={handleItemClick}>

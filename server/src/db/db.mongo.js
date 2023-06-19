@@ -8,12 +8,12 @@ class Database{
   }
 
   connect(type = 'mongo'){
-    // mongoose.set('debug', true)
-    // mongoose.set('debug', {color: true})
+    mongoose.set('debug', true)
+    mongoose.set('debug', {color: true})
     mongoose.connect(`mongodb://${host}:${port}/${name}`)
     .then(() => {
       console.log('Connect to MongoDB successfully')
-      checkOverload()
+      // checkOverload()
     }).catch(() => {
       console.log('Cannot connect to MongoDB')
     })

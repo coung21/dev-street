@@ -6,7 +6,7 @@ const cors = require('cors');
 const compression = require('compression');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
-const passport = require('./services/passport.service');
+const passport = require('./config/passport');
 const app = express();
 const server = require('http').createServer(app)
 //config lib middleware

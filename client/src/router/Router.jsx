@@ -1,13 +1,13 @@
-import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import {useSelector} from 'react-redux'
 import RootLayout from '../pages/RootLayout/RootLayout';
 import SignUp from '../pages/Enter/SignUp';
 import Home from '../pages/Home/Home';
 import SignIn from '../pages/Enter/SignIn';
 import SignOut from '../pages/SignOut/SignOut';
-import {useSelector} from 'react-redux'
 import UserProfile from '../pages/UserProfile/UserProfile';
 import GoogleLoading from '../components/Loading/GoogleLoading';
+import CreatePost from '../pages/CreatePost/CreatePost'
 
 function Router(){
   const { current_user } = useSelector((state) => state.auth);
@@ -33,6 +33,10 @@ function Router(){
       {
         path: '/:userid',
         element: <UserProfile />
+      },
+      {
+        path: '/new',
+        element: <CreatePost />
       }
     ];
   } else {

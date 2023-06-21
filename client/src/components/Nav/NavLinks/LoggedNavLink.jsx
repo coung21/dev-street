@@ -13,7 +13,7 @@ function LoggedNavLink({ user }) {
   }, [dispatch, dropdown]);
   return (
     <>
-      <Link>
+      <Link to={'/new'}>
         <button className='btn create-post btn--primary'>Create Post</button>
       </Link>
       <Link>

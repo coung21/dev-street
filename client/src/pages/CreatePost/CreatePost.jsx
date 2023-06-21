@@ -1,6 +1,6 @@
 import React , {useState} from 'react';
 import api from '../../api/api'
-import axios from 'axios';
+import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -33,12 +33,13 @@ function CreatePost() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      {/* <form onSubmit={handleSubmit}>
         <input type='file' name='image' onChange={handleFileChange} />
         {previewImage && <img src={previewImage} alt='Preview' width={50} height={50}/>}
         <input type="text" name="body" onChange={handleBodyChange}/>
         <button type='submit'>Upload</button>
-      </form>
+      </form> */}
+      <MarkdownEditor />
     </div>
   );
 }

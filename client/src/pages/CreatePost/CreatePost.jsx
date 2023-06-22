@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import api from '../../api/api';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import InputTags from '../../components/InputElements/InputTags/InputTags';
+import { useSelector } from 'react-redux';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -13,6 +14,8 @@ function CreatePost() {
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState([]);
+    const { current_user } = useSelector((state) => state.auth);
+
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -54,6 +57,7 @@ function CreatePost() {
         formData.append('body', body)
         formData.append('title', title)
         formData.append('tags', tags);
+        formData.append('author', current_user._id)
         const response = await api.post('/new', formData);
         
 

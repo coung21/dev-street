@@ -4,6 +4,6 @@ const UserController = require('../../controllers/user.controller')
 
 // router.use(authMiddleware)
 router.get('/user/:id' ,UserController.getUser);
-router.patch('/user/:id', UserController)
+// router.patch('/user/:id', UserController)
 
 module.exports = router

@@ -1,7 +1,7 @@
 const router = require('express').Router();
-const { check } = require('express-validator');
+// const { check } = require('express-validator');
+const PostController = require('../../controllers/post.controller')
 const upload = require('../../middlewares/upload.middleware');
-const cloudinary = require('../../config/cloundinary');
 const authMiddleware = require('../../middlewares/auth.middleware');
 
 
@@ -9,19 +9,6 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 
 //protected post api
 router.use(authMiddleware)
-router.post('/new', upload.single('image'), async (req, res) => {
-  try {
-    if (!req.file) {
-      throw new Error('No file selected');
-    }
-    const file = req.file
-    const {body, title, tags} = req.body
-    console.log(file)
-    const result = await cloudinary.uploader.upload(file.path)
-    return res.json({ body, title, tags: tags.split(',')})
-  } catch (error) {
-    console.log(error);
-  }
-});
+router.post('/new', upload.single('image'), PostController.createPost);
 
 module.exports = router;

@@ -40,9 +40,7 @@ function RootLayout() {
             </>
           ) : (
             <>
-              <div className='layout'>
                 <Outlet />
-              </div>
             </>
           )}
           <AnimatePresence>

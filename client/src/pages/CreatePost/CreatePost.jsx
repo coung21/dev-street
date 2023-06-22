@@ -1,27 +1,35 @@
-import React , {useState} from 'react';
-import api from '../../api/api'
+import React, { useState } from 'react';
+import './CreatePost.scss';
+import logo from '../../assets/DEV.png';
+import { AiOutlineClose } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import api from '../../api/api';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
-    const [previewImage, setPreviewImage] = useState(null);
-    const [body, setBody] = useState('');
+  const [previewImage, setPreviewImage] = useState(null);
+  const [body, setBody] = useState('');
+  const [title, setTitle] = useState('');
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
 
-  const handleBodyChange = (event) => {
-    setBody(event.target.value)
-  }
+  const handleBodyChange = (value) => {
+    setBody(value);
+  };
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     if (selectedFile && body) {
       try {
         const formData = new FormData();
         formData.append('image', selectedFile);
         formData.append('body', body)
+        formData.append('title', title)
         const response = await api.post('/new', formData);
 
         console.log(response);
@@ -32,15 +40,70 @@ function CreatePost() {
   };
 
   return (
-    <div>
-      {/* <form onSubmit={handleSubmit}>
+    <>
+      <nav className='create-nav'>
+        <div className='create-nav__left'>
+          <Link to={'/'}>
+            <img
+              src={logo}
+              alt='logo'
+              style={{ width: '50px', height: '45px' }}
+            />
+          </Link>
+          <h3>Create Post</h3>
+        </div>
+
+        <Link to={'/'} className='close'>
+          <AiOutlineClose fontWeight={700} size={20} />
+        </Link>
+      </nav>
+      <div className='article-form'>
+        {/* <form onSubmit={handleSubmit}>
         <input type='file' name='image' onChange={handleFileChange} />
-        {previewImage && <img src={previewImage} alt='Preview' width={50} height={50}/>}
         <input type="text" name="body" onChange={handleBodyChange}/>
         <button type='submit'>Upload</button>
       </form> */}
-      <MarkdownEditor />
-    </div>
+        <form onSubmit={handleSubmit}>
+          <div className='article-form__top'>
+            <div className='file-form'>
+              <input
+                type='file'
+                name='image'
+                id='image-input'
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
+              {previewImage && (
+                <img
+                  src={previewImage}
+                  alt='Preview'
+                  width={150}
+                  height={150}
+                  style={{marginRight: '1rem'}}
+                />
+              )}
+              <div>
+              <label className='add-cover' htmlFor='image-input'>
+                Add a cover image
+              </label>
+              </div>
+            </div>
+            <input
+              type='text'
+              name='title'
+              id='title-input'
+              placeholder='New post title here...'
+              value={title}
+              onChange={handleTitleChange}
+            />
+          </div>
+          <MarkdownEditor value={body} onChangeEvent={handleBodyChange} />
+          <button className='submit-btn' type='submit'>
+            Publish
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 

@@ -1,13 +1,16 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 
-function MarkdownEditor() {
+function MarkdownEditor(props) {
   return (
-    <div>
-      <SimpleMDE />
-    </div>
-  )
+    <>
+      <SimpleMDE
+        value={props.value}
+        onChange={props.onChangeEvent}
+      />
+    </>
+  );
 }
 
-export default MarkdownEditor
+export default MarkdownEditor;

@@ -15,10 +15,10 @@ router.post('/new', upload.single('image'), async (req, res) => {
       throw new Error('No file selected');
     }
     const file = req.file
-    const {body} = req.body
+    const {body, title} = req.body
     console.log(file)
     const result = await cloudinary.uploader.upload(file.path)
-    return res.json({imgUrl: result.secure_url, body})
+    return res.json({imgUrl: result.secure_url, body, title})
   } catch (error) {
     console.log(error);
   }

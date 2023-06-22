@@ -8,17 +8,17 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 //unprotected post api
 
 //protected post api
-// router.use(authMiddleware)
+router.use(authMiddleware)
 router.post('/new', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       throw new Error('No file selected');
     }
     const file = req.file
-    const {body, title} = req.body
+    const {body, title, tags} = req.body
     console.log(file)
     const result = await cloudinary.uploader.upload(file.path)
-    return res.json({imgUrl: result.secure_url, body, title})
+    return res.json({ body, title, tags: tags.split(',')})
   } catch (error) {
     console.log(error);
   }

@@ -5,37 +5,64 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import api from '../../api/api';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
+import InputTags from '../../components/InputElements/InputTags/InputTags';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
+  const [tags, setTags] = useState([]);
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
-
   const handleBodyChange = (value) => {
     setBody(value);
   };
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
+  
+  const addTag = (event) => {
+    event.preventDefault()
+    const tag = event.target.value;
+    if (event.code === 'Enter' && tag !== '') {
+      setTags((tags) => [...tags, tag]);
+      event.target.value = '';
+    }
+  }
+
+   const removeTag = (indexToRemove) => {
+    const removedTag = tags[indexToRemove];
+    const updatedTags = tags.filter((tag) => tag !== removedTag);
+    setTags(updatedTags);
+   }
+
+     const handleKeyDown = (event) => {
+       if (event.key === 'Enter') {
+         event.preventDefault();
+       }
+     };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (selectedFile && body) {
+    if (selectedFile && body && title && tags.length >= 1) {
       try {
         const formData = new FormData();
         formData.append('image', selectedFile);
         formData.append('body', body)
         formData.append('title', title)
+        formData.append('tags', tags);
         const response = await api.post('/new', formData);
+        
 
         console.log(response);
       } catch (error) {
         console.log(error);
       }
+    } else {
+      console.log('đéo có')
     }
   };
 
@@ -79,13 +106,13 @@ function CreatePost() {
                   alt='Preview'
                   width={150}
                   height={150}
-                  style={{marginRight: '1rem'}}
+                  style={{ marginRight: '1rem' }}
                 />
               )}
               <div>
-              <label className='add-cover' htmlFor='image-input'>
-                Add a cover image
-              </label>
+                <label className='add-cover' htmlFor='image-input'>
+                  Add a cover image
+                </label>
               </div>
             </div>
             <input
@@ -95,7 +122,9 @@ function CreatePost() {
               placeholder='New post title here...'
               value={title}
               onChange={handleTitleChange}
+              onKeyDown={handleKeyDown}
             />
+            <InputTags tags={tags} addTag={addTag} removeTag={removeTag} handleKeyDown={handleKeyDown}/>
           </div>
           <MarkdownEditor value={body} onChangeEvent={handleBodyChange} />
           <button className='submit-btn' type='submit'>

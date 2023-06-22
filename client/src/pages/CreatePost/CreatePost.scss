@@ -112,7 +112,7 @@
 .editor-toolbar{
   background-color: #f9f9f9;
   border-radius: 0;
-  border-top: none;
+  border-top: none !important;
 }
 .side-by-side, .fullscreen{
   display: none !important;

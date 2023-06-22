@@ -1,7 +1,7 @@
 const Post = require('../models/post.model')
 const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service')
-const cloudinary = require('../config/cloundinary');
+const cloudinary = require('../config/cloudinary');
 const {urlStringConvert} = require('../utils/index')
 
 const {BadRequest, ConflictRequest} = require('../utils/errResponse.utils')

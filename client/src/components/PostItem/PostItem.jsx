@@ -18,12 +18,12 @@ function PostItem({ data }) {
           <div className='post-item__author-pic'>
             <img
               src={data.author.avatar}
-              alt={data.author.name}
+              alt={data.author.name || data.author.username}
               style={{ width: '32px', height: '32px' }}
             />
           </div>
           <div>
-            <Link>{data.author.name}</Link>
+            <Link>{data.author.name || data.author.username}</Link>
             <div className='meta__time'>
               {new Date(data.date).toLocaleDateString('en-US', {
                 month: 'short',

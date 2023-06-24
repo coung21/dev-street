@@ -8,7 +8,7 @@ class AuthController {
   static async signUp(req, res) {
     try {
       const { email, password } = req.body;
-      const response = await AuthService.SignUp(email, password);
+      const response = await AuthService.signUp(email, password);
       return Response.success(res, '', 201, response);
     } catch (error) {
       return Response.fail(res, error.status, error.message);

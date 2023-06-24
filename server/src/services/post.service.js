@@ -10,9 +10,9 @@ const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
 class PostService {
   static async getAllPost() {
-    const allPost = await Post.find({},  '_id title image date tags likes comments bookmarks author')
+    const allPost = await Post.find({},  '_id title image date tags likes comments bookmarks author', {sort: {date: -1}})
       .populate({ path: 'tags', select: '_id name' })
-      .populate({ path: 'author', select: '_id name avatar' });
+      .populate({ path: 'author', select: '_id name username avatar' });
       return allPost
   }
   static async CreatePost(file, title, body, tags, author) {

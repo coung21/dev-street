@@ -18,9 +18,9 @@ function Home() {
       <div className='home-layout'>
         <LeftSidebar />
         <div>
-          {posts.map((item, i) => <PostItem key={i} data={item}/>)}
+          {posts.map((item, i) => <PostItem key={i} index={i} data={item}/>)}
         </div>
-        <div>a</div>
+        <div></div>
       </div>
     </>
   );

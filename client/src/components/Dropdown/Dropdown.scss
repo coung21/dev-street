@@ -1,5 +1,17 @@
 @use '../../scss/' as *;
 
+.dropdown-container {
+  display: inline-block;
+  position: fixed !important;
+  right: 4%;
+  top: 56px;
+  @include small-moblie {
+      display: block;
+      width: 92%;
+      margin: 0 auto;
+    }
+}
+
 .dropdown {
   position: absolute;
   min-width: 250px;

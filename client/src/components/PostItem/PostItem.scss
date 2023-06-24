@@ -1,111 +1,145 @@
 @use '../../scss/' as *;
 
-a{
+a {
   text-decoration: none;
   color: $txt-color;
 }
 
-.post-item{
-  &__body{
+.post-item {
+  &__cover {
+    height: 212px;
+    width: 100%;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border: $border-color solid 1px;
+    border-bottom: none !important;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+      object-fit: cover;
+    }
+  }
+
+  &__body {
     display: block;
     padding: 1.25rem;
     background-color: white;
     border-radius: 5px;
     margin-bottom: 1rem;
     border: $border-color solid 1px;
-    &:hover{
+
+    &:hover {
       cursor: pointer;
     }
   }
 
-  &__top{
+  &__top {
     margin-bottom: 0.5rem;
     @include flex(space-between, center);
   }
 
-  &__meta{
+  &__meta {
     display: flex;
     align-items: center;
-    a{
+
+    a {
       color: $txt-color;
       text-decoration: none;
       font-weight: 500;
     }
+
     .meta__time {
       font-size: 12px;
       color: rgb(82, 82, 82);
+      font-weight: 300;
     }
-    img{
+
+    img {
       border-radius: 50%;
       display: inline-block;
       vertical-align: bottom;
     }
   }
 
-  &__author-pic{
+  &__author-pic {
     margin-right: 0.5rem;
   }
 
 
-  &__indention{
+  &__indention {
     padding-left: 40px;
 
-    h2{
+    h2 {
       margin-bottom: 0.5rem;
       color: $txt-color;
-      &:hover{
+
+      &:hover {
         color: $primary-color
       }
     }
   }
 
-  &__tags{
+  &__tags {
     @include flex(flex-start, center);
     margin-bottom: 0.5rem;
 
-    .tag{
+    .tag {
       margin: 4px 7px;
       font-size: 14px;
       font-weight: 300;
       color: #404040;
+      padding: 4px 3px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      &:hover {
+        background-color: $bg-color;
+        border-color: $border-color;
+      }
     }
   }
 
-  &__bottom{
+  &__bottom {
     @include flex(space-between, center);
   }
 
-  &__detail{
+  &__detail {
     display: flex;
     align-items: center;
     gap: 1rem;
-    .detail__like, .detail__cmt {
+
+    .detail__like,
+    .detail__cmt {
       display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 7px 6px;
-        border-radius: 5px;
-      
-        span {
-          font-size: 16px;
-          color: #404040;
-        }
-      
-        &:hover {
-          background-color: $border-color;
-        }
+      align-items: center;
+      gap: 0.5rem;
+      padding: 7px 6px;
+      border-radius: 5px;
+
+      span {
+        font-size: 16px;
+        color: #404040;
+      }
+
+      &:hover {
+        background-color: $border-color;
+      }
     }
+
     .detail__like-icon {
       color: $primary-color;
     }
   }
 
-  &__save{
+  &__save {
     display: flex;
     align-items: center;
     color: $txt-color;
     padding: 8px;
     border-radius: 5px;
+
     &:hover {
       background-color: rgba($color: $primary-color, $alpha: 0.1);
       color: $primary-color;

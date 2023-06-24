@@ -27,6 +27,7 @@ function Dropdown() {
   }, []);
 
   return (
+    <div className='dropdown-container'>
     <motion.div
       id='dropdown'
       className='dropdown'
@@ -57,6 +58,7 @@ function Dropdown() {
         </li>
       </ul>
     </motion.div>
+    </div>
   );
 }
 

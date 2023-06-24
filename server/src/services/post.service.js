@@ -3,10 +3,16 @@ const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service')
 const cloudinary = require('../config/cloudinary');
 const {urlStringConvert} = require('../utils/index')
+const {getData} = require('../utils/getData')
 
 const {BadRequest, ConflictRequest} = require('../utils/errResponse.utils')
 
 class PostService{
+  static async getAllPost(){
+    const allPost = await Post.find()
+    return allPost
+  }
+
   static async CreatePost(file, title, body, tags, author){
     if(!file) throw new BadRequest('No file selected')
     const result = await cloudinary.uploader.upload(file.path);

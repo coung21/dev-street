@@ -5,6 +5,7 @@ class PostController {
     try {
       const allPost = await PostService.getAllPost()
       return Response.success(res, allPost, 200, 'Get All Posts Successfully')
+      // return res.json(allPost)
     } catch (error) {
       return Response.fail(res, error.status, error.message)
     }

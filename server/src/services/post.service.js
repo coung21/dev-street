@@ -1,22 +1,24 @@
-const Post = require('../models/post.model')
+const Comment = require('../models/comment.model');
+const Post = require('../models/post.model');
 const { ObjectId } = require('mongoose').Types;
-const TagService = require('./tag.service')
+const TagService = require('./tag.service');
 const cloudinary = require('../config/cloudinary');
-const {urlStringConvert} = require('../utils/index')
-const {getData} = require('../utils/getData')
+const { urlStringConvert } = require('../utils/index');
+const { getData } = require('../utils/getData');
 
-const {BadRequest, ConflictRequest} = require('../utils/errResponse.utils')
+const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
-class PostService{
-  static async getAllPost(){
-    const allPost = await Post.find()
-    return allPost
+class PostService {
+  static async getAllPost() {
+    const allPost = await Post.find({},  '_id title image date tags likes comments bookmarks author')
+      .populate({ path: 'tags', select: '_id name' })
+      .populate({ path: 'author', select: '_id name avatar' });
+      return allPost
   }
-
-  static async CreatePost(file, title, body, tags, author){
-    if(!file) throw new BadRequest('No file selected')
+  static async CreatePost(file, title, body, tags, author) {
+    if (!file) throw new BadRequest('No file selected');
     const result = await cloudinary.uploader.upload(file.path);
-    const tagList = await TagService.findOrCreateTags(tags)
+    const tagList = await TagService.findOrCreateTags(tags);
     const newPost = await Post.create({
       title,
       body,
@@ -25,8 +27,8 @@ class PostService{
       tags: [...tagList],
       author: new ObjectId(author),
     });
-    return newPost
+    return newPost;
   }
 }
 
-module.exports = PostService
+module.exports = PostService;

@@ -27,6 +27,7 @@ class PostService {
       tags: [...tagList],
       author: new ObjectId(author),
     });
+    await TagService.updateTagsPost(newPost.tags, newPost._id)
     return newPost;
   }
 }

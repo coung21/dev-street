@@ -47,7 +47,7 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link className='sidebar-link' onClick={handleNavigate}>
+          <Link to={'/tags'} className='sidebar-link' onClick={handleNavigate}>
             <span className='sidebar-link__icon'>
               <FcPackage size={20} />
             </span>

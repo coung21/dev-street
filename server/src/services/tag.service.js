@@ -17,6 +17,13 @@ class TagService {
 
     return TagList;
   }
+
+  static async updateTagsPost(tagsId, postId) {
+    await Tag.updateMany(
+      { _id: { $in: tagsId } },
+      { $push: { posts: postId } }
+    );
+  }
 }
 
 module.exports = TagService;

@@ -8,6 +8,7 @@ import SignOut from '../pages/SignOut/SignOut';
 import UserProfile from '../pages/UserProfile/UserProfile';
 import GoogleLoading from '../components/Loading/GoogleLoading';
 import CreatePost from '../pages/CreatePost/CreatePost'
+import Tags from '../pages/Tags/Tags';
 
 function Router(){
   const { current_user } = useSelector((state) => state.auth);
@@ -37,6 +38,10 @@ function Router(){
       {
         path: '/new',
         element: <CreatePost />
+      },
+      {
+        path: '/tags',
+        element: <Tags />
       }
     ];
   } else {
@@ -60,6 +65,10 @@ function Router(){
       {
         path: '/:userid',
         element: <UserProfile />,
+      },
+      {
+        path: '/tags',
+        element: <Tags />,
       },
     ];
   }

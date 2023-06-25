@@ -1,4 +1,5 @@
 const Tag = require('../models/tag.model');
+const { getRandomHexColor } = require('../utils/index');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
 class TagService {
@@ -8,7 +9,7 @@ class TagService {
     for (const tagName of tagNames) {
       let tag = await Tag.findOne({ name: tagName });
       if (!tag) {
-        tag = await Tag.create({ name: tagName });
+        tag = await Tag.create({ name: tagName, theme: getRandomHexColor() });
       }
 
       TagList.push(tag._id);

@@ -6,8 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../../api/api';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import InputTags from '../../components/InputElements/InputTags/InputTags';
-import { useSelector } from 'react-redux';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { startLoading,finishLoading } from '../../store/slices/loadingErrorSlice';
 
 function CreatePost() {
   const [selectedFile, setSelectedFile] = useState(null);
@@ -17,6 +17,7 @@ function CreatePost() {
   const [tags, setTags] = useState([]);
   const { current_user } = useSelector((state) => state.auth);
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -60,10 +61,11 @@ function CreatePost() {
         formData.append('title', title)
         formData.append('tags', tags);
         formData.append('author', current_user._id)
+        dispatch(startLoading())
         const response = await api.post('/post/new', formData);
-        
-
         console.log(response);
+        dispatch(finishLoading())
+
         navigate('/')
       } catch (error) {
         console.log(error);

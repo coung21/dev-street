@@ -24,6 +24,11 @@ class TagService {
       { $push: { posts: postId } }
     );
   }
+
+  static async getAllTag(){
+    const allTag = await Tag.find()
+    return allTag
+  }
 }
 
 module.exports = TagService;

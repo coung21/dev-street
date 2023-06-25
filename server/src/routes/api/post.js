@@ -9,7 +9,6 @@ const authMiddleware = require('../../middlewares/auth.middleware');
 router.get('/post', PostController.getAllPosts)
 
 //protected post api
-router.use(authMiddleware)
-router.post('/post/new', upload.single('image'), PostController.createPost);
+router.post('/post/new',authMiddleware ,upload.single('image'), PostController.createPost);
 
 module.exports = router;

@@ -6,7 +6,9 @@ const BASE_ROUTE = '/v1/api'
 router.use(BASE_ROUTE, require('./api/auth'));
 //user route
 router.use(BASE_ROUTE, require('./api/user'));
-//poste router
+//post router
 router.use(BASE_ROUTE, require('./api/post'));
+//tag router
+router.use(BASE_ROUTE, require('./api/tag'))
 
 module.exports = router;

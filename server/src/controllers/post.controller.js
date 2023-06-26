@@ -22,6 +22,17 @@ class PostController {
       return Response.fail(res, error.status, error.message)
     }
   }
+
+  static async getPostDetail(req, res){
+    try {
+      const { slugUrl } = req.params;
+      const post = await PostService.getPostDetail(slugUrl.trim());
+      return Response.success(res, post, 201, 'Find Post Successfully');
+
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController

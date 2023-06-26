@@ -6,12 +6,16 @@ import { BsBookmark } from 'react-icons/bs';
 import { FaRegComment } from 'react-icons/fa';
 function PostItem({ data, index }) {
   const navigate = useNavigate();
-  function navigateToProfile() {
+  function navigateToProfile(event) {
+    event.stopPropagation();
     navigate(`/${data.author._id}`);
   }
-
+  function navigateToPost(event){
+    event.stopPropagation();
+    navigate(`/${data.author._id}/${data.url}`)
+  }
   return (
-    <>
+    <div onClick={navigateToPost}>
       {index === 0 && (
         <div className='post-item__cover'>
           <img src={data.image} alt='cover' />
@@ -26,15 +30,16 @@ function PostItem({ data, index }) {
         }}
       >
         <div className='post-item__top'>
-          <div onClick={navigateToProfile} className='post-item__meta'>
+          <div className='post-item__meta'>
             <div className='post-item__author-pic'>
               <img
+                onClick={navigateToProfile}
                 src={data.author.avatar}
                 alt={data.author.name || data.author.username}
                 style={{ width: '32px', height: '32px' }}
               />
             </div>
-            <div>
+            <div onClick={navigateToProfile}>
               <Link>{data.author.name || data.author.username}</Link>
               <div className='meta__time'>
                 {new Date(data.date).toLocaleDateString('en-US', {
@@ -71,7 +76,7 @@ function PostItem({ data, index }) {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

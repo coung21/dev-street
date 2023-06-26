@@ -10,7 +10,7 @@ const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
 class PostService {
   static async getAllPost() {
-    const allPost = await Post.find({},  '_id title image date tags likes comments bookmarks author', {sort: {date: -1}})
+    const allPost = await Post.find({},  '_id title image date url tags likes comments bookmarks author', {sort: {date: -1}})
       .populate({ path: 'tags', select: '_id name' })
       .populate({ path: 'author', select: '_id name username avatar' });
       return allPost
@@ -29,6 +29,16 @@ class PostService {
     });
     await TagService.updateTagsPost(newPost.tags, newPost._id)
     return newPost;
+  }
+
+  static async getPostDetail(slugUrl){
+    if(!slugUrl) throw BadRequest('NO SUCH URL')
+    const foundPost = await Post.findOne({ url: slugUrl })
+      .populate('comments')
+      .populate('tags');
+      console.log(slugUrl)
+    if(!foundPost) throw ConflictRequest('POST FOUND ERROR')
+    return foundPost
   }
 }
 

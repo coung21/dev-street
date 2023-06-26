@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import {useSelector} from 'react-redux'
+import { useSelector } from 'react-redux';
 import RootLayout from '../pages/RootLayout/RootLayout';
 import SignUp from '../pages/Enter/SignUp';
 import Home from '../pages/Home/Home';
@@ -7,10 +7,11 @@ import SignIn from '../pages/Enter/SignIn';
 import SignOut from '../pages/SignOut/SignOut';
 import UserProfile from '../pages/UserProfile/UserProfile';
 import GoogleLoading from '../components/Loading/GoogleLoading';
-import CreatePost from '../pages/CreatePost/CreatePost'
+import CreatePost from '../pages/CreatePost/CreatePost';
 import Tags from '../pages/Tags/Tags';
+import Post from '../pages/Post/Post';
 
-function Router(){
+function Router() {
   const { current_user } = useSelector((state) => state.auth);
   let routes;
   if (current_user) {
@@ -33,16 +34,20 @@ function Router(){
       },
       {
         path: '/:userid',
-        element: <UserProfile />
+        element: <UserProfile />,
+      },
+      { 
+        path: '/:userid/:slug', 
+        element: <Post /> 
       },
       {
         path: '/new',
-        element: <CreatePost />
+        element: <CreatePost />,
       },
       {
         path: '/tags',
-        element: <Tags />
-      }
+        element: <Tags />,
+      },
     ];
   } else {
     routes = [
@@ -67,22 +72,26 @@ function Router(){
         element: <UserProfile />,
       },
       {
+        path: '/:userid/:slug',
+        element: <Post />,
+      },
+      {
         path: '/tags',
         element: <Tags />,
       },
     ];
   }
-const router = createBrowserRouter([
-  {
-    element: <RootLayout />,
-    children: routes,
-  },
-  {
-    path: '/oauth/google',
-    element: <GoogleLoading />,
-  },
-]);
-  return {router}
+  const router = createBrowserRouter([
+    {
+      element: <RootLayout />,
+      children: routes,
+    },
+    {
+      path: '/oauth/google',
+      element: <GoogleLoading />,
+    },
+  ]);
+  return { router };
 }
 
 export default Router;

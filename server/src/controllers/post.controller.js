@@ -19,7 +19,7 @@ class PostController {
       // console.log(newPost)
       return Response.success(res, newPost, 201, 'Create Post Successfully')
     } catch (error) {
-      return Response.fail(res, error.status, error.message)
+      // return Response.fail(res, error.status, error.message)
     }
   }
 
@@ -27,7 +27,7 @@ class PostController {
     try {
       const { slugUrl } = req.params;
       const post = await PostService.getPostDetail(slugUrl.trim());
-      return Response.success(res, post, 201, 'Find Post Successfully');
+      return Response.success(res, post, 200, 'Find Post Successfully');
 
     } catch (error) {
       return Response.fail(res, error.status, error.message);

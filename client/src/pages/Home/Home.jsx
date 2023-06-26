@@ -4,7 +4,6 @@ import LeftSidebar from '../../components/Sidebar/LeftSidebar/LeftSidebar';
 import PostItem from '../../components/PostItem/PostItem';
 import { getAllPost } from '../../api/postApi';
 import api from '../../api/api'
-import Skeleton from 'react-loading-skeleton';
 import SkeletonArticle from '../../components/Skeleton/SkeletonArticle';
 function Home() {
   const [posts, setPosts] = useState([]);

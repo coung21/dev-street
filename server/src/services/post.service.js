@@ -16,9 +16,12 @@ class PostService {
       return allPost
   }
   static async CreatePost(file, title, body, tags, author) {
+    console.log('reach1')
     if (!file) throw new BadRequest('No file selected');
     const result = await cloudinary.uploader.upload(file.path);
+    console.log('reach2')
     const tagList = await TagService.findOrCreateTags(tags);
+    console.log(tagList)
     const newPost = await Post.create({
       title,
       body,
@@ -27,7 +30,9 @@ class PostService {
       tags: [...tagList],
       author: new ObjectId(author),
     });
+    console.log(newPost)
     await TagService.updateTagsPost(newPost.tags, newPost._id)
+    console.log('reach5')
     return newPost;
   }
 
@@ -35,7 +40,8 @@ class PostService {
     if(!slugUrl) throw BadRequest('NO SUCH URL')
     const foundPost = await Post.findOne({ url: slugUrl })
       .populate('comments')
-      .populate('tags');
+      .populate('tags')
+      .populate({ path: 'author', select: '_id name username avatar' });
       console.log(slugUrl)
     if(!foundPost) throw ConflictRequest('POST FOUND ERROR')
     return foundPost

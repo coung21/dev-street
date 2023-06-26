@@ -6,11 +6,15 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html{
+  overflow-x: hidden;
+}
 body{
   font-family: $font-family;
   font-weight: 400;
   background-color: $bg-color;
   color: $txt-color;
+  overflow-x: hidden;
 }
 #root{
   padding-top: 56px;

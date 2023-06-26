@@ -5,7 +5,8 @@ const SyntaxHighlight = {
   code({ node, inline, className, ...props }) {
     // Set code language declared in code block: ```lang
     const match = /language-(\w+)/.exec(className || '');
-    return !inline && match ? (
+    return <div style={{width: '100%', maxWidth: '700px'}}>
+      {!inline && match ? (
       <SyntaxHighlighter
         style={oneDark}
         language={match[1]}
@@ -15,7 +16,8 @@ const SyntaxHighlight = {
       />
     ) : (
       <code className={className} {...props} />
-    );
+    )}
+    </div>
   },
 };
 

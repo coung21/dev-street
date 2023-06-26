@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import './PostItem.scss';
 import { Link, useNavigate } from 'react-router-dom';
-import { AiFillLike } from 'react-icons/ai';
+import { AiFillHeart } from 'react-icons/ai';
 import { BsBookmark } from 'react-icons/bs';
 import { FaRegComment } from 'react-icons/fa';
 function PostItem({ data, index }) {
@@ -62,7 +62,7 @@ function PostItem({ data, index }) {
           <div className='post-item__bottom'>
             <div className='post-item__detail'>
               <div className='detail__like'>
-                <AiFillLike size={23} className='detail__like-icon' />
+                <AiFillHeart size={23} className='detail__like-icon' />
                 <span>{data.likes.length} Likes</span>
               </div>
               <div className='detail__cmt'>

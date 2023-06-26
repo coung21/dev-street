@@ -5,6 +5,7 @@ const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 class TagService {
   static async findOrCreateTags(tagNames) {
     const TagList = [];
+    console.log('reach')
 
     for (const tagName of tagNames) {
       let tag = await Tag.findOne({ name: tagName });
@@ -14,7 +15,6 @@ class TagService {
 
       TagList.push(tag._id);
     }
-
     return TagList;
   }
 

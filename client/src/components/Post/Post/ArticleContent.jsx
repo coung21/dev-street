@@ -6,10 +6,16 @@ import ReactMarkdown from 'react-markdown'
 import SyntaxHighlight from '../../SyntaxHighlight/SyntaxHighlight'
 import gfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import SkeletonArticle from '../../Skeleton/SkeletonArticle';
 
 function ArticleContent({data}) {
+  const [loading, setloading] = useState(true)
   if(!data){
-    return <p>loading...</p>
+    return <>
+     <main className='article__content'>
+      <SkeletonArticle />
+     </main>
+    </>
   }
   return (
     <main className='article__content'>

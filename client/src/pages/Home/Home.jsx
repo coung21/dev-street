@@ -3,8 +3,7 @@ import './Home.scss';
 import LeftSidebar from '../../components/Sidebar/LeftSidebar/LeftSidebar';
 import PostItem from '../../components/PostItem/PostItem';
 import { getAllPost } from '../../api/postApi';
-import api from '../../api/api'
-import SkeletonArticle from '../../components/Skeleton/SkeletonArticle';
+import SkeletonPostItem from '../../components/Skeleton/SkeletonPostItem';
 function Home() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
@@ -23,7 +22,9 @@ function Home() {
         <LeftSidebar />
         <div>
           {isLoading ? (
-            Array(10).fill().map((_, i) => <SkeletonArticle key={i} />)
+            Array(10)
+              .fill()
+              .map((_, i) => <SkeletonPostItem key={i} />)
           ) : (
             <div>
               {posts.map((item, i) => (

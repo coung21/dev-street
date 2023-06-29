@@ -20,6 +20,7 @@ function LoggedNavLink({ user }) {
   }, [dispatch, dropdown]);
 
   function navigateNotification(){
+    socket.emit('clearNotification', {sender: {id: current_user?._id}})
     setUnreadNotifications([])
   }
   useEffect(() => {
@@ -38,9 +39,9 @@ function LoggedNavLink({ user }) {
         <button className='btn--notification' onClick={navigateNotification}>
           <BiBell size={25} />
           {/* counter */}
-          {unreadNotifications && unreadNotifications.length > 0 && (
-            <span className='nofi-counter'>{unreadNotifications.length}</span>
-          )}
+          {unreadNotifications && unreadNotifications.length > 0 && 
+              <span className='nofi-counter'>{unreadNotifications.length}</span>
+            }
         </button>
       </Link>
       <button className='btn--profile' onClick={handleToggleDropdown}>

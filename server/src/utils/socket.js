@@ -1,4 +1,6 @@
 let users = [];
+let disconnected = []
+let unreadNotification = []
 
 function addNewSocket(userId, socketId) {
   const user = users.find((item) => item.id === userId);
@@ -6,17 +8,19 @@ function addNewSocket(userId, socketId) {
     return users;
   } else {
     if (user && user.socketId !== socketId) {
-      removeSocket(socketId);
+      removeSocket(userId, socketId);
     }
     const newUser = { id: userId, socketId };
     users.push(newUser);
+    disconnected = disconnected.filter(item => item.id !== newUser.id)
     return users;
   }
 }
 
-function removeSocket(socketId) {
+function removeSocket(userId ,socketId) {
   users = users.filter((item) => item.socketId !== socketId);
-
+  const newDisconnected = {id: userId, socketId, data: null}
+  disconnected.push(newDisconnected)
 }
 
 function findConnectedUser (userId) {
@@ -37,11 +41,28 @@ function socketHandler(io) {
     next();
   });
   return io.on('connection', (socket) => {
+    const reconnectedUser = disconnected.findIndex(
+      (item) => item.id === socket.data.userId
+    );
     socket.on('join', ({ userId, socketId }) => {
+      if (reconnectedUser !== -1) {
+        unreadNotification.forEach((notification) => {
+          if(notification.id === disconnected[reconnectedUser].id){
+            io.to(socketId).emit(
+              'notification',
+              notification.data
+            );
+            // unreadNotification = unreadNotification.filter(item => item.id !== disconnected[reconnectedUser].id)
+          }
+        })
+      }
       const userSockets = addNewSocket(userId, socketId);
        console.log(`connected: `,userSockets)
+      console.log('disconnected: ', disconnected);
+    });
 
-        // console.log(`user ${userId} just join with socket ${socketId}`)
+    socket.on('clearNotification', ({ sender }) => {
+        unreadNotification = unreadNotification.filter(item => item.id !== sender.id)
     });
 
     socket.on('like',({sender, receiver, postId}) => {
@@ -53,6 +74,28 @@ function socketHandler(io) {
           type: 'like',
           postId: postId
         });
+        unreadNotification.push({
+          id: receiver.id,
+          data: {
+            senderName: sender.username,
+            receiverName: receiver.username,
+            type: 'like',
+            postId: postId,
+          },
+        });
+      } else {
+        const disconnectedIndex = disconnected.findIndex((item) => item.id === receiver.id)
+        if (disconnectedIndex !== -1) {
+          unreadNotification.push({
+            id: disconnected[disconnectedIndex].id,
+            data: {
+              senderName: sender.username,
+              receiverName: receiver.username,
+              type: 'like',
+              postId: postId,
+            },
+          });
+        }
       }
     })
 
@@ -69,10 +112,10 @@ function socketHandler(io) {
     });
 
     socket.on('disconnect', () => {
-      users.find(item => item.socketId === socket.id)
-      removeSocket(socket.id);
-      // console.log(`user ${disconnectingUser.id} just disconnected`)
+      const disconnectingUser = users.find(item => item.socketId === socket.id)
+      removeSocket(disconnectingUser.id, socket.id);
       console.log(`connected: `, users);
+      console.log('disconnected: ', disconnected)
     });
   });
 }

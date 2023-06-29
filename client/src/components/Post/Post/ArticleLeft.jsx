@@ -11,24 +11,24 @@ function ArticleLeft({ data }) {
   }
   const socket = useContext(SocketContext);
   const { current_user } = useSelector((state) => state.auth);
-  const [isLiked, setLiked] = useState(data.likes.includes(current_user._id));
+  const [isLiked, setLiked] = useState(data.likes.includes(current_user?._id));
   const [isSaved, setSaved] = useState(
-    data.bookmarks.includes(current_user._id)
+    data.bookmarks.includes(current_user?._id)
   );
   async function likeHandler() {
     setLiked((prev) => !prev);
     // if(!isLiked){
       socket.emit('like', {
-        sender: { id: current_user._id, username: current_user.username },
+        sender: { id: current_user?._id, username: current_user?.username },
         receiver: { id: data.author._id, username: data.author.username },
-        postId: data._id
+        postId: data?._id
       });
     // }
   }
   async function saveHandler() {
     setSaved((prev) => !prev);
     socket.emit('bookmark', {
-      sender: { id: current_user._id, username: current_user.username },
+      sender: { id: current_user?._id, username: current_user.username },
       receiver: { id: data.author._id, username: data.author.username },
       postId: data._id
     });
@@ -41,7 +41,7 @@ function ArticleLeft({ data }) {
           <div className='reactions'>
             <button
               className='btn-like'
-              onClick={ current_user._id !== data.author._id ? likeHandler : null}
+              onClick={ current_user?._id !== data.author._id ? likeHandler : null}
             >
               {isLiked ? (
                 <AiFillHeart style={{ color: '#e74559' }} size={27} />

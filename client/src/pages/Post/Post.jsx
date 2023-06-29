@@ -14,7 +14,6 @@ function Post() {
       try {
         const response = await getPostDetail(slug);
         setPost(response.data)
-        console.log(response.data)
       } catch (error) {
         setIsLoading(false)
         console.log(error)

@@ -113,11 +113,26 @@
         background-color: $hover-tighter-color;
       }
       &--notification{
+        position: relative;
         margin: 0 4px;
         padding: 8px;
         background-color: transparent;
         border: none;
         border-radius: 5px;
+        .nofi-counter{
+          position: absolute;
+          display: inline-block;
+          font-size: 12px;
+          text-align: center;
+          width: 22px;
+          justify-content: center;
+          padding: 0.25rem;
+          background-color: $primary-color;
+          color: white;
+          border-radius: 50%;
+          top: -1px;
+          right: 2px;
+        }
       }
 
        &--notification:hover{
@@ -155,3 +170,5 @@
     display: none;
   }
  }
+
+ 

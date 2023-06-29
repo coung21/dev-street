@@ -1,28 +1,31 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import Nav from '../../components/Nav/Header';
 import Footer from '../../components/Footer/Footer';
 import Loading from '../../components/Loading/Loading';
 import PopupSidebar from '../../components/Sidebar/PopupSidebar/PopupSidebar';
 import { useSelector } from 'react-redux';
-import {AnimatePresence} from 'framer-motion'
+import { AnimatePresence } from 'framer-motion';
 import Toaster from '../../components/Toaster/Toaster';
-import {useLocation} from 'react-router-dom'
-
+import { useLocation } from 'react-router-dom';
 
 function RootLayout() {
-  const location = useLocation()
+  const location = useLocation();
+  const { loading, error, message } = useSelector(
+    (state) => state.loadingError
+  );
+
   useEffect(() => {
-    const root = document.getElementById('root')
-    if(location.pathname === '/new'){
-      root.style.paddingTop = '0'
+    const root = document.getElementById('root');
+    if (location.pathname === '/new') {
+      root.style.paddingTop = '0';
     } else {
-      root.style.paddingTop = '56px'
+      root.style.paddingTop = '56px';
     }
-  }, [location])
-  const {loading, error, message} = useSelector((state) => state.loadingError);
+    window.scrollTo(0, 0);
+  }, [location]);
   // console.log(isLoading)
-  const hamburger = useSelector((state) => state.Ui.hamburger)
+  const hamburger = useSelector((state) => state.Ui.hamburger);
   return (
     <>
       {loading ? (
@@ -40,7 +43,7 @@ function RootLayout() {
             </>
           ) : (
             <>
-                <Outlet />
+              <Outlet />
             </>
           )}
           <AnimatePresence>

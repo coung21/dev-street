@@ -3,6 +3,7 @@ import './Post.scss'
 import { useParams } from 'react-router-dom';
 import { getPostDetail } from '../../api/postApi';
 import ArticleContent from '../../components/Post/Post/ArticleContent';
+import ArticleLeft from '../../components/Post/Post/ArticleLeft';
 
 
 function Post() {
@@ -13,6 +14,7 @@ function Post() {
       try {
         const response = await getPostDetail(slug);
         setPost(response.data)
+        console.log(response.data)
       } catch (error) {
         setIsLoading(false)
         console.log(error)
@@ -22,7 +24,7 @@ function Post() {
   }, [])
   return (
     <div className='article-layout'>
-      <div></div>
+      <ArticleLeft data={post}/>
       <ArticleContent data={post} />
       <div></div>
     </div>

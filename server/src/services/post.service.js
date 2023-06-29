@@ -16,10 +16,8 @@ class PostService {
       return allPost
   }
   static async CreatePost(file, title, body, tags, author) {
-    console.log('reach1')
     if (!file) throw new BadRequest('No file selected');
     const result = await cloudinary.uploader.upload(file.path);
-    console.log('reach2')
     const tagList = await TagService.findOrCreateTags(tags);
     console.log(tagList)
     const newPost = await Post.create({
@@ -30,9 +28,7 @@ class PostService {
       tags: [...tagList],
       author: new ObjectId(author),
     });
-    console.log(newPost)
     await TagService.updateTagsPost(newPost.tags, newPost._id)
-    console.log('reach5')
     return newPost;
   }
 

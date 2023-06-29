@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import '../../../pages/Post/Post.scss';
 import { Link } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import ReactMarkdown from 'react-markdown'
@@ -9,7 +8,6 @@ import rehypeRaw from 'rehype-raw';
 import SkeletonArticle from '../../Skeleton/SkeletonArticle';
 
 function ArticleContent({data}) {
-  const [loading, setloading] = useState(true)
   if(!data){
     return <>
      <main className='article__content'>

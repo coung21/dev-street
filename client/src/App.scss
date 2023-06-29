@@ -7,14 +7,19 @@
 }
 
 html{
-  overflow-x: hidden;
+  @include mobile {
+    overflow-x: hidden;
+  }
 }
 body{
+  scroll-behavior: smooth;
   font-family: $font-family;
   font-weight: 400;
   background-color: $bg-color;
   color: $txt-color;
-  overflow-x: hidden;
+  @include mobile {
+    overflow-x: hidden;
+  }
 }
 #root{
   padding-top: 56px;

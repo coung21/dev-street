@@ -7,7 +7,9 @@ const compression = require('compression');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const passport = require('./config/passport');
+const {socketHandler} = require('./utils/socket')
 const app = express();
+const {Server} = require('socket.io')
 const server = require('http').createServer(app)
 //config lib middleware
 
@@ -41,6 +43,14 @@ require('./db/db.mongo');
 
 //init route
 app.use('/', require('./routes/index'));
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST'],
+    credentials: true
+  },
+});
+socketHandler(io)
 
 //handle error
 app.use((req, res, next) => {

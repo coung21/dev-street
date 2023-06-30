@@ -26,6 +26,7 @@ function LoggedNavLink({ user }) {
   useEffect(() => {
     if(current_user && socket){
       socket.on('notification', (data) => {
+        notificationAudio.play()
         setUnreadNotifications((prevState => [...prevState, data]))
       });
     }

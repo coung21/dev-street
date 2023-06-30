@@ -10,6 +10,7 @@ import GoogleLoading from '../components/Loading/GoogleLoading';
 import CreatePost from '../pages/CreatePost/CreatePost';
 import Tags from '../pages/Tags/Tags';
 import Post from '../pages/Post/Post';
+import TagPosts from '../pages/TagPosts/TagPosts';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -36,9 +37,9 @@ function Router() {
         path: '/:userid',
         element: <UserProfile />,
       },
-      { 
-        path: '/:userid/:slug', 
-        element: <Post /> 
+      {
+        path: '/:userid/:slug',
+        element: <Post />,
       },
       {
         path: '/new',
@@ -47,6 +48,10 @@ function Router() {
       {
         path: '/tags',
         element: <Tags />,
+      },
+      {
+        path: '/tags/:tagname',
+        element: <TagPosts />,
       },
     ];
   } else {
@@ -75,9 +80,18 @@ function Router() {
         path: '/:userid/:slug',
         element: <Post />,
       },
+
       {
         path: '/tags',
         element: <Tags />,
+      },
+      {
+        path: '/tags',
+        element: <Tags />,
+      },
+      {
+        path: '/tags/:tagname',
+        element: <TagPosts />,
       },
     ];
   }

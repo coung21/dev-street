@@ -20,7 +20,8 @@ function Header() {
         <div className='nav-left'>
           <button
             onClick={() => {
-              document.body.style.overflow = 'hidden';
+              document.documentElement.style.overflowY = 'hidden';
+              document.getElementById('modal').style.display = 'block'
               dispatch(UIActions.toggleHamburger());
             }}
             className='nav-left__menu'

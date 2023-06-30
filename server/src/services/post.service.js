@@ -42,6 +42,22 @@ class PostService {
     if(!foundPost) throw ConflictRequest('POST FOUND ERROR')
     return foundPost
   }
+
+  static async getPostsByTag(tagname){
+    const foundPosts = await Post.find(
+      {},
+      '_id title image date url tags likes comments bookmarks author',
+      { sort: { date: -1 } }
+    )
+      .populate({ path: 'tags', select: '_id name theme' })
+      .populate({ path: 'author', select: '_id name username avatar' });
+    const filteredPost = foundPosts.filter(post => {
+      return post.tags.some(tag => tag.name === tagname)
+    })
+
+    if(filteredPost < 1) throw new BadRequest('Tag name error')
+    return filteredPost
+  }
 }
 
 module.exports = PostService;

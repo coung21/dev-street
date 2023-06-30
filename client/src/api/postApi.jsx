@@ -7,3 +7,7 @@ export const getAllPost = () => {
 export const getPostDetail =  async (slug) => {
   return await api.get(`/post/${slug}`)
 }
+
+export const getPostsByTag = (tag) => {
+  return api.get(`/post/tags/${tag}`)
+}

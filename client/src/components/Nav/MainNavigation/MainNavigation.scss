@@ -29,7 +29,9 @@ ul {
   width: 100%;
   margin-bottom: 1rem;
   @include flex(flex-start, center);
-
+ @include mobile{
+  margin-left: 2rem;
+ }
   a {
     padding: 8px;
     color: $txt-color;

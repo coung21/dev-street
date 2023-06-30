@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import './PostItem.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
 import { BsBookmark } from 'react-icons/bs';
 import { FaRegComment } from 'react-icons/fa';
 function PostItem({ data, index }) {
   const navigate = useNavigate();
+  const location = useLocation()
   function navigateToProfile(event) {
     event.stopPropagation();
     navigate(`/${data.author._id}`);
@@ -16,7 +17,7 @@ function PostItem({ data, index }) {
   }
   return (
     <div onClick={navigateToPost}>
-      {index === 0 && (
+      {index === 0 && location.pathname === '/' && (
         <div className='post-item__cover'>
           <img src={data.image} alt='cover' />
         </div>
@@ -24,9 +25,11 @@ function PostItem({ data, index }) {
       <div
         className='post-item__body'
         style={{
-          borderTop: index === 0 ? 'none' : null,
-          borderTopLeftRadius: index === 0 ? '0px' : null,
-          borderTopRightRadius: index === 0 ? '0px' : null,
+          borderTop: index === 0 && location.pathname === '/' ? 'none' : null,
+          borderTopLeftRadius:
+            index === 0 && location.pathname === '/' ? '0px' : null,
+          borderTopRightRadius:
+            index === 0 && location.pathname === '/' ? '0px' : null,
         }}
       >
         <div className='post-item__top'>

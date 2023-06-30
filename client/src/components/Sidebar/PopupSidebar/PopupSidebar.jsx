@@ -1,18 +1,19 @@
-import React from 'react'
-import {createPortal} from 'react-dom'
+import React from 'react';
+import { createPortal } from 'react-dom';
 import './PopupSidebar.scss';
 import { IoClose } from 'react-icons/io5';
 import MainNavigation from '../../Nav/MainNavigation/MainNavigation';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { UIActions } from '../../../store/slices/UiSlice';
 function PopupSidebar() {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   return createPortal(
     <div
       className='sidebar-popup'
       onClick={() => {
         dispatch(UIActions.toggleHamburger());
-        document.body.style.overflow = 'auto';
+        document.documentElement.style.overflowY = 'auto';
+        document.getElementById('modal').style.display = 'none';
       }}
     >
       <aside
@@ -26,7 +27,8 @@ function PopupSidebar() {
           <button
             onClick={() => {
               dispatch(UIActions.toggleHamburger());
-              document.body.style.overflow = 'auto';
+              document.documentElement.style.overflowY = 'auto';
+              document.getElementById('modal').style.display = 'none';
             }}
             className='close'
           >
@@ -42,4 +44,4 @@ function PopupSidebar() {
   );
 }
 
-export default PopupSidebar
+export default PopupSidebar;

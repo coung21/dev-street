@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const passport = require('../../config/passport');
 const AuthController = require('../../controllers/auth.controller')
-const authMiddleware = require('../../middlewares/auth.middleware')
+const {verifyToken} = require('../../middlewares/auth.middleware')
 
 
 router.post('/auth/signup', AuthController.signUp)
@@ -14,7 +14,7 @@ router.post('/auth/forgot', AuthController.forgotPassword)
 
 router.post('/auth/reset/:token', AuthController.resetPassword)
 
-router.post('/auth/logout', authMiddleware ,AuthController.logOut)
+router.post('/auth/logout', verifyToken, AuthController.logOut);
 
 router.get('/auth/newtoken' ,AuthController.newToken);
 
@@ -33,9 +33,9 @@ router.get(
 
 router.get('/auth/0auth/success',AuthController.googleAuth)
 
-router.get('/ok', authMiddleware,(req, res) => {
-  res.send('ok')
-})
+router.get('/ok', verifyToken, (req, res) => {
+  res.send('ok');
+});
 
 
 module.exports = router;

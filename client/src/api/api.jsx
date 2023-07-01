@@ -10,8 +10,13 @@ const api = axios.create({
   withCredentials: true,
 });
 
+const current_user = JSON.parse(localStorage.getItem('current_user'));
+
 api.interceptors.request.use(
   (config) => {
+    if (current_user) {
+      config.headers.userId = current_user._id || 'guess';
+    }
     return config;
   },
   (error) => {
@@ -26,6 +31,11 @@ api.interceptors.response.use(
   (error) => {
     const originalRequest = error.config;
     const { status, data } = error.response;
+    console.log(status,data.message)
+    if (data.message === 'invalid signature' || 'invalid user') {
+      localStorage.clear();
+      return Promise.reject(error);
+    }
     if (status == 404 && data.message == 'jwt expired') {
       api
         .get(`/auth/newtoken`)

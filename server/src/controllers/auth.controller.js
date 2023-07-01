@@ -37,10 +37,11 @@ class AuthController {
 
       const options = {
         httpOnly: true,
+        secure: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
       };
 
-      res.cookie('accessToken', user.tokens.accessToken, options);
+      res.cookie('accessToken', user.tokens.accessToken);
       res.cookie('refreshToken', user.tokens.refreshToken, options);
       res.cookie('userId', user.user._id, options);
       return Response.success(res, user.user, 200, 'Sign in successfully');
@@ -86,6 +87,7 @@ class AuthController {
       const user = await AuthService.googleAuth(reqData.email);
       const options = {
         httpOnly: true,
+        secure: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
       };
 
@@ -122,6 +124,7 @@ class AuthController {
       const newToken = await AuthService.newToken(userId);
       const options = {
         httpOnly: true,
+        secure: true,
         maxAge: 7 * 24 * 60 * 60 * 1000, // Hết hạn sau 7 ngày
       };
       res.cookie('accessToken', newToken.accessToken, options);

@@ -8,6 +8,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const passport = require('./config/passport');
 const {socketHandler} = require('./utils/socket')
+const { clientSideSecurity } = require('./middlewares/auth.middleware');
 const app = express();
 const {Server} = require('socket.io')
 const server = require('http').createServer(app)
@@ -42,6 +43,7 @@ require('./db/db.mongo');
 
 
 //init route
+app.use(clientSideSecurity);
 app.use('/', require('./routes/index'));
 const io = new Server(server, {
   cors: {

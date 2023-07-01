@@ -12,5 +12,6 @@ router.get('/post/tags/:tagname', PostController.getPostsByTag);
 
 //protected post api
 router.post('/post/new',authMiddleware ,upload.single('image'), PostController.createPost);
+router.patch('/post/edit/:postid',authMiddleware ,upload.single('image'), PostController.editPost);
 
 module.exports = router;

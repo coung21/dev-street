@@ -1,7 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 const userModel = require('../models/user.model');
-const {resizeProfilePicture} = require('../utils/index') 
+const {resizeProfilePicture, englishSUserNameFormatter} = require('../utils/index') 
 
 passport.use(
   new GoogleStrategy(
@@ -15,7 +15,7 @@ passport.use(
       //save to database
       const UserData = {
         id: profile.id,
-        username: profile.displayName,
+        username: englishSUserNameFormatter(profile.displayName),
         name: profile.family_name || profile.displayName,
         email: profile.email,
         avatar: resizeProfilePicture(profile.picture, 200),

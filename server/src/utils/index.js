@@ -1,3 +1,4 @@
+const unidecode = require('unidecode');
 const Post = require('../models/post.model')
 
 function resizeProfilePicture(url, size) {
@@ -26,5 +27,15 @@ function getRandomHexColor() {
   return color;
 }
 
-module.exports = {resizeProfilePicture, urlStringConvert, getRandomHexColor}
+
+function englishSUserNameFormatter(str) {
+  return unidecode(str).replace(/\s/g, '').toLowerCase();
+}
+
+module.exports = {
+  resizeProfilePicture,
+  urlStringConvert,
+  getRandomHexColor,
+  englishSUserNameFormatter,
+};
 

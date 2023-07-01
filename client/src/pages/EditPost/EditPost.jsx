@@ -1,28 +1,37 @@
-import React, { useState, } from 'react';
-import './CreatePost.scss';
+import React, { useState, useEffect } from 'react';
+// import './CreatePost.scss';
 import logo from '../../assets/DEV.png';
 import { AiOutlineClose } from 'react-icons/ai';
-import { Link, useNavigate } from 'react-router-dom';
-import api from '../../api/api';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { editPost } from '../../api/postApi';
+import { getPostDetail } from '../../api/postApi';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import InputTags from '../../components/InputElements/InputTags/InputTags';
 import { useSelector, useDispatch } from 'react-redux';
-import { startLoading,finishLoading } from '../../store/slices/loadingErrorSlice';
-import { setError, resetError, setMessage } from '../../store/slices/loadingErrorSlice';
+import {
+  startLoading,
+  finishLoading,
+} from '../../store/slices/loadingErrorSlice';
+import {
+  setError,
+  resetError,
+  setMessage,
+} from '../../store/slices/loadingErrorSlice';
 
-function CreatePost() {
+function EditPost() {
+  const { slug } = useParams();
+  const [postId, setPostId] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
   const [body, setBody] = useState('');
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState([]);
   const { current_user } = useSelector((state) => state.auth);
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
-    console.log(event.target.files[0]);
     setPreviewImage(URL.createObjectURL(event.target.files[0]));
   };
   const handleBodyChange = (value) => {
@@ -31,56 +40,76 @@ function CreatePost() {
   const handleTitleChange = (event) => {
     setTitle(event.target.value);
   };
-  
+
   const addTag = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     const tag = event.target.value;
     if (event.code === 'Enter' && tag !== '') {
       setTags((tags) => [...tags, tag]);
       event.target.value = '';
     }
-  }
+  };
 
-   const removeTag = (indexToRemove) => {
+  const removeTag = (indexToRemove) => {
     const removedTag = tags[indexToRemove];
     const updatedTags = tags.filter((tag) => tag !== removedTag);
     setTags(updatedTags);
-   }
+  };
 
-     const handleKeyDown = (event) => {
-       if (event.key === 'Enter') {
-         event.preventDefault();
-       }
-     };
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (selectedFile && body && title && tags.length >= 1) {
+    if (previewImage && body && title && tags.length >= 1) {
       try {
         const formData = new FormData();
         formData.append('image', selectedFile);
-        formData.append('body', body)
-        formData.append('title', title)
+        formData.append('body', body);
+        formData.append('title', title);
         formData.append('tags', tags);
-        formData.append('author', current_user._id)
-        dispatch(startLoading())
-        const response = await api.post('/post/new', formData);
-        console.log(response);
-        dispatch(finishLoading())
-
-        navigate('/')
+        dispatch(startLoading());
+        const response = await editPost(postId, formData)//update api
+        dispatch(finishLoading());
+        console.log(response)
+        navigate('/');
       } catch (error) {
         console.log(error);
       }
     } else {
       dispatch(setMessage('This form needs to be filled out'));
-      dispatch(setError())
+      dispatch(setError());
       setTimeout(() => {
-        dispatch(resetError())
-        setMessage('')
-      }, 3000)
+        dispatch(resetError());
+        setMessage('');
+      }, 3000);
     }
   };
+
+  useEffect(() => {
+    async function fetchPost() {
+      const response = await getPostDetail(slug);
+      const postData = response.data;
+      if (current_user._id !== postData.author._id) {
+        dispatch(setMessage('You are not allowed to edit this post'));
+        dispatch(setError());
+        setTimeout(() => {
+          dispatch(resetError());
+          setMessage('');
+        }, 3000);
+        return navigate('/');
+      }
+      setPostId(postData._id);
+      setPreviewImage(postData.image);
+      setTitle(postData.title);
+      setBody(postData.body);
+      setTags(postData.tags.map((item) => item.name));
+    }
+    fetchPost();
+  }, []);
 
   return (
     <>
@@ -93,7 +122,7 @@ function CreatePost() {
               style={{ width: '50px', height: '45px' }}
             />
           </Link>
-          <h3>Create Post</h3>
+          <h3>Edit Post</h3>
         </div>
 
         <Link to={'/'} className='close'>
@@ -140,11 +169,16 @@ function CreatePost() {
               onChange={handleTitleChange}
               onKeyDown={handleKeyDown}
             />
-            <InputTags tags={tags} addTag={addTag} removeTag={removeTag} handleKeyDown={handleKeyDown}/>
+            <InputTags
+              tags={tags}
+              addTag={addTag}
+              removeTag={removeTag}
+              handleKeyDown={handleKeyDown}
+            />
           </div>
           <MarkdownEditor value={body} onChangeEvent={handleBodyChange} />
           <button className='submit-btn' type='submit'>
-            Publish
+            Save Changes
           </button>
         </form>
       </div>
@@ -152,4 +186,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default EditPost;

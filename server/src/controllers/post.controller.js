@@ -25,8 +25,28 @@ class PostController {
       // console.log(newPost)
       return Response.success(res, newPost, 201, 'Create Post Successfully');
     } catch (error) {
-      // return Response.fail(res, error.status, error.message)
+      return Response.fail(res, error.status, error.message)
     }
+  }
+
+  static async editPost(req, res){
+try {
+  const { postid } = req.params;
+  const {body, title, tags, author } = req.body;
+  const tagsArray = tags.split(',');
+  const file = req.file;
+  const editedPost = await PostService.editPost(
+    postid,
+    file,
+    title,
+    body,
+    tagsArray,
+    author
+  );
+  return Response.success(res, editedPost, 201, 'Edit Post Successfully');
+} catch (error) {
+  return Response.fail(res, error.status, error.message);
+}
   }
 
   static async getPostDetail(req, res) {

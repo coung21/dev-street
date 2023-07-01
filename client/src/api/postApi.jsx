@@ -11,3 +11,7 @@ export const getPostDetail =  async (slug) => {
 export const getPostsByTag = (tag) => {
   return api.get(`/post/tags/${tag}`)
 }
+
+export const editPost = (postid, data) => {
+  return api.patch(`/post/edit/${postid}`, data)
+}

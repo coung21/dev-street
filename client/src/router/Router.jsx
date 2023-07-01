@@ -11,6 +11,7 @@ import CreatePost from '../pages/CreatePost/CreatePost';
 import Tags from '../pages/Tags/Tags';
 import Post from '../pages/Post/Post';
 import TagPosts from '../pages/TagPosts/TagPosts';
+import EditPost from '../pages/EditPost/EditPost';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -40,6 +41,10 @@ function Router() {
       {
         path: '/:userid/:slug',
         element: <Post />,
+      },
+      {
+        path: '/:userid/:slug/edit',
+        element: <EditPost />
       },
       {
         path: '/new',

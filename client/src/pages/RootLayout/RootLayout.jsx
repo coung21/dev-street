@@ -17,7 +17,7 @@ function RootLayout() {
 
   useEffect(() => {
     const root = document.getElementById('root');
-    if (location.pathname === '/new') {
+    if (location.pathname === '/new' || location.pathname.endsWith('/edit')) {
       root.style.paddingTop = '0';
     } else {
       root.style.paddingTop = '56px';
@@ -33,7 +33,7 @@ function RootLayout() {
       ) : (
         <>
           {hamburger && <PopupSidebar />}
-          {location.pathname !== '/new' ? (
+          {location.pathname !== '/new' && !location.pathname.endsWith('/edit') ? (
             <>
               <Nav />
               <div className='layout'>

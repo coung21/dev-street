@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const DOCCUMENT = 'Post';
+const DOCUMENT = 'Post';
 const COLLECTION = 'posts';
 
 const postSchema = new mongoose.Schema(
@@ -21,4 +21,4 @@ const postSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model(DOCCUMENT, postSchema);
+module.exports = mongoose.model(DOCUMENT, postSchema);

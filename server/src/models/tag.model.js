@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const DOCCUMENT = 'Tag';
+const DOCUMENT = 'Tag';
 const COLLECTION = 'tags';
 
 const tagSchema = new mongoose.Schema({
@@ -14,4 +14,4 @@ const tagSchema = new mongoose.Schema({
   followers: [{ type: mongoose.Types.ObjectId, ref: 'User' }],
 }, {collection: COLLECTION});
 
-module.exports = mongoose.model(DOCCUMENT, tagSchema); 
+module.exports = mongoose.model(DOCUMENT, tagSchema); 

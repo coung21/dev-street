@@ -28,7 +28,7 @@ getAllPostByTag();
   return (
     <div className='tag-page-layout'>
     <div className='tag-page'>
-      <h2 style={{margin: '2rem 0', display: 'inline-block'}}>
+      <h2 className='tag-page__heading'>
         Posts tagged with <i style={{color: `${theme}`}}>#</i>
         {tagname}
       </h2>

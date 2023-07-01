@@ -1,4 +1,5 @@
 const Comment = require('../models/comment.model');
+const User = require('../models/user.model')
 const Post = require('../models/post.model');
 const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service');
@@ -19,7 +20,6 @@ class PostService {
     if (!file) throw new BadRequest('No file selected');
     const result = await cloudinary.uploader.upload(file.path);
     const tagList = await TagService.findOrCreateTags(tags);
-    console.log(tagList)
     const newPost = await Post.create({
       title,
       body,
@@ -29,6 +29,10 @@ class PostService {
       author: new ObjectId(author),
     });
     await TagService.updateTagsPost(newPost.tags, newPost._id)
+    const foundAuthor = await User.findById(author)
+    if(!foundAuthor) throw new ConflictRequest('Could not find user by provided ID')
+    foundAuthor.posts.push(newPost._id)
+    foundAuthor.save()
     return newPost;
   }
 

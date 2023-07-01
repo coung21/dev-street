@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const DOCCUMENT = 'tokenKey'
+const DOCUMENT = 'tokenKey';
 const COLLECTION = 'tokenKeys'
 
 const keyToken = new mongoose.Schema(
@@ -32,4 +32,4 @@ const keyToken = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model(DOCCUMENT, keyToken)
+module.exports = mongoose.model(DOCUMENT, keyToken);

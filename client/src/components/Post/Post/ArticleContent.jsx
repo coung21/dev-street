@@ -1,19 +1,24 @@
-import React, {useState, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
-import ReactMarkdown from 'react-markdown'
-import SyntaxHighlight from '../../SyntaxHighlight/SyntaxHighlight'
+import ReactMarkdown from 'react-markdown';
+import SyntaxHighlight from '../../SyntaxHighlight/SyntaxHighlight';
 import gfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SkeletonArticle from '../../Skeleton/SkeletonArticle';
+import { useSelector } from 'react-redux';
 
-function ArticleContent({data}) {
-  if(!data){
-    return <>
-     <main className='article__content'>
-      <SkeletonArticle />
-     </main>
-    </>
+function ArticleContent({ data }) {
+  const location = useLocation();
+  const { current_user } = useSelector((state) => state.auth);
+  if (!data) {
+    return (
+      <>
+        <main className='article__content'>
+          <SkeletonArticle />
+        </main>
+      </>
+    );
   }
   return (
     <main className='article__content'>
@@ -23,24 +28,31 @@ function ArticleContent({data}) {
             <img src={data.image} alt='' />
           </div>
           <div className='article__header__meta'>
-            <div className='article__header__author'>
-              <div className='article__header__author-pic'>
-                <img
-                  src={data.author.avatar}
-                  alt=''
-                  style={{ width: '40px', height: '40px' }}
-                />
-              </div>
-              <div>
-                <Link>{data.author.username}</Link>
-                <div className='meta__time'>
-                  Posted on{' '}
-                  {new Date(data.date).toLocaleDateString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                  })}
+            <div className='article__header__author-wrapper'>
+              <div className='article__header__author'>
+                <div className='article__header__author-pic'>
+                  <img
+                    src={data.author.avatar}
+                    alt=''
+                    style={{ width: '40px', height: '40px' }}
+                  />
+                </div>
+                <div>
+                  <Link>{data.author.username}</Link>
+                  <div className='meta__time'>
+                    Posted on{' '}
+                    {new Date(data.date).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                    })}
+                  </div>
                 </div>
               </div>
+              {data.author._id === current_user?._id && (
+                <Link to={location.pathname + '/edit'}>
+                  <button className='edit-post'>Edit</button>
+                </Link>
+              )}
             </div>
             <div className='article__reactions'>
               <AiFillHeart size={25} style={{ color: '#e74559' }} />

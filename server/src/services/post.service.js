@@ -57,7 +57,8 @@ class PostService {
             tags: [...tagList],
           }
         );
-        await cloudinary.uploader.destroy(editedPost.image);
+        const publicId = editedPost.image.match(/\/([^/]+)$/)[1].split('.')[0];
+        await cloudinary.uploader.destroy(publicId);
       } else {
         const tagList = await TagService.findOrCreateTags(tags);
         await Post.findOneAndUpdate(
@@ -81,7 +82,6 @@ class PostService {
       .populate('comments')
       .populate('tags')
       .populate({ path: 'author', select: '_id name username avatar' });
-    console.log(slugUrl);
     if (!foundPost) throw ConflictRequest('POST FOUND ERROR');
     return foundPost;
   }

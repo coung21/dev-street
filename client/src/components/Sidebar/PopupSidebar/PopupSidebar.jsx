@@ -13,7 +13,7 @@ function PopupSidebar() {
       onClick={() => {
         dispatch(UIActions.toggleHamburger());
         document.documentElement.style.overflowY = 'auto';
-        document.getElementById('modal').style.display = 'none';
+        document.getElementById('left-navigation').style.display = 'none';
       }}
     >
       <aside
@@ -28,7 +28,7 @@ function PopupSidebar() {
             onClick={() => {
               dispatch(UIActions.toggleHamburger());
               document.documentElement.style.overflowY = 'auto';
-              document.getElementById('modal').style.display = 'none';
+              document.getElementById('left-navigation').style.display = 'none';
             }}
             className='close'
           >
@@ -40,7 +40,7 @@ function PopupSidebar() {
         </div>
       </aside>
     </div>,
-    document.getElementById('modal')
+    document.getElementById('left-navigation')
   );
 }
 

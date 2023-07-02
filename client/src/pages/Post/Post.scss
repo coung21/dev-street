@@ -31,6 +31,9 @@
 
     &__meta {
       padding: 36px 64px 0;
+      @include mobile{
+        padding: 36px 36px 0;
+      }
     }
 
     &__author-wrapper {
@@ -40,6 +43,15 @@
       align-items: center;
       margin-bottom: 1.25rem;
 
+      .post-actions {
+        display: flex; 
+        align-items: center;
+        gap: 0.5rem;
+        @include mobile{
+          gap: 5px;
+        }
+      }
+
       .edit-post {
         padding: 0.6rem 1rem;
         color: white;
@@ -48,8 +60,31 @@
         border: none;
         border-radius: 5px;
         background-color: $primary-color;
-        &:hover{
+
+        &:hover {
           background-color: $hover-darker-color;
+        }
+
+        @include mobile {
+          font-size: 10px;
+        }
+      }
+
+      .delete-post {
+        padding: 0.6rem;
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        border: none;
+        border-radius: 5px;
+        background-color: #FF3232;
+
+        &:hover {
+          background-color: #E50000;
+        }
+
+        @include mobile {
+          font-size: 10px;
         }
       }
     }
@@ -133,6 +168,9 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+    @include mobile{
+      padding: 32px;
     }
   }
 

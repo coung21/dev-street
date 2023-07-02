@@ -21,7 +21,8 @@ function Header() {
           <button
             onClick={() => {
               document.documentElement.style.overflowY = 'hidden';
-              document.getElementById('modal').style.display = 'block'
+              document.getElementById('left-navigation').style.display =
+                'block';
               dispatch(UIActions.toggleHamburger());
             }}
             className='nav-left__menu'

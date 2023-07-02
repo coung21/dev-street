@@ -68,6 +68,17 @@ try {
       return Response.fail(res, error.status, error.message);
     }
   }
+
+  static async deletePost(req, res){
+    try {
+      const {userid, postid} = req.query
+      console.log(userid, postid)
+      const deletedPost = await PostService.deletePost(userid, req.id, postid)
+      return Response.success(res, deletedPost, 200, 'Delete Post By Tag Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController;

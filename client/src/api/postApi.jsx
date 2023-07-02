@@ -15,3 +15,7 @@ export const getPostsByTag = (tag) => {
 export const editPost = (postid, data) => {
   return api.patch(`/post/edit/${postid}`, data)
 }
+
+export const deletePost = (userId, postId) => {
+  return api.delete(`/post/delete?userid=${userId}&postid=${postId}`);
+}

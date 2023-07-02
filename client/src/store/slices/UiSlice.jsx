@@ -3,6 +3,7 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
   hamburger: false,
   dropdown: false,
+  confirm: false
 }
 
 const UiSlice = createSlice({
@@ -14,6 +15,9 @@ const UiSlice = createSlice({
     },
     toggleDropdown: (state, action) => {
       state.dropdown = action.payload
+    },
+    toggleConfirm : (state,action) => {
+      state.confirm = action.payload
     }
   }
 })

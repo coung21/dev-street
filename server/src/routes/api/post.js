@@ -13,5 +13,6 @@ router.get('/post/tags/:tagname', PostController.getPostsByTag);
 //protected post api
 router.post('/post/new',verifyToken ,upload.single('image'), PostController.createPost);
 router.patch('/post/edit/:postid',verifyToken ,upload.single('image'), PostController.editPost);
+router.delete('/post/delete', verifyToken, PostController.deletePost)
 
 module.exports = router;

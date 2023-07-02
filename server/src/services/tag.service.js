@@ -23,6 +23,14 @@ class TagService {
     );
   }
 
+  static async deleteTagsPost(postId) {
+    await Tag.updateMany(
+      { posts: postId},
+      { $pull: { posts: postId } }
+    );
+  }
+
+
   static async getAllTag(){
     const allTag = await Tag.find()
     return allTag

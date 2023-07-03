@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GoComment } from 'react-icons/go';
 import { useSelector } from 'react-redux';
-import { likePost } from '../../../api/postApi';
+import { likePost, unlikePost } from '../../../api/postApi';
 
 function ArticleLeft({ data }) {
   if (!data) {
@@ -32,6 +32,8 @@ function ArticleLeft({ data }) {
   async function unlikeHandler() {
     if (current_user && socket && isLiked) {
       setLiked((prev) => !prev);
+      setLikes(prev => prev - 1)
+      await unlikePost(current_user?._id, data?._id)
     }
   }
   async function saveHandler() {

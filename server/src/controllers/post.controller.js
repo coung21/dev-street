@@ -89,6 +89,16 @@ try {
       return Response.fail(res, error.status, error.message);
     }
   }
+ 
+  static async unlikePost(req, res){
+    try {
+      const {userid, postid} = req.body
+      const unlikedPost = await PostService.unlikePost(userid, postid)
+      return Response.success(res, unlikedPost, 200, 'Like Post Successfully')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController;

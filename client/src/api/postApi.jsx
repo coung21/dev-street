@@ -23,3 +23,6 @@ export const deletePost = (userId, postId) => {
 export const likePost = (userId, postId) => {
   return api.post('/post/like', {userid: userId, postid: postId})
 }
+export const unlikePost = (userId, postId) => {
+  return api.post('/post/unlike', {userid: userId, postid: postId})
+}

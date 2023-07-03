@@ -15,5 +15,6 @@ router.post('/post/new',verifyToken ,upload.single('image'), PostController.crea
 router.patch('/post/edit/:postid',verifyToken ,upload.single('image'), PostController.editPost);
 router.delete('/post/delete', verifyToken, PostController.deletePost)
 router.post('/post/like', verifyToken, PostController.likePost)
+router.post('/post/unlike', verifyToken, PostController.unlikePost)
 
 module.exports = router;

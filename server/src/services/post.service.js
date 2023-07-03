@@ -120,7 +120,15 @@ class PostService {
     const foundPost = await Post.findOne({_id: postId})
     if(!foundPost) throw new BadRequest('Can not like post')
     foundPost.likes.push(new ObjectId(userId))
-    foundPost.save()
+    await foundPost.save()
+    return foundPost
+  }
+
+  static async unlikePost(userId, postId){
+    const foundPost = await Post.findOne({_id: postId, likes: userId})
+    if (!foundPost) throw new BadRequest('Can not unlike post');
+    foundPost.likes = foundPost.likes.filter(user => !user.equals(userId))
+    await foundPost.save();
     return foundPost
   }
 }

@@ -66,11 +66,6 @@ function ArticleContent({ data }) {
                   </div>
                 )}
               </div>
-              <div className='article__reactions'>
-                <AiFillHeart size={25} style={{ color: '#e74559' }} />
-                &#160;
-                {data.likes.length} likes
-              </div>
               <h1 className='article__title'>{data.title}</h1>
               <div className='article__tags'>
                 {data.tags.map((item, i) => (

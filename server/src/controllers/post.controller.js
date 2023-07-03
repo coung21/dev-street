@@ -79,6 +79,16 @@ try {
       return Response.fail(res, error.status, error.message);
     }
   }
+
+  static async likePost(req, res){
+    try {
+      const {userid, postid} = req.body
+      const likedPost = await PostService.likePost(userid, postid)
+      return Response.success(res, likedPost, 200, 'Like Post Successfully')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController;

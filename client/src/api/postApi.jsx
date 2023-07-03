@@ -19,3 +19,7 @@ export const editPost = (postid, data) => {
 export const deletePost = (userId, postId) => {
   return api.delete(`/post/delete?userid=${userId}&postid=${postId}`);
 }
+
+export const likePost = (userId, postId) => {
+  return api.post('/post/like', {userid: userId, postid: postId})
+}

@@ -4,6 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GoComment } from 'react-icons/go';
 import { useSelector } from 'react-redux';
+import { likePost } from '../../../api/postApi';
 
 function ArticleLeft({ data }) {
   if (!data) {
@@ -12,21 +13,24 @@ function ArticleLeft({ data }) {
   const socket = useContext(SocketContext);
   const { current_user } = useSelector((state) => state.auth);
   const [isLiked, setLiked] = useState(data.likes.includes(current_user?._id));
+  const [likes, setLikes] = useState(data.likes.length);
   const [isSaved, setSaved] = useState(
     data.bookmarks.includes(current_user?._id)
   );
   async function likeHandler() {
-    if (current_user && socket) {
+    if (current_user && socket && !isLiked) {
       setLiked((prev) => !prev);
+      setLikes(prev => prev + 1)
       socket.emit('like', {
         sender: { id: current_user?._id, username: current_user?.username },
         receiver: { id: data.author._id, username: data.author.username },
         postId: data?._id,
       });
+      await likePost(current_user?._id, data?._id)
     }
   }
   async function unlikeHandler() {
-    if (current_user && socket) {
+    if (current_user && socket && isLiked) {
       setLiked((prev) => !prev);
     }
   }
@@ -64,7 +68,7 @@ function ArticleLeft({ data }) {
                 />
               )}
             </button>
-            <div>{data.likes.length}</div>
+            <div>{likes}</div>
           </div>
           <div className='reactions'>
             <button

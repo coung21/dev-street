@@ -111,9 +111,17 @@ class PostService {
       await User.updateOne({_id: userId, posts: postId}, {$pull: {posts: postId}})
       //more
     } else {
-      // throw new BadRequest('Can not delete post')
-      return 'error'
+      throw new BadRequest('Can not delete post')
+      // return 'error'
     }
+  }
+
+  static async likePost(userId, postId){
+    const foundPost = await Post.findOne({_id: postId})
+    if(!foundPost) throw new BadRequest('Can not like post')
+    foundPost.likes.push(new ObjectId(userId))
+    foundPost.save()
+    return foundPost
   }
 }
 

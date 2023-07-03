@@ -14,5 +14,6 @@ router.get('/post/tags/:tagname', PostController.getPostsByTag);
 router.post('/post/new',verifyToken ,upload.single('image'), PostController.createPost);
 router.patch('/post/edit/:postid',verifyToken ,upload.single('image'), PostController.editPost);
 router.delete('/post/delete', verifyToken, PostController.deletePost)
+router.post('/post/like', verifyToken, PostController.likePost)
 
 module.exports = router;

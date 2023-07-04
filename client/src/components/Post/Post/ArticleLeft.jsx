@@ -4,7 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GoComment } from 'react-icons/go';
 import { useSelector } from 'react-redux';
-import { likePost, unlikePost } from '../../../api/postApi';
+import { likePost, unlikePost, bookmark, unBookmark } from '../../../api/postApi';
 
 function ArticleLeft({ data }) {
   if (!data) {
@@ -14,18 +14,20 @@ function ArticleLeft({ data }) {
   const { current_user } = useSelector((state) => state.auth);
   const [isLiked, setLiked] = useState(data.likes.includes(current_user?._id));
   const [likes, setLikes] = useState(data.likes.length);
-  const [isSaved, setSaved] = useState(
-    data.bookmarks.includes(current_user?._id)
-  );
+  const [isSaved, setSaved] = useState(data.bookmarks.includes(current_user?._id));
+  const [saves, setSaves] = useState(data.bookmarks.length)
+
   async function likeHandler() {
     if (current_user && socket && !isLiked) {
       setLiked((prev) => !prev);
       setLikes(prev => prev + 1)
-      socket.emit('like', {
-        sender: { id: current_user?._id, username: current_user?.username },
-        receiver: { id: data.author._id, username: data.author.username },
-        postId: data?._id,
-      });
+      if (current_user?._id !== data.author._id){
+        socket.emit('like', {
+          sender: { id: current_user?._id, username: current_user?.username },
+          receiver: { id: data.author._id, username: data.author.username },
+          postId: data?._id,
+        });
+      }
       await likePost(current_user?._id, data?._id)
     }
   }
@@ -37,12 +39,24 @@ function ArticleLeft({ data }) {
     }
   }
   async function saveHandler() {
-    setSaved((prev) => !prev);
-    socket.emit('bookmark', {
-      sender: { id: current_user?._id, username: current_user.username },
-      receiver: { id: data.author._id, username: data.author.username },
-      postId: data._id,
-    });
+    if (current_user && !isSaved) {
+      setSaved((prev) => !prev);
+      setSaves(prev => prev + 1)
+      await bookmark(current_user?._id, data?._id);
+    }
+    // socket.emit('bookmark', {
+    //   sender: { id: current_user?._id, username: current_user.username },
+    //   receiver: { id: data.author._id, username: data.author.username },
+    //   postId: data._id,
+    // });
+  }
+
+  async function unSaveHandler(){
+    if (current_user && isSaved) {
+      setSaved((prev) => !prev);
+      setSaves((prev) => prev - 1);
+      await unBookmark(current_user?._id, data?._id);
+    }
   }
 
   return (
@@ -57,16 +71,12 @@ function ArticleLeft({ data }) {
               {isLiked ? (
                 <AiFillHeart
                   style={{ color: '#e74559', width: '100%', height: '100%' }}
-                  onClick={
-                    current_user?._id !== data.author._id ? unlikeHandler : null
-                  }
+                  onClick={unlikeHandler}
                 />
               ) : (
                 <AiOutlineHeart
                   style={{ width: '100%', height: '100%' }}
-                  onClick={
-                    current_user?._id !== data.author._id ? likeHandler : null
-                  }
+                  onClick={likeHandler}
                 />
               )}
             </button>
@@ -85,17 +95,20 @@ function ArticleLeft({ data }) {
             <button
               className='btn-save'
               style={{ width: '23px', height: '23px' }}
-              onClick={saveHandler}
             >
               {isSaved ? (
                 <BsBookmarkFill
                   style={{ color: '#f5a216', width: '100%', height: '100%' }}
+                  onClick={unSaveHandler}
                 />
               ) : (
-                <BsBookmark style={{ width: '100%', height: '100%' }} />
+                <BsBookmark
+                  style={{ width: '100%', height: '100%' }}
+                  onClick={saveHandler}
+                />
               )}
             </button>
-            <div>{data.bookmarks.length}</div>
+            <div>{saves}</div>
           </div>
         </div>
       </div>

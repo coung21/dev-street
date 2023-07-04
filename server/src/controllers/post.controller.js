@@ -25,28 +25,28 @@ class PostController {
       // console.log(newPost)
       return Response.success(res, newPost, 201, 'Create Post Successfully');
     } catch (error) {
-      return Response.fail(res, error.status, error.message)
+      return Response.fail(res, error.status, error.message);
     }
   }
 
-  static async editPost(req, res){
-try {
-  const { postid } = req.params;
-  const {body, title, tags, author } = req.body;
-  const tagsArray = tags.split(',');
-  const file = req.file;
-  const editedPost = await PostService.editPost(
-    postid,
-    file,
-    title,
-    body,
-    tagsArray,
-    author
-  );
-  return Response.success(res, editedPost, 201, 'Edit Post Successfully');
-} catch (error) {
-  return Response.fail(res, error.status, error.message);
-}
+  static async editPost(req, res) {
+    try {
+      const { postid } = req.params;
+      const { body, title, tags, author } = req.body;
+      const tagsArray = tags.split(',');
+      const file = req.file;
+      const editedPost = await PostService.editPost(
+        postid,
+        file,
+        title,
+        body,
+        tagsArray,
+        author
+      );
+      return Response.success(res, editedPost, 201, 'Edit Post Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
   }
 
   static async getPostDetail(req, res) {
@@ -69,32 +69,57 @@ try {
     }
   }
 
-  static async deletePost(req, res){
+  static async deletePost(req, res) {
     try {
-      const {userid, postid} = req.query
-      console.log(userid, postid)
-      const deletedPost = await PostService.deletePost(userid, req.id, postid)
-      return Response.success(res, deletedPost, 200, 'Delete Post By Tag Successfully');
+      const { userid, postid } = req.query;
+      console.log(userid, postid);
+      const deletedPost = await PostService.deletePost(userid, req.id, postid);
+      return Response.success(
+        res,
+        deletedPost,
+        200,
+        'Delete Post By Tag Successfully'
+      );
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
   }
 
-  static async likePost(req, res){
+  static async likePost(req, res) {
     try {
-      const {userid, postid} = req.body
-      const likedPost = await PostService.likePost(userid, postid)
-      return Response.success(res, likedPost, 200, 'Like Post Successfully')
+      const { userid, postid } = req.body;
+      const likedPost = await PostService.likePost(userid, postid);
+      return Response.success(res, likedPost, 200, 'Like Post Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }
   }
- 
-  static async unlikePost(req, res){
+
+  static async unlikePost(req, res) {
     try {
-      const {userid, postid} = req.body
-      const unlikedPost = await PostService.unlikePost(userid, postid)
-      return Response.success(res, unlikedPost, 200, 'Like Post Successfully')
+      const { userid, postid } = req.body;
+      const unlikedPost = await PostService.unlikePost(userid, postid);
+      return Response.success(res, unlikedPost, 200, 'Like Post Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+
+  static async bookmarkPost(req, res) {
+    try {
+      const { userid, postid } = req.body;
+      const bookmarkedPost = await PostService.bookmarkPost(userid, postid);
+      return Response.success(res, bookmarkedPost, 200, 'Bookmark Post Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+  
+  static async unbookmarkPost(req, res) {
+    try {
+      const { userid, postid } = req.body;
+      const unbookmarkedPost = await PostService.unbookmarkPost(userid, postid);
+      return Response.success(res, unbookmarkedPost, 200, 'Unbookmark Post Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
     }

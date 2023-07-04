@@ -13,6 +13,7 @@ import Post from '../pages/Post/Post';
 import TagPosts from '../pages/TagPosts/TagPosts';
 import EditPost from '../pages/EditPost/EditPost';
 import Notifications from '../pages/Notifications/Notifications';
+import ReadingList from '../pages/ReadingList/ReadingList';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -62,6 +63,10 @@ function Router() {
       {
         path: '/notifications',
         element: <Notifications />
+      },
+      {
+        path: '/readinglist',
+        element: <ReadingList />
       }
     ];
   } else {

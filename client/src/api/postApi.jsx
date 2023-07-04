@@ -26,3 +26,9 @@ export const likePost = (userId, postId) => {
 export const unlikePost = (userId, postId) => {
   return api.post('/post/unlike', {userid: userId, postid: postId})
 }
+export const bookmark = (userId, postId) => {
+  return api.post('/post/bookmark', {userid: userId, postid: postId})
+}
+export const unBookmark = (userId, postId) => {
+  return api.post('/post/unbookmark', {userid: userId, postid: postId})
+}

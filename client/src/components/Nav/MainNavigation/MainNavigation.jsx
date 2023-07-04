@@ -39,7 +39,7 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link className='sidebar-link' onClick={handleNavigate}>
+          <Link to={'/readinglist'} className='sidebar-link' onClick={handleNavigate}>
             <span className='sidebar-link__icon'>
               <FcRules size={20} />
             </span>

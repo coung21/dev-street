@@ -120,7 +120,9 @@ class PostService {
     if(!foundPost) throw new BadRequest('Can not like post')
     foundPost.likes.push(new ObjectId(userId))
     await foundPost.save()
-    await NotificationService.likeNotification(userId, foundPost.author, postId)
+    if(!foundPost.author.equals(userId)){
+      await NotificationService.likeNotification(userId, foundPost.author, postId)
+    }
     return foundPost
   }
 
@@ -129,7 +131,30 @@ class PostService {
     if (!foundPost) throw new BadRequest('Can not unlike post');
     foundPost.likes = foundPost.likes.filter(user => !user.equals(userId))
     await foundPost.save();
-    await NotificationService.removeLikeNotification(userId, foundPost.author, postId)
+    if(!foundPost.author.equals(userId)){
+      await NotificationService.removeLikeNotification(userId, foundPost.author, postId)
+    }
+    return foundPost
+  }
+
+  static async bookmarkPost(userId, postId){
+    const foundPost = await Post.findOne({ _id: postId })
+    if (!foundPost) throw new BadRequest('Can not bookmark post');
+    foundPost.bookmarks.push(new ObjectId(userId))
+    const bookmarkedUser = await User.findOne({_id: userId})
+    bookmarkedUser.bookmarked.push(new ObjectId(postId))
+    await foundPost.save()
+    await bookmarkedUser.save()
+    return foundPost
+  }
+  static async unbookmarkPost(userId, postId){
+    const foundPost = await Post.findOne({ _id: postId })
+    if (!foundPost) throw new BadRequest('Can not bookmark post');
+    foundPost.bookmarks = foundPost.bookmarks.filter(user => !user.equals(userId))
+    const bookmarkedUser = await User.findOne({_id: userId})
+    bookmarkedUser.bookmarked = bookmarkedUser.bookmarked.filter(post => !post.equals(postId))
+    await foundPost.save()
+    await bookmarkedUser.save()
     return foundPost
   }
 }

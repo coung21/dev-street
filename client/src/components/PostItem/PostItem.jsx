@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './PostItem.scss';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { AiFillHeart } from 'react-icons/ai';
-import { BsBookmark } from 'react-icons/bs';
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { FaRegComment } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+
 function PostItem({ data, index }) {
+  const { current_user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const location = useLocation()
   function navigateToProfile(event) {
@@ -74,7 +77,11 @@ function PostItem({ data, index }) {
               </div>
             </div>
             <div className='post-item__save'>
-              <BsBookmark size={20} />
+              {data.bookmarks.includes(current_user?._id) ? (
+                <BsBookmarkFill size={20} style={{ color: '#f5a216' }} />
+              ) : (
+                <BsBookmark size={20} />
+              )}
             </div>
           </div>
         </div>

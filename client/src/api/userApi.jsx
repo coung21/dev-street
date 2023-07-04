@@ -14,5 +14,9 @@ export const google = () => {
 }
 
 export const getNotification = (userId) => {
-  return api.get(`user/${userId}/notifications`)
+  return api.get(`/user/${userId}/notifications`)
+}
+
+export const getReadingList = (userId) => {
+  return api.get(`/user/${userId}/readinglist`)
 }

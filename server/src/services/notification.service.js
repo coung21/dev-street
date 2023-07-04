@@ -12,22 +12,26 @@ class NotificationService {
   }
 
   static async likeNotification(senderId, receiverId, postId){
-    const createdNotification = await Notification.create({
-      type: 'like',
-      sender: new ObjectId(senderId),
-      receiver: new ObjectId(receiverId),
-      post: new ObjectId(postId)
-    })
+    if(senderId !== receiverId){
+      const createdNotification = await Notification.create({
+        type: 'like',
+        sender: new ObjectId(senderId),
+        receiver: new ObjectId(receiverId),
+        post: new ObjectId(postId)
+      })
+    }
     return;
   }
 
   static async removeLikeNotification(senderId, receiverId, postId){
-    await Notification.findOneAndDelete({
-      type: 'like',
-      sender: senderId,
-      receiver: receiverId,
-      post: postId
-    })
+    if(senderId !== receiverId){
+      await Notification.findOneAndDelete({
+        type: 'like',
+        sender: senderId,
+        receiver: receiverId,
+        post: postId
+      })
+    }
     return;
   }
 }

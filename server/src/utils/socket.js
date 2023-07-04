@@ -95,41 +95,41 @@ function socketHandler(io) {
       }
     });
 
-    socket.on('bookmark', ({ sender, receiver, postId }) => {
-      const receiverSocket = findConnectedUser(receiver.id);
-      if (receiverSocket) {
-        io.to(receiverSocket.socketId).emit('notification', {
-          senderName: sender.username,
-          receiverName: receiver.username,
-          type: 'bookmark',
-          postId: postId,
-        });
-        unreadNotification.push({
-          id: receiver.id,
-          data: {
-            senderName: sender.username,
-            receiverName: receiver.username,
-            type: 'bookmark',
-            postId: postId,
-          },
-        });
-      } else {
-        const disconnectedIndex = disconnected.findIndex(
-          (item) => item.id === receiver.id
-        );
-        if (disconnectedIndex !== -1) {
-          unreadNotification.push({
-            id: disconnected[disconnectedIndex].id,
-            data: {
-              senderName: sender.username,
-              receiverName: receiver.username,
-              type: 'bookmark',
-              postId: postId,
-            },
-          });
-        }
-      }
-    });
+    // socket.on('bookmark', ({ sender, receiver, postId }) => {
+    //   const receiverSocket = findConnectedUser(receiver.id);
+    //   if (receiverSocket) {
+    //     io.to(receiverSocket.socketId).emit('notification', {
+    //       senderName: sender.username,
+    //       receiverName: receiver.username,
+    //       type: 'bookmark',
+    //       postId: postId,
+    //     });
+    //     unreadNotification.push({
+    //       id: receiver.id,
+    //       data: {
+    //         senderName: sender.username,
+    //         receiverName: receiver.username,
+    //         type: 'bookmark',
+    //         postId: postId,
+    //       },
+    //     });
+    //   } else {
+    //     const disconnectedIndex = disconnected.findIndex(
+    //       (item) => item.id === receiver.id
+    //     );
+    //     if (disconnectedIndex !== -1) {
+    //       unreadNotification.push({
+    //         id: disconnected[disconnectedIndex].id,
+    //         data: {
+    //           senderName: sender.username,
+    //           receiverName: receiver.username,
+    //           type: 'bookmark',
+    //           postId: postId,
+    //         },
+    //       });
+    //     }
+    //   }
+    // });
 
     socket.on('disconnect', () => {
       const disconnectingUser = users.find(

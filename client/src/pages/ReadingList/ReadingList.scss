@@ -1,0 +1,38 @@
+@use '../../scss/' as *;
+
+.readinglist-page-layout {
+  height: 100%;
+  width: 50%;
+  margin-bottom: 1.5rem;
+
+  @include mobile {
+    width: 90%;
+  }
+
+  @include tablet {
+    width: 75%;
+  }
+
+  @include small-moblie {
+    width: 100%;
+  }
+}
+
+.readinglist-page {
+  margin: 0 auto;
+  width: 100%;
+
+  &>div {
+    width: 100% !important;
+  }
+
+}
+
+.readinglist-page__heading {
+  display: inline-block;
+  margin: 2rem 1rem !important;
+
+  @include small-moblie {
+    font-size: 20px;
+  }
+}

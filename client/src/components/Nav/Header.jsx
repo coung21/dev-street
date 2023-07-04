@@ -2,7 +2,7 @@ import React from 'react';
 import './Nav.scss';
 import logo from '../../assets/DEV.png';
 import { AiOutlineMenu } from 'react-icons/ai';
-import Search from '../Search/Search';
+import Search from '../InputElements/Search/Search';
 import GuestNavLink from './NavLinks/GuestNavLink';
 import LoggedNavLink from './NavLinks/LoggedNavLink';
 import { useSelector, useDispatch } from 'react-redux';

@@ -1,5 +1,4 @@
 import React from 'react'
-import '../Nav/Nav.scss'
 import { BiSearch } from 'react-icons/bi';
 
 

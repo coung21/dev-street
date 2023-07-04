@@ -20,9 +20,11 @@ function Notifications() {
       <div className='notifications-page'>
         <h3>Notifications</h3>
         {notifications.length >= 1 ? (
-          notifications.map((item, i) => <Notification key={i} data={item}/>)
+          notifications.map((item, i) => <Notification key={i} data={item} />)
         ) : (
-          <h2>you don't have any notifications</h2>
+          <h2 style={{ color: '#6c6c6c' }}>
+            You don't have any notifications
+          </h2>
         )}
       </div>
     </div>

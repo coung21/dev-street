@@ -12,6 +12,7 @@ import Tags from '../pages/Tags/Tags';
 import Post from '../pages/Post/Post';
 import TagPosts from '../pages/TagPosts/TagPosts';
 import EditPost from '../pages/EditPost/EditPost';
+import Notifications from '../pages/Notifications/Notifications';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -58,6 +59,10 @@ function Router() {
         path: '/tags/:tagname',
         element: <TagPosts />,
       },
+      {
+        path: '/notifications',
+        element: <Notifications />
+      }
     ];
   } else {
     routes = [

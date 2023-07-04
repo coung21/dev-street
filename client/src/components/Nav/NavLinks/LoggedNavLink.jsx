@@ -36,7 +36,7 @@ function LoggedNavLink({ user }) {
       <Link to={'/new'}>
         <button className='btn create-post btn--primary'>Create Post</button>
       </Link>
-      <Link>
+      <Link to={'/notifications'}>
         <button className='btn--notification' onClick={navigateNotification}>
           <BiBell size={25} />
           {/* counter */}

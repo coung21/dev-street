@@ -1,9 +1,12 @@
 const router = require('express').Router()
-const authMiddleware = require('../../middlewares/auth.middleware')
+const {verifyToken} = require('../../middlewares/auth.middleware')
 const UserController = require('../../controllers/user.controller')
 
 // router.use(authMiddleware)
 router.get('/user/:id' ,UserController.getUser);
-// router.patch('/user/:id', UserController)
+
+
+
+router.get('/user/:id/notifications', verifyToken,UserController.getUserNotifications)
 
 module.exports = router

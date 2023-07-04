@@ -15,7 +15,9 @@ function urlStringConvert(inputString) {
   );
   const trimedString = sanitizedString.trim();
   const urlFriendlyString = trimedString.replace(/ /g, '-');
-  return urlFriendlyString;
+  return (
+    urlFriendlyString + Math.floor(Math.random() * (999 - 1) + 1).toString()
+  );
 }
 
 function getRandomHexColor() {

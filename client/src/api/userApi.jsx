@@ -13,3 +13,6 @@ export const google = () => {
   return api.get('/auth/0auth/success');
 }
 
+export const getNotification = (userId) => {
+  return api.get(`user/${userId}/notifications`)
+}

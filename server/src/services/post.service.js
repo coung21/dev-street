@@ -5,8 +5,7 @@ const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service');
 const cloudinary = require('../config/cloudinary');
 const { urlStringConvert } = require('../utils/index');
-const { getData } = require('../utils/getData');
-
+const NotificationService = require('./notification.service')
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
 class PostService {
@@ -121,6 +120,7 @@ class PostService {
     if(!foundPost) throw new BadRequest('Can not like post')
     foundPost.likes.push(new ObjectId(userId))
     await foundPost.save()
+    await NotificationService.likeNotification(userId, foundPost.author, postId)
     return foundPost
   }
 
@@ -129,6 +129,7 @@ class PostService {
     if (!foundPost) throw new BadRequest('Can not unlike post');
     foundPost.likes = foundPost.likes.filter(user => !user.equals(userId))
     await foundPost.save();
+    await NotificationService.removeLikeNotification(userId, foundPost.author, postId)
     return foundPost
   }
 }

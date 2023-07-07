@@ -3,6 +3,7 @@ import './UserProfile.scss'
 import { useParams } from 'react-router-dom'
 import api from '../../api/api'
 import ProfileCard from '../../components/Profile/ProfileCard';
+import ProfileFeeds from '../../components/Profile/ProfileFeeds';
 
 function UserProfile() {
   let {userid} = useParams()
@@ -20,8 +21,9 @@ function UserProfile() {
 
   return (
     <div className='brand-bg'>
-      <div className='profile-header'>
+      <div className='profile-layout'>
         <ProfileCard data={user}/>
+        <ProfileFeeds data={user}/>
       </div>
     </div>
   );

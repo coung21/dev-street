@@ -4,8 +4,11 @@ import {
   HiLocationMarker,
   HiExternalLink,
 } from 'react-icons/hi';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 function ProfileCard({ data }) {
+  const { current_user } = useSelector((state) => state.auth);
   if (!data) {
     return <p>Loading..</p>;
   }
@@ -15,8 +18,15 @@ function ProfileCard({ data }) {
         <span className='profile-avatar'>
           <img src={data.avatar} alt='' />
         </span>
+        {/* tính năng follow & edit */}
         <div className='profile-actions'>
-          <button className='users-btn'>Edit Profile</button>
+          {current_user._id === data._id ? (
+            <Link>
+              <button className='users-btn'>Edit Profile</button>
+            </Link>
+          ) : (
+            <button className='users-btn'>Follow</button>
+          )}
         </div>
       </div>
       <div className='profile-card__details'>
@@ -32,7 +42,7 @@ function ProfileCard({ data }) {
           <span className='profile-meta__item'>
             <HiOutlineCake size={24} />
             <p>
-              Joined on {' '}
+              Joined on{' '}
               {new Date(data.joinDate).toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',

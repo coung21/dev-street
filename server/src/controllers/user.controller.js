@@ -8,7 +8,7 @@ class UserController {
     try {
       const {id} = req.params
       const user = await UserService.getUserInfo(id)
-      return Response.success(res, user, 200, 'success')
+      return Response.success(res, user, 200, 'Get User Profile Successfully')
     } catch (error) {
       return Response.fail(res, error.status, error.message)
     }

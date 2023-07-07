@@ -1,0 +1,152 @@
+@use '../../scss/' as *;
+
+.profile-header {
+  width: 100%;
+  max-width: 1024px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding: 5rem 1rem 1rem;
+  @include tablet{
+    padding: 0;
+    padding-top: 2rem;
+  }
+}
+
+.brand-bg {
+  background: linear-gradient(to bottom, black 8rem, transparent 8rem);
+  width: 100%;
+}
+
+.profile-card {
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  background-color: rgb(250, 250, 250);
+  color: rgb(23, 23, 23);
+  box-shadow: 0 0 0 1px $border-color;
+  overflow-wrap: anywhere;
+
+  &__top {
+    margin-top: -4rem;
+    margin-bottom: 0.75rem;
+    padding: 0 1rem;
+    position: relative;
+    @include tablet {
+      margin-top: -2rem;
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+  }
+
+  &__bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0.8rem;
+    border-top: 1px solid $border-color;
+    color: #717171;
+    @include mobile{
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .definition{
+      padding: 0.5rem;
+      text-align: center;
+    }
+  }
+
+  &__details{
+    padding: 1.5rem;
+    text-align: center;
+    color: $txt-color;
+    @include tablet{
+      padding: 1rem;
+      text-align: left;
+    }
+    
+    .profile-meta{
+      font-size: 0.875rem;
+      color: #717171;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include tablet{
+        justify-content: flex-start;
+      }
+      &__item{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 4px 12px;
+        @include tablet{
+          padding: 2px 6px;
+        }
+      }
+    }
+  }
+
+  h1{
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    min-height: 40px;
+    margin-bottom: 0.5rem;
+  }
+
+    .profile-bio{
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.profile-avatar {
+  display: block;
+  padding: 0.5rem;
+  background-color: black;
+  border-radius: 50%;
+  width: 8rem;
+  height: 8rem;
+  margin: 0 auto;
+
+  @include tablet {
+    width: 4rem;
+    height: 4rem;
+    margin: 0;
+    padding: 0.25rem;
+  }
+
+  img {
+    border-radius: 100%;
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+}
+
+.profile-actions{
+  display: flex;
+  position: absolute;
+  top: 4rem;
+  right: 0;
+  left: 0;
+  justify-content: flex-end;
+  padding: 1.5rem 1.5rem 0 0;
+  @include tablet{
+    top: 2rem;
+    padding: 1rem 1rem 0 0;
+  }
+  .users-btn{
+    font-weight: 600;
+    padding: 8px 16px;
+    background-color: $primary-color;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+  }
+}

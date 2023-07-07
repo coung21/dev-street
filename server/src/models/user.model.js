@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: 'https://www.drupal.org/files/issues/default-avatar.png',
     },
-    bio: { type: String, default: '' },
+    bio: { type: String, default: '404 bio not found' },
     links: { type: String, default: '' },
     joinDate: { type: Date, default: Date.now() },
     skills: { type: String, default: '' },

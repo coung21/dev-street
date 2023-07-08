@@ -14,6 +14,7 @@ import TagPosts from '../pages/TagPosts/TagPosts';
 import EditPost from '../pages/EditPost/EditPost';
 import Notifications from '../pages/Notifications/Notifications';
 import ReadingList from '../pages/ReadingList/ReadingList';
+import EditProfile from '../pages/EditProfile/EditProfile';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -39,6 +40,10 @@ function Router() {
       {
         path: '/:userid',
         element: <UserProfile />,
+      },
+      {
+        path: '/user/:userid/settings',
+        element: <EditProfile />
       },
       {
         path: '/:userid/:slug',

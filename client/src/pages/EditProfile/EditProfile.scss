@@ -1,0 +1,131 @@
+@use '../../scss/' as *;
+
+.settings-layout {
+  padding: 3rem 12rem;
+  width: 100%;
+  color: $txt-color;
+
+  .header {
+    margin-bottom: 1.5rem;
+    text-align: left;
+  }
+
+  @include tablet {
+    padding: 1.5rem 4rem;
+  }
+
+  @include mobile {
+    padding: 0.5rem 1rem;
+  }
+
+  @include small-moblie{
+    padding: 0;
+  }
+}
+
+#settings-form {
+  display: grid;
+  gap: 2rem;
+  width: 100%;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  background-color: white;
+  padding: 2rem 6rem;
+  font-size: 1rem;
+
+  @include tablet {
+    padding: 1.5rem 3rem;
+  }
+
+  @include mobile {
+    padding: 1.25rem;
+  }
+
+  .setting-fields {
+    display: flex;
+    flex-flow: column;
+
+    label {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    input[type='text'] {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+
+      &:focus-visible {
+        outline: $primary-color auto 1px;
+      }
+    }
+
+    textarea{
+  font-size: 1rem;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    padding: 0.5rem;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+  
+    &:focus-visible {
+      outline: $primary-color auto 1px;
+    }
+    }
+
+
+    .avatar-field {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+
+      span {
+        margin-right: 0.75rem;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+
+      input[type='file'] {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        padding: 1rem;
+        background: rgb(255, 255, 255);
+        color: rgb(64, 64, 64);
+        box-shadow: 0 0 0 1px rgba($color: $border-color, $alpha: 0.6);
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+    }
+  }
+}
+
+
+.settings-submit{
+  position: sticky;
+  bottom: 0px;
+  padding: 24px;
+  margin: 24px 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid $border-color;
+  border-radius: 5px;
+  button{
+    font-size: 16px;
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: $primary-color;
+    color: white;
+    font-weight: 700;
+    &:hover{
+      background-color: $hover-darker-color;
+    }
+  }
+}

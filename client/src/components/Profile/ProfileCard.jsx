@@ -21,7 +21,7 @@ function ProfileCard({ data }) {
         {/* tính năng follow & edit */}
         <div className='profile-actions'>
           {current_user._id === data._id ? (
-            <Link>
+            <Link to={`/user/${data._id}/settings`}>
               <button className='users-btn'>Edit Profile</button>
             </Link>
           ) : (

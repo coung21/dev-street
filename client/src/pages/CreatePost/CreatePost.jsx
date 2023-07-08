@@ -111,6 +111,7 @@ function CreatePost() {
             <div className='file-form'>
               <input
                 type='file'
+                accept='image/*'
                 name='image'
                 id='image-input'
                 onChange={handleFileChange}

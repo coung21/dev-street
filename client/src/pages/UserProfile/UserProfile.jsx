@@ -17,6 +17,9 @@ function UserProfile() {
       console.log(response.data)
     }
     fetchUser()
+    return () => {
+    document.getElementsByClassName('layout')[0].style.padding = '1rem';
+    }
   }, [])
 
   return (

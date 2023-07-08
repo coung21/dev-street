@@ -32,7 +32,6 @@
     margin-bottom: 0.75rem;
     padding: 0 1rem;
     position: relative;
-
     @include tablet {
       margin-top: -2rem;
       margin-bottom: 1rem;
@@ -138,6 +137,7 @@
 .profile-actions {
   display: flex;
   position: absolute;
+  z-index: 1;
   top: 4rem;
   right: 0;
   left: 0;

@@ -1,6 +1,7 @@
 @use '../../scss/' as *;
 
 .dropdown-container {
+  z-index: 200;
   display: inline-block;
   position: fixed !important;
   right: 4%;
@@ -19,7 +20,7 @@
   right: 4%;
   top: 100%;
   left: auto;
-  z-index: 10;
+  z-index: 200;
   padding: 0.5rem;
   background-color: white;
   border-radius: 5px;

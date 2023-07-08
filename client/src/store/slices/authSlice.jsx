@@ -11,6 +11,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    updateCurrentUser: (state) => {
+      state.current_user =  JSON.parse(localStorage.getItem('current_user'))
+    },
     googleAuth: (state, action) => {
       state.current_user = action.payload;
     }

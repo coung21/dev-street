@@ -31,7 +31,7 @@ function ProfileCard({ data }) {
       </div>
       <div className='profile-card__details'>
         <h1>{data.name || data.username}</h1>
-        <p className='profile-bio'>{data.bio}</p>
+        <p className='profile-bio'>{!data.bio ? '404 bio not found' : data.bio}</p>
         <div className='profile-meta'>
           {data.location && (
             <span className='profile-meta__item'>

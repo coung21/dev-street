@@ -1,10 +1,96 @@
-import React from 'react'
-import './EditProfile.scss'
+import React, { useEffect, useState } from 'react';
+import './EditProfile.scss';
+import { editUserProfile } from '../../api/userApi';
+import { useParams, useNavigate } from 'react-router-dom';
+import { getUserProfile } from '../../api/userApi';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  startLoading,
+  finishLoading,
+} from '../../store/slices/loadingErrorSlice';
+import {
+  setError,
+  resetError,
+  setMessage,
+} from '../../store/slices/loadingErrorSlice';
+import {authActions} from '../../store/slices/authSlice'
+
 function EditProfile() {
+  const { userid } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [avatar, setAvatar] = useState(null);
+  const [previewAvatar, setPreviewAvatar] = useState(null);
+  const [links, setLinks] = useState('');
+  const [location, setLocation] = useState('');
+  const [bio, setBio] = useState('');
+  const [skills, setSkills] = useState('');
+  const [education, setEducation] = useState('');
+  const [work, setWork] = useState('');
+
+  const handleAvatarChange = (event) => {
+    setAvatar(event.target.files[0]);
+    setPreviewAvatar(URL.createObjectURL(event.target.files[0]));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (username) {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('username', username);
+      formData.append('avatar', avatar);
+      formData.append('links', links);
+      formData.append('location', location);
+      formData.append('bio', bio);
+      formData.append('skills', skills);
+      formData.append('education', education);
+      formData.append('work', work);
+      dispatch(startLoading());
+      const response = await editUserProfile(userid, formData);
+      const newData = JSON.parse(localStorage.getItem('current_user'))
+      newData.name = response.data.name;
+      newData.username = response.data.username;
+      newData.email = newData.email;
+      newData.avatar = response.data.avatar;
+      localStorage.setItem('current_user', JSON.stringify(newData))
+      dispatch(authActions.updateCurrentUser())
+      dispatch(finishLoading());
+      navigate(`/${userid}`)
+    } else {
+      dispatch(setMessage('username is too short - minimum 1 character'));
+      dispatch(setError());
+      setTimeout(() => {
+        dispatch(resetError());
+        setMessage('');
+      }, 3000);
+    }
+  };
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await getUserProfile(userid);
+      const data = response.data;
+      setName(data.name);
+      setUsername(data.username);
+      setPreviewAvatar(data.avatar);
+      setLinks(data.links);
+      setLocation(data.location);
+      setBio(data.bio);
+      setSkills(data.skills);
+      setEducation(data.education);
+      setWork(data.work);
+    }
+    getUser();
+  }, []);
+
   return (
     <div className='settings-layout'>
       <div className='header'>
-        <h1>Settings for @</h1>
+        <h1>Settings for @{username}</h1>
       </div>
 
       <div id='settings-form'>
@@ -15,6 +101,8 @@ function EditProfile() {
             name='name'
             id='name-input'
             placeholder='Jonh Doe'
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
@@ -24,22 +112,22 @@ function EditProfile() {
             name='username'
             id='username-input'
             placeholder='jonhdoe'
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
           <label htmlFor='avatar-input'>Profile image</label>
           <div className='avatar-field'>
             <span>
-              <img
-                src='https://res.cloudinary.com/practicaldev/image/fetch/s--CRSfoFsK--/c_fill,f_auto,fl_progressive,h_50,q_auto,w_50/https://dev-to-uploads.s3.amazonaws.com/uploads/user/profile_image/1074355/bea4226a-074c-4527-a830-180802033a92.jpeg'
-                alt=''
-              />
+              <img src={previewAvatar} alt='' />
             </span>
             <input
               accept='image/*'
               type='file'
               name='avatar'
               id='avatar-input'
+              onChange={handleAvatarChange}
             />
           </div>
         </div>
@@ -50,6 +138,8 @@ function EditProfile() {
             name='links'
             id='links-input'
             placeholder='https://yoursite.com'
+            value={links}
+            onChange={(e) => setLinks(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
@@ -59,6 +149,8 @@ function EditProfile() {
             name='location'
             id='location-input'
             placeholder='Ha Noi, VietNam'
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
@@ -68,11 +160,20 @@ function EditProfile() {
             name='bio'
             id='bio-input'
             placeholder='A short bio...'
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
           <label htmlFor='skills-input'>Skills</label>
-          <textarea type='text' name='skills' id='skills-input' />
+          <textarea
+            type='text'
+            name='skills'
+            id='skills-input'
+            placeholder='Currently hacking on...'
+            value={skills}
+            onChange={(e) => setSkills(e.target.value)}
+          />
         </div>
         <div className='setting-fields'>
           <label htmlFor='education-input'>Education</label>
@@ -81,6 +182,8 @@ function EditProfile() {
             name='education'
             id='education-input'
             placeholder='Where did you go to school ?'
+            value={education}
+            onChange={(e) => setEducation(e.target.value)}
           />
         </div>
         <div className='setting-fields'>
@@ -90,15 +193,17 @@ function EditProfile() {
             name='work'
             id='work-input'
             placeholder='What do you do ?'
+            value={work}
+            onChange={(e) => setWork(e.target.value)}
           />
         </div>
       </div>
 
       <div className='settings-submit'>
-        <button>Save Profile Information</button>
+        <button onClick={handleSubmit}>Save Profile Information</button>
       </div>
     </div>
   );
 }
 
-export default EditProfile
+export default EditProfile;

@@ -34,10 +34,15 @@ function englishSUserNameFormatter(str) {
   return unidecode(str).replace(/\s/g, '').toLowerCase();
 }
 
+function checkCloudinary(str) {
+  return str.includes('cloudinary');
+}
+
 module.exports = {
   resizeProfilePicture,
   urlStringConvert,
   getRandomHexColor,
   englishSUserNameFormatter,
+  checkCloudinary
 };
 

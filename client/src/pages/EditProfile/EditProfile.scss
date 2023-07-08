@@ -18,7 +18,7 @@
     padding: 0.5rem 1rem;
   }
 
-  @include small-moblie{
+  @include small-moblie {
     padding: 0;
   }
 }
@@ -63,17 +63,17 @@
       }
     }
 
-    textarea{
-  font-size: 1rem;
-    margin-top: 0.5rem;
-    line-height: 1.5;
-    padding: 0.5rem;
-    border: 1px solid $border-color;
-    border-radius: 5px;
-  
-    &:focus-visible {
-      outline: $primary-color auto 1px;
-    }
+    textarea {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+      line-height: 1.5;
+      padding: 0.5rem;
+      border: 1px solid $border-color;
+      border-radius: 5px;
+
+      &:focus-visible {
+        outline: $primary-color auto 1px;
+      }
     }
 
 
@@ -88,6 +88,8 @@
 
       img {
         border-radius: 50%;
+        height: 50px;
+        width: 50px;
       }
 
       input[type='file'] {
@@ -106,7 +108,7 @@
 }
 
 
-.settings-submit{
+.settings-submit {
   position: sticky;
   bottom: 0px;
   padding: 24px;
@@ -115,7 +117,8 @@
   background-color: white;
   border: 1px solid $border-color;
   border-radius: 5px;
-  button{
+
+  button {
     font-size: 16px;
     width: 100%;
     padding: 8px 16px;
@@ -124,7 +127,8 @@
     background-color: $primary-color;
     color: white;
     font-weight: 700;
-    &:hover{
+
+    &:hover {
       background-color: $hover-darker-color;
     }
   }

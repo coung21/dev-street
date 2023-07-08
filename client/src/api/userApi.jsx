@@ -20,3 +20,11 @@ export const getNotification = (userId) => {
 export const getReadingList = (userId) => {
   return api.get(`/user/${userId}/readinglist`)
 }
+
+export const getUserProfile = (userId) => {
+  return api.get(`/user/${userId}`);
+}
+
+export const editUserProfile = (userId, data) => {
+  return api.post(`/user/${userId}/edit`, data)
+}

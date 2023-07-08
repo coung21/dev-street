@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './UserProfile.scss'
 import { useParams } from 'react-router-dom'
-import api from '../../api/api'
+import { getUserProfile } from '../../api/userApi';
 import ProfileCard from '../../components/Profile/ProfileCard';
 import ProfileFeeds from '../../components/Profile/ProfileFeeds';
 
@@ -12,7 +12,7 @@ function UserProfile() {
   useEffect(() => {
     document.getElementsByClassName('layout')[0].style.padding = '0px'
     async function fetchUser(){
-      const response = await api.get(`/user/${userid}`)
+      const response = await getUserProfile(userid)
       setUser(response.data)
       console.log(response.data)
     }

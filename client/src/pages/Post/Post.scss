@@ -21,7 +21,8 @@
 
   &__content {
     background-color: white;
-    border-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     border: 1px solid $border-color;
   }
 

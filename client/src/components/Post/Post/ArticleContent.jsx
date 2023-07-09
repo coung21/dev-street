@@ -8,6 +8,7 @@ import rehypeRaw from 'rehype-raw';
 import SkeletonArticle from '../../Skeleton/SkeletonArticle';
 import { useSelector, useDispatch } from 'react-redux';
 import ConfirmModal from '../../ComfirmModal/ConfirmModal';
+import Comments from '../../Comment/Comments';
 
 
 function ArticleContent({ data }) {
@@ -27,7 +28,7 @@ function ArticleContent({ data }) {
     );
   }
   return (
-    <>
+    <div>
       <main className='article__content'>
         <article>
           <header className='article__header'>
@@ -89,8 +90,9 @@ function ArticleContent({ data }) {
           </div>
         </article>
       </main>
+      <Comments />
       <ConfirmModal userId={current_user?._id} postId={data?._id} />
-    </>
+    </div>
   );
 }
 

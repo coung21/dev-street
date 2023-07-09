@@ -1,0 +1,132 @@
+@use '../../scss/' as *;
+
+#comments {
+  color: $txt-color;
+  margin-bottom: 1rem;
+  padding: 32px 64px;
+  background-color: white;
+  border: 1px solid $border-color;
+  border-top: none;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+
+  @include mobile {
+    padding: 32px;
+  }
+
+  h2 {
+    margin-bottom: 24px;
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+}
+
+
+.comment-form {
+  display: flex;
+  gap: 1.5rem;
+
+  &__container {
+    margin: 0.75rem 0;
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    padding: 1rem;
+    border: 1px solid $border-color;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+
+    &:focus-visible {
+      outline: $primary-color auto 1px;
+    }
+  }
+}
+
+.comment-btn {
+  padding: 0.6rem 1rem;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: $primary-color;
+  margin-left: 4rem;
+  margin-right: 0.5rem;
+
+  &:hover {
+    background-color: $hover-darker-color;
+  }
+
+  @include mobile {
+    font-size: 10px;
+  }
+}
+
+.dismiss-btn {
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid rgba($color: $border-color, $alpha: 0.7);
+  border-radius: 5px;
+  background-color: transparent;
+
+  @include mobile {
+    font-size: 10px;
+  }
+}
+
+.comment {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 24px;
+
+  &__inner {
+    font-size: 18px;
+    line-height: 1.5;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px rgba($color: $border-color, $alpha: 0.6);
+    margin-bottom: 0.5rem;
+
+    header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+
+      a {
+        color: #3d3d3d;
+        font-weight: 600;
+      }
+
+      p {
+        font-size: 13px;
+        color: rgb(82, 82, 82);
+      }
+    }
+  }
+
+  &__content {}
+
+  &__footer {
+    button {
+      font-size: 15px;
+      padding: 4px 12px;
+      border: none;
+      background-color: transparent;
+      border-radius: 5px;
+      color: rgb(82, 82, 82);
+
+      &:hover {
+        background-color: $bg-color;
+      }
+    }
+  }
+}

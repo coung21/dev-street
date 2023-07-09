@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   HiOutlineCake,
   HiLocationMarker,
@@ -6,12 +6,18 @@ import {
 } from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import FollowButton from '../Follow/FollowButton';
+import FollowingButton from '../Follow/followingButton';
 
 function ProfileCard({ data }) {
-  const { current_user } = useSelector((state) => state.auth);
-  if (!data) {
+  if (!data.followers) {
     return <p>Loading..</p>;
   }
+  const { current_user } = useSelector((state) => state.auth);
+  console.log(data)
+  const [isFollow, setIsFollow] = useState(
+    data.followers?.includes(current_user?._id)
+  );
   return (
     <div className='profile-card'>
       <div className='profile-card__top'>
@@ -25,13 +31,29 @@ function ProfileCard({ data }) {
               <button className='users-btn'>Edit Profile</button>
             </Link>
           ) : (
-            <button className='users-btn'>Follow</button>
+            <>
+              {isFollow ? (
+                <FollowingButton
+                  setIsFollow={setIsFollow}
+                  follower={current_user}
+                  user={data}
+                />
+              ) : (
+                <FollowButton
+                  setIsFollow={setIsFollow}
+                  follower={current_user}
+                  user={data}
+                />
+              )}
+            </>
           )}
         </div>
       </div>
       <div className='profile-card__details'>
         <h1>{data.name || data.username}</h1>
-        <p className='profile-bio'>{!data.bio ? '404 bio not found' : data.bio}</p>
+        <p className='profile-bio'>
+          {!data.bio ? '404 bio not found' : data.bio}
+        </p>
         <div className='profile-meta'>
           {data.location && (
             <span className='profile-meta__item'>

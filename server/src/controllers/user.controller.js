@@ -46,6 +46,25 @@ class UserController {
       return Response.fail(res, error.status, error.message)
     }
   }
+
+  static async followUser(req, res){
+    try {
+      const {followerid, userid} = req.body
+      const user = UserService.followUser(followerid, userid)
+      return Response.success(res, user, 200, 'Follow User Successfully')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message)
+    }
+  }
+  static async unfollowUser(req, res){
+    try {
+      const {followerid, userid} = req.body
+      const user = UserService.unFollowUser(followerid, userid)
+      return Response.success(res, user, 200, 'UnFollow User Successfully')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message)
+    }
+  }
 }
 
 module.exports = UserController

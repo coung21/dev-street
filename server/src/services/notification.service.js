@@ -34,6 +34,28 @@ class NotificationService {
     }
     return;
   }
+
+  static async followNotification(senderId, receiverId){
+    if(senderId != receiverId){
+      await Notification.create({
+        type: 'follow',
+        sender: senderId,
+        receiver: receiverId
+      })
+    }
+    return
+  }
+  
+  static async removeFollowNotification(senderId, receiverId){
+    if(senderId != receiverId){
+      await Notification.findOneAndDelete({
+        type: 'follow',
+        sender: senderId,
+        receiver: receiverId
+      })
+    }
+    return
+  }
 }
 
 module.exports = NotificationService

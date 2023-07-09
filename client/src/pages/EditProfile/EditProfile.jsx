@@ -56,6 +56,7 @@ function EditProfile() {
       newData.username = response.data.username;
       newData.email = newData.email;
       newData.avatar = response.data.avatar;
+      console.log(newData)
       localStorage.setItem('current_user', JSON.stringify(newData))
       dispatch(authActions.updateCurrentUser())
       dispatch(finishLoading());

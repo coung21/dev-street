@@ -28,3 +28,12 @@ export const getUserProfile = (userId) => {
 export const editUserProfile = (userId, data) => {
   return api.post(`/user/${userId}/edit`, data)
 }
+
+export const followUser = (userId, followerId) => {
+  return api.post('/user/follow', { userid: userId, followerid: followerId });
+}
+
+export const unFollowUser = (userId, followerId) => {
+  return api.post('/user/unfollow', { userid: userId, followerid: followerId });
+}
+

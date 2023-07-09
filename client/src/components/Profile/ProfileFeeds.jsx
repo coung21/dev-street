@@ -32,7 +32,7 @@ function ProfileFeeds({ data }) {
       </div>
       <div className='feeds'>
         {data.posts?.map((item, i) => (
-          <PostItem data={item} index={i} />
+          <PostItem data={item} index={i} key={i}/>
         ))} 
       </div>
     </div>

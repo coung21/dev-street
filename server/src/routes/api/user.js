@@ -9,5 +9,7 @@ router.get('/user/:id' ,UserController.getUser);
 router.post('/user/:id/edit', verifyToken,upload.single('avatar') ,UserController.editUser)
 router.get('/user/:id/notifications', verifyToken,UserController.getUserNotifications)
 router.get('/user/:id/readinglist', UserController.getReadingList)
+router.post('/user/follow', verifyToken, UserController.followUser)
+router.post('/user/unfollow', verifyToken, UserController.unfollowUser)
 
 module.exports = router

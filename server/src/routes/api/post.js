@@ -9,6 +9,7 @@ const { verifyToken } = require('../../middlewares/auth.middleware');
 router.get('/post', PostController.getAllPosts)
 router.get('/post/:slugUrl', PostController.getPostDetail);
 router.get('/post/tags/:tagname', PostController.getPostsByTag);
+router.get('/post/comment/:id', PostController.getComments)
 
 //protected post api
 router.post('/post/new',verifyToken ,upload.single('image'), PostController.createPost);
@@ -18,5 +19,6 @@ router.post('/post/like', verifyToken, PostController.likePost)
 router.post('/post/unlike', verifyToken, PostController.unlikePost)
 router.post('/post/bookmark', verifyToken, PostController.bookmarkPost)
 router.post('/post/unbookmark', verifyToken, PostController.unbookmarkPost)
+router.post('/post/comment/:id', PostController.postComment)
 
 module.exports = router;

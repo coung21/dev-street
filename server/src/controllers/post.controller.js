@@ -124,6 +124,27 @@ class PostController {
       return Response.fail(res, error.status, error.message);
     }
   }
+
+  static async getComments(req, res){
+    try {
+      const {id} = req.params
+      const comments = await PostService.getComments(id)
+      return Response.success(res, comments, 200, 'Get Comments Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+  
+  static async postComment(req, res){
+    try {
+      const {id} = req.params
+      const {author, body, parent} = req.body
+      const comment = await PostService.postComment(id, author, body, parent)
+      return Response.success(res, comment, 201, 'Post Comment Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController;

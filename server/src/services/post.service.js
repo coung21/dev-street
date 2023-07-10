@@ -147,6 +147,8 @@ class PostService {
     await bookmarkedUser.save()
     return foundPost
   }
+
+
   static async unbookmarkPost(userId, postId){
     const foundPost = await Post.findOne({ _id: postId })
     if (!foundPost) throw new BadRequest('Can not bookmark post');
@@ -156,6 +158,31 @@ class PostService {
     await foundPost.save()
     await bookmarkedUser.save()
     return foundPost
+  }
+
+  static async getComments(id){
+    if(!id) throw BadRequest('Can not get comments')
+    const comments = await Comment.find({ post: id }).sort({date: 'desc'}).populate({
+      path: 'author',
+      select: '_id name username avatar',
+    });
+    return comments
+  }
+  
+  static async postComment(id, author, body, parent){
+    const comment = await Comment.create({
+      body,
+      author: new ObjectId(author),
+      post: new ObjectId(id),
+      parentId: parent ? new ObjectId(parent) : null,
+    })
+    const postOwner = await Post.findOne({_id: id})
+    if(!parent){
+      await NotificationService.commentNotification(author, postOwner.author, comment._id)
+    } else {
+      await NotificationService.replyNotification(author, postOwner.author, comment._id)
+    }
+    return comment
   }
 }
 

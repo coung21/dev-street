@@ -127,6 +127,39 @@ function socketHandler(io) {
         }
       }
     });
+    
+    socket.on('comment', ({ sender, receiver }) => {
+      const receiverSocket = findConnectedUser(receiver.id);
+      if (receiverSocket) {
+        io.to(receiverSocket.socketId).emit('notification', {
+          senderName: sender.username,
+          receiverName: receiver.username,
+          type: 'comment',
+        });
+        unreadNotification.push({
+          id: receiver.id,
+          data: {
+            senderName: sender.username,
+            receiverName: receiver.username,
+            type: 'comment',
+          },
+        });
+      } else {
+        const disconnectedIndex = disconnected.findIndex(
+          (item) => item.id === receiver.id
+        );
+        if (disconnectedIndex !== -1) {
+          unreadNotification.push({
+            id: disconnected[disconnectedIndex].id,
+            data: {
+              senderName: sender.username,
+              receiverName: receiver.username,
+              type: 'comment',
+            },
+          });
+        }
+      }
+    });
 
     socket.on('disconnect', () => {
       const disconnectingUser = users.find(

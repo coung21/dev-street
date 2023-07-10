@@ -90,7 +90,7 @@ function ArticleContent({ data }) {
           </div>
         </article>
       </main>
-      <Comments />
+      <Comments postId={data._id} postOwner={data.author}/>
       <ConfirmModal userId={current_user?._id} postId={data?._id} />
     </div>
   );

@@ -32,3 +32,11 @@ export const bookmark = (userId, postId) => {
 export const unBookmark = (userId, postId) => {
   return api.post('/post/unbookmark', {userid: userId, postid: postId})
 }
+
+export const getComments = (id) => {
+  return api.get(`/post/comment/${id}`)
+}
+
+export const postComment = (id, author, body, parent) => {
+  return api.post(`/post/comment/${id}`, {author: author, body: body, parent: parent});
+}

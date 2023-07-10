@@ -41,6 +41,8 @@ app.use(passport.session());
 //init database
 require('./db/db.mongo');
 
+//init models
+// require('./models/comment.model')
 
 //init route
 app.use(clientSideSecurity);

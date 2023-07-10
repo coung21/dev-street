@@ -11,16 +11,15 @@
   border-bottom-left-radius: 5px;
 
   @include mobile {
-    padding: 32px;
+    padding: 16px;
   }
 
   h2 {
     margin-bottom: 24px;
   }
-
   img {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
   }
 }
@@ -31,7 +30,7 @@
   gap: 1.5rem;
 
   &__container {
-    margin: 0.75rem 0;
+    margin: 1rem 0;
   }
 
   textarea {
@@ -85,7 +84,11 @@
 .comment {
   display: flex;
   gap: 1rem;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  
+  &__container{
+    padding-left: 0.75rem;
+  }
 
   &__inner {
     font-size: 18px;
@@ -110,6 +113,18 @@
         font-size: 13px;
         color: rgb(82, 82, 82);
       }
+    }
+  }
+
+  &__avatar{
+    display: inline-block;
+    height: 35px;
+    position: relative;
+    i{
+      position: absolute;
+      left: 9px;
+      bottom: -30px;
+      cursor: pointer;
     }
   }
 

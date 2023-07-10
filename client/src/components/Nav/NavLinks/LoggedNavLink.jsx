@@ -5,9 +5,9 @@ import { BiBell } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { UIActions } from '../../../store/slices/UiSlice';
 import { SocketContext } from '../../../contexts/SocketContext';
-import audio from '../../../assets/audio/notification.mp3';
+// import audio from '../../../assets/audio/notification.mp3';
 
-const notificationAudio = new Audio(audio);
+// const notificationAudio = new Audio(audio);
 
 function LoggedNavLink({ user }) {
   const socket = useContext(SocketContext)
@@ -26,7 +26,7 @@ function LoggedNavLink({ user }) {
   useEffect(() => {
     if(current_user && socket){
       socket.on('notification', (data) => {
-        notificationAudio.play()
+        // notificationAudio.play()
         setUnreadNotifications((prevState => [...prevState, data]))
       });
     }

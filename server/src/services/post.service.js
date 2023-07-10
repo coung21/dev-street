@@ -5,7 +5,7 @@ const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service');
 const cloudinary = require('../config/cloudinary');
 const { urlStringConvert } = require('../utils/index');
-const NotificationService = require('./notification.service')
+const NotificationService = require('./notification.service');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
 class PostService {
@@ -68,7 +68,7 @@ class PostService {
             url: urlStringConvert(title),
             tags: [...tagList],
           }
-        );  
+        );
       }
     } catch (error) {
       throw new BadRequest('Can not edit post');
@@ -101,88 +101,125 @@ class PostService {
     return filteredPost;
   }
 
-  static async deletePost(userId, secure_id, postId){
-    if(userId === secure_id){
-      const deletedPost = await Post.findOneAndDelete({_id: postId}, {new: true})
+  static async deletePost(userId, secure_id, postId) {
+    if (userId === secure_id) {
+      const deletedPost = await Post.findOneAndDelete(
+        { _id: postId },
+        { new: true }
+      );
       const publicId = deletedPost.image.match(/\/([^/]+)$/)[1].split('.')[0];
       await cloudinary.uploader.destroy(publicId);
-      await TagService.deleteTagsPost(deletedPost._id)
-      await User.updateOne({_id: userId, posts: postId}, {$pull: {posts: postId}})
+      await TagService.deleteTagsPost(deletedPost._id);
+      await User.updateOne(
+        { _id: userId, posts: postId },
+        { $pull: { posts: postId } }
+      );
       //more
     } else {
-      throw new BadRequest('Can not delete post')
+      throw new BadRequest('Can not delete post');
       // return 'error'
     }
   }
 
-  static async likePost(userId, postId){
-    const foundPost = await Post.findOne({_id: postId})
-    if(!foundPost) throw new BadRequest('Can not like post')
-    foundPost.likes.push(new ObjectId(userId))
-    await foundPost.save()
-    if(!foundPost.author.equals(userId)){
-      await NotificationService.likeNotification(userId, foundPost.author, postId)
-    }
-    return foundPost
-  }
-
-  static async unlikePost(userId, postId){
-    const foundPost = await Post.findOne({_id: postId, likes: userId})
-    if (!foundPost) throw new BadRequest('Can not unlike post');
-    foundPost.likes = foundPost.likes.filter(user => !user.equals(userId))
+  static async likePost(userId, postId) {
+    const foundPost = await Post.findOne({ _id: postId });
+    if (!foundPost) throw new BadRequest('Can not like post');
+    foundPost.likes.push(new ObjectId(userId));
     await foundPost.save();
-    if(!foundPost.author.equals(userId)){
-      await NotificationService.removeLikeNotification(userId, foundPost.author, postId)
+    if (!foundPost.author.equals(userId)) {
+      await NotificationService.likeNotification(
+        userId,
+        foundPost.author,
+        postId
+      );
     }
-    return foundPost
+    return foundPost;
   }
 
-  static async bookmarkPost(userId, postId){
-    const foundPost = await Post.findOne({ _id: postId })
+  static async unlikePost(userId, postId) {
+    const foundPost = await Post.findOne({ _id: postId, likes: userId });
+    if (!foundPost) throw new BadRequest('Can not unlike post');
+    foundPost.likes = foundPost.likes.filter((user) => !user.equals(userId));
+    await foundPost.save();
+    if (!foundPost.author.equals(userId)) {
+      await NotificationService.removeLikeNotification(
+        userId,
+        foundPost.author,
+        postId
+      );
+    }
+    return foundPost;
+  }
+
+  static async bookmarkPost(userId, postId) {
+    const foundPost = await Post.findOne({ _id: postId });
     if (!foundPost) throw new BadRequest('Can not bookmark post');
-    foundPost.bookmarks.push(new ObjectId(userId))
-    const bookmarkedUser = await User.findOne({_id: userId})
-    bookmarkedUser.bookmarked.push(new ObjectId(postId))
-    await foundPost.save()
-    await bookmarkedUser.save()
-    return foundPost
+    foundPost.bookmarks.push(new ObjectId(userId));
+    const bookmarkedUser = await User.findOne({ _id: userId });
+    bookmarkedUser.bookmarked.push(new ObjectId(postId));
+    await foundPost.save();
+    await bookmarkedUser.save();
+    return foundPost;
   }
 
-
-  static async unbookmarkPost(userId, postId){
-    const foundPost = await Post.findOne({ _id: postId })
+  static async unbookmarkPost(userId, postId) {
+    const foundPost = await Post.findOne({ _id: postId });
     if (!foundPost) throw new BadRequest('Can not bookmark post');
-    foundPost.bookmarks = foundPost.bookmarks.filter(user => !user.equals(userId))
-    const bookmarkedUser = await User.findOne({_id: userId})
-    bookmarkedUser.bookmarked = bookmarkedUser.bookmarked.filter(post => !post.equals(postId))
-    await foundPost.save()
-    await bookmarkedUser.save()
-    return foundPost
+    foundPost.bookmarks = foundPost.bookmarks.filter(
+      (user) => !user.equals(userId)
+    );
+    const bookmarkedUser = await User.findOne({ _id: userId });
+    bookmarkedUser.bookmarked = bookmarkedUser.bookmarked.filter(
+      (post) => !post.equals(postId)
+    );
+    await foundPost.save();
+    await bookmarkedUser.save();
+    return foundPost;
   }
 
-  static async getComments(id){
-    if(!id) throw BadRequest('Can not get comments')
-    const comments = await Comment.find({ post: id }).sort({date: -1}).populate({
-      path: 'author',
-      select: '_id name username avatar',
-    });
-    return comments
+  static async getComments(id) {
+    if (!id) throw BadRequest('Can not get comments');
+    const comments = await Comment.find({ post: id })
+      .sort({ date: -1 })
+      .populate({
+        path: 'author',
+        select: '_id name username avatar',
+      });
+    return comments;
   }
-  
-  static async postComment(id, author, body, parent){
+
+  static async postComment(id, author, body, parent) {
     const comment = await Comment.create({
       body,
       author: new ObjectId(author),
       post: new ObjectId(id),
       parentId: parent ? new ObjectId(parent) : null,
-    })
-    const postOwner = await Post.findOne({_id: id})
-    if(!parent){
-      await NotificationService.commentNotification(author, postOwner.author, comment._id)
+    });
+    const post = await Post.findOneAndUpdate(
+      { _id: id },
+      { $push: { comments: comment._id } },
+      { new: true }
+    );
+    const user = await User.findOneAndUpdate(
+      { _id: author },
+      { $push: { comments: comment._id } },
+      { new: true }
+    );
+    if (!parent) {
+      await NotificationService.commentNotification(
+        author,
+        post.author,
+        comment._id
+      );
     } else {
-      await NotificationService.replyNotification(author, postOwner.author, comment._id)
+      const parentComment = await Comment.findOne({ _id: parent });
+      await NotificationService.replyNotification(
+        author,
+        parentComment.author,
+        comment._id
+      );
     }
-    return comment
+    return comment;
   }
 }
 

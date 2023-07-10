@@ -19,7 +19,6 @@ function Comments({ postId, postOwner }) {
       );
     }
     fetchComments();
-    console.log(rootComments)
   }, [newComment]);
 
   return (

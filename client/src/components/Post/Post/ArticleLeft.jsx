@@ -86,6 +86,7 @@ function ArticleLeft({ data }) {
             <button
               className='btn-cmt'
               style={{ width: '25px', height: '25px' }}
+              onClick={() => document.getElementById('comments').scrollIntoView({behavior: 'smooth'})}
             >
               <GoComment style={{ width: '100%', height: '100%' }} />
             </button>

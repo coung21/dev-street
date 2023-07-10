@@ -14,9 +14,11 @@ function Comment({ data, child, comments, setNewComment, postId, postOwner }) {
         <div className='comment'>
           <span className='comment__avatar'>
             <img src={data.author.avatar} alt='' />
-            <i onClick={() => setExpand((prev) => !prev)}>
-              <BiExpandVertical />
-            </i>
+            {child?.length > 0 && (
+              <i onClick={() => setExpand((prev) => !prev)}>
+                <BiExpandVertical />
+              </i>
+            )}
           </span>
           <div className='comment__body'>
             <div className='comment__inner'>
@@ -50,6 +52,7 @@ function Comment({ data, child, comments, setNewComment, postId, postOwner }) {
             parentId={data._id}
             postId={postId}
             postOwner={postOwner}
+            commentOwner={data.author}
           />
         )}
         {/* replies */}

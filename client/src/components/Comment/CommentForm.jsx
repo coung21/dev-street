@@ -11,6 +11,7 @@ function CommentForm({
   parentId = null,
   postId,
   postOwner,
+  commentOwner = null,
 }) {
   const [text, setText] = useState('');
   const { current_user } = useSelector((state) => state.auth);
@@ -21,21 +22,46 @@ function CommentForm({
 
   async function submitHandler(event) {
     event.preventDefault();
-    if (postOwner._id !== current_user?._id) {
+    if (postOwner._id !== current_user?._id && !activeReply) {
       socket.emit('comment', {
         sender: { id: current_user?._id, username: current_user?.username },
         receiver: { id: postOwner._id, username: postOwner.username },
         postId: postId,
       });
-      const response = await postComment(postId, current_user?._id, text, parentId)
-      console.log(response.data)
-      setNewComment(response.data)
+      const response = await postComment(
+        postId,
+        current_user?._id,
+        text,
+        parentId
+      );
+      setNewComment(response.data);
+    } else if (activeReply && current_user?._id !== commentOwner?._id) {
+      socket.emit('comment', {
+        sender: { id: current_user?._id, username: current_user?.username },
+        receiver: {
+          id: commentOwner?._id,
+          username: postOwner?.username || 'guess',
+        },
+        postId: postId,
+      });
+      const response = await postComment(
+        postId,
+        current_user?._id,
+        text,
+        parentId
+      );
+      setNewComment(response.data);
     } else {
-      const response = await postComment(postId, current_user?._id, text, parentId)
-      setNewComment(response.data)
+      const response = await postComment(
+        postId,
+        current_user?._id,
+        text,
+        parentId
+      );
+      setNewComment(response.data);
     }
-    setText('')
-    setActiveReply(false)
+    if(activeReply) setActiveReply(false)
+    setText('');
   }
   return (
     <div className='comment-form__container'>
@@ -50,7 +76,9 @@ function CommentForm({
       </div>
       {text.length > 0 && (
         <>
-          <button onClick={submitHandler} className='comment-btn'>Submit</button>
+          <button onClick={submitHandler} className='comment-btn'>
+            Submit
+          </button>
           <button
             onClick={
               activeReply ? () => setActiveReply(false) : () => setText('')

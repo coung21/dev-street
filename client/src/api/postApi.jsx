@@ -40,3 +40,7 @@ export const getComments = (id) => {
 export const postComment = (id, author, body, parent) => {
   return api.post(`/post/comment/${id}`, {author: author, body: body, parent: parent});
 }
+
+export const getSearchResult = (keyword) => {
+  return api.get(`/search?search=${keyword}`)
+}

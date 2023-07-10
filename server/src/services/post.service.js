@@ -221,6 +221,25 @@ class PostService {
     }
     return comment;
   }
+
+  static async getSearchResults(keyword) {
+    if (keyword) {
+      const query = {
+        $or: [
+          { title: { $regex: keyword, $options: 'i' } },
+          { body: { $regex: keyword, $options: 'i' } },
+        ],
+      };
+
+      const post = await Post.find(
+        query,
+        '_id title image date url tags likes comments bookmarks author'
+      )
+        .populate({ path: 'tags', select: '_id name' })
+        .populate({ path: 'author', select: '_id name username avatar' })
+        return post;
+    }
+  }
 }
 
 module.exports = PostService;

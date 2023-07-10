@@ -10,6 +10,7 @@ router.get('/post', PostController.getAllPosts)
 router.get('/post/:slugUrl', PostController.getPostDetail);
 router.get('/post/tags/:tagname', PostController.getPostsByTag);
 router.get('/post/comment/:id', PostController.getComments)
+router.get('/search', PostController.getSearchResults)
 
 //protected post api
 router.post('/post/new',verifyToken ,upload.single('image'), PostController.createPost);

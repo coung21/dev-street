@@ -44,6 +44,7 @@ body{
   padding: 1rem;
   grid-template-columns: 100%;
   place-items: center;
+  min-height: 400px;
   @include mobile{
     padding: 0;
   }

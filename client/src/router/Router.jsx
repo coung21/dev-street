@@ -15,6 +15,7 @@ import EditPost from '../pages/EditPost/EditPost';
 import Notifications from '../pages/Notifications/Notifications';
 import ReadingList from '../pages/ReadingList/ReadingList';
 import EditProfile from '../pages/EditProfile/EditProfile';
+import SearchPage from '../pages/Search/SearchPage';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -72,6 +73,10 @@ function Router() {
       {
         path: '/readinglist',
         element: <ReadingList />
+      },
+      {
+        path: '/post/search',
+        element: <SearchPage />
       }
     ];
   } else {
@@ -112,6 +117,10 @@ function Router() {
       {
         path: '/tags/:tagname',
         element: <TagPosts />,
+      },
+      {
+        path: '/post/search',
+        element: <SearchPage />,
       },
     ];
   }

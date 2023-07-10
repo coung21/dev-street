@@ -145,6 +145,16 @@ class PostController {
       return Response.fail(res, error.status, error.message);
     }
   }
+
+  static async getSearchResults(req, res){
+    try {
+      const keyword = req.query.search;
+      const posts = await PostService.getSearchResults(keyword)
+      return Response.success(res, posts, 200, 'Get Search Results Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = PostController;

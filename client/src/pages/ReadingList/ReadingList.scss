@@ -2,7 +2,8 @@
 
 .readinglist-page-layout {
   height: 100%;
-  width: 50%;
+  min-height: 400px;
+  min-width: 50%;
   margin-bottom: 1.5rem;
 
   @include mobile {

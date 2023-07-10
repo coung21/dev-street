@@ -1,6 +1,6 @@
 @use '../../scss/' as *;
 
-.tag-page-layout {
+.search-page-layout {
   height: 100%;
   min-height: 400px;
   min-width: 50%;
@@ -19,7 +19,7 @@
   }
 }
 
-.tag-page {
+.search-page {
   margin: 0 auto;
   width: 100%;
 
@@ -29,7 +29,7 @@
 
 }
 
-.tag-page__heading {
+.search-page__heading {
   display: inline-block;
   margin: 2rem 1rem !important;
 

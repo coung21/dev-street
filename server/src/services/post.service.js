@@ -162,7 +162,7 @@ class PostService {
 
   static async getComments(id){
     if(!id) throw BadRequest('Can not get comments')
-    const comments = await Comment.find({ post: id }).sort({date: 'desc'}).populate({
+    const comments = await Comment.find({ post: id }).sort({date: -1}).populate({
       path: 'author',
       select: '_id name username avatar',
     });

@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema(
   {
     body: { type: String, require: true },
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    date: { type: Date, default: Date.now() },
+    date: { type: Date, default: Date.now,},
     parentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: DOCUMENT,

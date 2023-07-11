@@ -71,7 +71,7 @@ function Router() {
         element: <Notifications />
       },
       {
-        path: '/readinglist',
+        path: '/user/readinglist',
         element: <ReadingList />
       },
       {

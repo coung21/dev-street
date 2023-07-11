@@ -18,11 +18,14 @@ import {
   BsLinkedin,
 } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-function handleNavigate() {
-  dispatch(UIActions.toggleHamburger());
-  document.body.style.overflow = 'auto';
-}
+import {useSelector} from 'react-redux'
+import FollowingTag from '../../FollowingTag/FollowingTag';
 function MainNavigation() {
+  const {current_user} = useSelector(state => state.auth)
+  function handleNavigate() {
+    dispatch(UIActions.toggleHamburger());
+    document.body.style.overflow = 'auto';
+  }
   return (
     <>
       <ul style={{ marginBottom: '1rem' }}>
@@ -39,7 +42,7 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link to={'/readinglist'} className='sidebar-link' onClick={handleNavigate}>
+          <Link to={'/user/readinglist'} className='sidebar-link' onClick={handleNavigate}>
             <span className='sidebar-link__icon'>
               <FcRules size={20} />
             </span>
@@ -100,6 +103,7 @@ function MainNavigation() {
           <BsLinkedin size={20} />
         </a>
       </div>
+      {current_user && <FollowingTag />}
     </>
   );
 }

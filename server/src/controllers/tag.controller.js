@@ -11,6 +11,16 @@ class TagController{
     }
   }
   
+  static async getFollowTag(req, res){
+    try {
+      const {id} = req.params
+      const tags = await TagService.getFollowTag(id)
+      return Response.success(res, tags, 200, 'Get Follow Tag Successfully');
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
+
   static async followTag(req, res){
     try {
       const {userId, tagId} = req.body

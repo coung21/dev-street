@@ -55,6 +55,15 @@ class TagService {
       throw new BadRequest('Can not follow tag')
     }
   }
+
+  static async getFollowTag(userId){
+    try {
+      const tags = await Tag.find({followers: userId})
+      return tags
+    } catch (error) {
+      throw new BadRequest('Can not get following tag');
+    }
+  }
 }
 
 module.exports = TagService;

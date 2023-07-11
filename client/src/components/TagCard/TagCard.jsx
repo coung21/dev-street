@@ -1,14 +1,37 @@
-import React from 'react'
-import './TagCard.scss'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react';
+import './TagCard.scss';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { followTag, unFollowTag } from '../../api/tagApi';
 
-function TagCard({data}) {
-  const navigate = useNavigate()
-  function navigateTagPosts(){
+function TagCard({ data }) {
+  const navigate = useNavigate();
+  const { current_user } = useSelector((state) => state.auth);
+  const [isFollow, setIsFollow] = useState(
+    data.followers.includes(current_user._id)
+  );
+
+  function navigateTagPosts(event) {
+    event.stopPropagation();
     navigate(`/tags/${data.name}`);
   }
+  async function followingTag(event) {
+    event.stopPropagation();
+    setIsFollow(true);
+    await followTag(data._id, current_user._id)
+  }
+
+  async function unFollowingTag(event) {
+    event.stopPropagation();
+    setIsFollow(false);
+    unFollowTag(data._id, current_user._id)
+  }
   return (
-    <div className='tag-item' style={{ borderTop: `1rem solid ${data.theme}` }} onClick={navigateTagPosts}>
+    <div
+      className='tag-item'
+      style={{ borderTop: `1rem solid ${data.theme}` }}
+      onClick={navigateTagPosts}
+    >
       <h2>
         <Link className='tag-title'>
           <span style={{ color: `${data.theme}` }}>#</span>
@@ -17,10 +40,14 @@ function TagCard({data}) {
       </h2>
       <p>{data.posts.length} posts published</p>
       <div>
-        <button>Follow</button>
+        {isFollow ? (
+          <button onClick={unFollowingTag}>Following</button>
+        ) : (
+          <button onClick={followingTag}>Follow</button>
+        )}
       </div>
     </div>
   );
 }
 
-export default TagCard
+export default TagCard;

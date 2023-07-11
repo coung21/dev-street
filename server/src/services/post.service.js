@@ -97,7 +97,7 @@ class PostService {
       return post.tags.some((tag) => tag.name === tagname);
     });
 
-    if (filteredPost < 1) throw new BadRequest('Tag name error');
+    // if (filteredPost < 1) throw new BadRequest('Tag name error');
     return filteredPost;
   }
 

@@ -1,4 +1,5 @@
 const Tag = require('../models/tag.model');
+const User = require('../models/user.model');
 const { getRandomHexColor } = require('../utils/index');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 
@@ -34,6 +35,25 @@ class TagService {
   static async getAllTag(){
     const allTag = await Tag.find()
     return allTag
+  }
+
+  static async followTag(tagId, userId){
+    try {
+      const tag = await Tag.findByIdAndUpdate(tagId, {$addToSet: {followers: userId}}, {new: true})
+      const user = await User.findByIdAndUpdate(userId, {$addToSet: {followedTags: tagId}})
+      return tag
+    } catch (error) {
+      throw new BadRequest('Can not follow tag')
+    }
+  }
+  static async unFollowTag(tagId, userId){
+    try {
+      const tag = await Tag.findByIdAndUpdate(tagId, {$pull: {followers: userId}}, {new: true})
+      const user = await User.findByIdAndUpdate(userId, {$pull: {followedTags: tagId}})
+      return tag
+    } catch (error) {
+      throw new BadRequest('Can not follow tag')
+    }
   }
 }
 

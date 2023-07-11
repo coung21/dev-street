@@ -21,7 +21,7 @@ function Tags() {
     <>
       <div className='tags-layout'>
         {tags.map((item, i) => (
-          <TagCard data={item} key={i}/>
+          <TagCard data={item} key={i} />
           // console.log(item)
         ))}
       </div>

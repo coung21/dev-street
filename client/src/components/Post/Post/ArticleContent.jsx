@@ -7,7 +7,7 @@ import gfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SkeletonArticle from '../../Skeleton/SkeletonArticle';
 import { useSelector, useDispatch } from 'react-redux';
-import ConfirmModal from '../../ComfirmModal/ConfirmModal';
+import ConfirmModal from '../../Modal/ConfirmModal';
 import Comments from '../../Comment/Comments';
 
 
@@ -16,7 +16,7 @@ function ArticleContent({ data }) {
   const dispatch = useDispatch();
   const { current_user } = useSelector((state) => state.auth);
   function openConfirmDelete(){
-    document.getElementById('confirm-modal').style.display = 'flex';
+    document.getElementById('confirm-backdrop').style.display = 'flex';
   }
   if (!data) {
     return (

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { AnimatePresence } from 'framer-motion';
 import Toaster from '../../components/Toaster/Toaster';
 import { useLocation } from 'react-router-dom';
+import AuthModal from '../../components/Modal/AuthModal';
 
 function RootLayout() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function RootLayout() {
               <Outlet />
             </>
           )}
+          <AuthModal />
           <AnimatePresence>
             {error && <Toaster message={message} success={false} />}
           </AnimatePresence>

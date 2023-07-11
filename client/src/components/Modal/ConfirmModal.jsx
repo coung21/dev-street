@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
-import './ConfirmModal.scss';
+import './Modal.scss';
 import { IoIosClose } from 'react-icons/io';
 import { deletePost } from '../../api/postApi';
 import { useNavigate } from 'react-router-dom';
@@ -10,10 +10,10 @@ function ConfirmModal({userId, postId}) {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   function closeConfirmModal(){
-    document.getElementById('confirm-modal').style.display = 'none'
+    document.getElementById('backdrop').style.display = 'none'
   }
   async function confirmDelete(){
-    document.getElementById('confirm-modal').style.display = 'none';
+    document.getElementById('backdrop').style.display = 'none';
     dispatch(startLoading())
     const response = await deletePost(userId, postId)
     console.log(response)
@@ -35,7 +35,7 @@ function ConfirmModal({userId, postId}) {
         </button>
       </div>
     </div>,
-    document.getElementById('confirm-modal')
+    document.getElementById('confirm-backdrop')
   );
 }
 

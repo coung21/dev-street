@@ -8,7 +8,7 @@ function TagCard({ data }) {
   const navigate = useNavigate();
   const { current_user } = useSelector((state) => state.auth);
   const [isFollow, setIsFollow] = useState(
-    data.followers.includes(current_user._id)
+    data.followers.includes(current_user?._id)
   );
 
   function navigateTagPosts(event) {

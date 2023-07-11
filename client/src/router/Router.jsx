@@ -122,6 +122,10 @@ function Router() {
         path: '/post/search',
         element: <SearchPage />,
       },
+      {
+        path: '/user/readinglist',
+        element: <ReadingList />,
+      },
     ];
   }
   const router = createBrowserRouter([

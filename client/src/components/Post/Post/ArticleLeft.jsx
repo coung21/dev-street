@@ -4,7 +4,12 @@ import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GoComment } from 'react-icons/go';
 import { useSelector } from 'react-redux';
-import { likePost, unlikePost, bookmark, unBookmark } from '../../../api/postApi';
+import {
+  likePost,
+  unlikePost,
+  bookmark,
+  unBookmark,
+} from '../../../api/postApi';
 
 function ArticleLeft({ data }) {
   if (!data) {
@@ -14,34 +19,45 @@ function ArticleLeft({ data }) {
   const { current_user } = useSelector((state) => state.auth);
   const [isLiked, setLiked] = useState(data.likes.includes(current_user?._id));
   const [likes, setLikes] = useState(data.likes.length);
-  const [isSaved, setSaved] = useState(data.bookmarks.includes(current_user?._id));
-  const [saves, setSaves] = useState(data.bookmarks.length)
+  const [isSaved, setSaved] = useState(
+    data.bookmarks.includes(current_user?._id)
+  );
+  const [saves, setSaves] = useState(data.bookmarks.length);
 
   async function likeHandler() {
+    if (!current_user) {
+      return (document.getElementById('auth-backdrop').style.display = 'flex');
+    }
     if (current_user && socket && !isLiked) {
       setLiked((prev) => !prev);
-      setLikes(prev => prev + 1)
-      if (current_user?._id !== data.author._id){
+      setLikes((prev) => prev + 1);
+      if (current_user?._id !== data.author._id) {
         socket.emit('like', {
           sender: { id: current_user?._id, username: current_user?.username },
           receiver: { id: data.author._id, username: data.author.username },
           postId: data?._id,
         });
       }
-      await likePost(current_user?._id, data?._id)
+      await likePost(current_user?._id, data?._id);
     }
   }
   async function unlikeHandler() {
+    if (!current_user) {
+      return (document.getElementById('auth-backdrop').style.display = 'flex');
+    }
     if (current_user && socket && isLiked) {
       setLiked((prev) => !prev);
-      setLikes(prev => prev - 1)
-      await unlikePost(current_user?._id, data?._id)
+      setLikes((prev) => prev - 1);
+      await unlikePost(current_user?._id, data?._id);
     }
   }
   async function saveHandler() {
+    if (!current_user) {
+      return (document.getElementById('auth-backdrop').style.display = 'flex');
+    }
     if (current_user && !isSaved) {
       setSaved((prev) => !prev);
-      setSaves(prev => prev + 1)
+      setSaves((prev) => prev + 1);
       await bookmark(current_user?._id, data?._id);
     }
     // socket.emit('bookmark', {
@@ -51,7 +67,10 @@ function ArticleLeft({ data }) {
     // });
   }
 
-  async function unSaveHandler(){
+  async function unSaveHandler() {
+    if (!current_user) {
+      return (document.getElementById('auth-backdrop').style.display = 'flex');
+    }
     if (current_user && isSaved) {
       setSaved((prev) => !prev);
       setSaves((prev) => prev - 1);
@@ -86,7 +105,11 @@ function ArticleLeft({ data }) {
             <button
               className='btn-cmt'
               style={{ width: '25px', height: '25px' }}
-              onClick={() => document.getElementById('comments').scrollIntoView({behavior: 'smooth'})}
+              onClick={() =>
+                document
+                  .getElementById('comments')
+                  .scrollIntoView({ behavior: 'smooth' })
+              }
             >
               <GoComment style={{ width: '100%', height: '100%' }} />
             </button>

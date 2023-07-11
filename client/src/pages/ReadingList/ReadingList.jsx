@@ -17,7 +17,9 @@ function ReadingList() {
       setPosts([...response.data]);
       setIsLoading(false);
     }
-    getUserReadingList();
+    if(current_user){
+      getUserReadingList();
+    }
   }, []);
   return (
     <div className='readinglist-page-layout'>
@@ -31,6 +33,19 @@ function ReadingList() {
             .map((_, i) => <SkeletonPostItem key={i} />)
         ) : (
           <div>
+            {posts.length === 0 && (
+              <div
+                className='card'
+                style={{
+                  minHeight: '150px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                You don't have any posts on your reading list
+              </div>
+            )}
             {posts.map((item, i) => (
               <PostItem key={i} index={i} data={item} />
             ))}

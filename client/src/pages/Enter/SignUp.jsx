@@ -4,7 +4,7 @@ import { AiFillFacebook } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { DevTool } from '@hookform/devtools';
+// import { DevTool } from '@hookform/devtools';
 import Toaster from '../../components/Toaster/Toaster';
 import { AnimatePresence } from 'framer-motion';
 import { signup } from '../../api/userApi';
@@ -145,7 +145,7 @@ function SignUp() {
           </div>
         </div>
       </div>
-      <DevTool control={control} />
+      {/* <DevTool control={control} /> */}
       <AnimatePresence>
         {toaster && (
           <Toaster message={message} success={isSuccess ? true : false} />

@@ -3,7 +3,8 @@ import { SocketContext } from '../../../contexts/SocketContext';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs';
 import { GoComment } from 'react-icons/go';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { UIActions } from '../../../store/slices/UiSlice';
 import {
   likePost,
   unlikePost,
@@ -17,6 +18,7 @@ function ArticleLeft({ data }) {
   }
   const socket = useContext(SocketContext);
   const { current_user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
   const [isLiked, setLiked] = useState(data.likes.includes(current_user?._id));
   const [likes, setLikes] = useState(data.likes.length);
   const [isSaved, setSaved] = useState(
@@ -26,7 +28,7 @@ function ArticleLeft({ data }) {
 
   async function likeHandler() {
     if (!current_user) {
-      return (document.getElementById('auth-backdrop').style.display = 'flex');
+      return dispatch(UIActions.toggleAuthModal(true))
     }
     if (current_user && socket && !isLiked) {
       setLiked((prev) => !prev);
@@ -43,7 +45,7 @@ function ArticleLeft({ data }) {
   }
   async function unlikeHandler() {
     if (!current_user) {
-      return (document.getElementById('auth-backdrop').style.display = 'flex');
+      return dispatch(UIActions.toggleAuthModal(true))
     }
     if (current_user && socket && isLiked) {
       setLiked((prev) => !prev);
@@ -53,7 +55,7 @@ function ArticleLeft({ data }) {
   }
   async function saveHandler() {
     if (!current_user) {
-      return (document.getElementById('auth-backdrop').style.display = 'flex');
+      return dispatch(UIActions.toggleAuthModal(true))
     }
     if (current_user && !isSaved) {
       setSaved((prev) => !prev);
@@ -69,7 +71,7 @@ function ArticleLeft({ data }) {
 
   async function unSaveHandler() {
     if (!current_user) {
-      return (document.getElementById('auth-backdrop').style.display = 'flex');
+      return dispatch(UIActions.toggleAuthModal(true))
     }
     if (current_user && isSaved) {
       setSaved((prev) => !prev);

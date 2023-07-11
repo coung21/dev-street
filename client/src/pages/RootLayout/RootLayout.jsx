@@ -26,7 +26,7 @@ function RootLayout() {
     window.scrollTo(0, 0);
   }, [location]);
   // console.log(isLoading)
-  const hamburger = useSelector((state) => state.Ui.hamburger);
+  const {hamburger, authModal} = useSelector((state) => state.Ui);
   return (
     <>
       {loading ? (
@@ -47,7 +47,7 @@ function RootLayout() {
               <Outlet />
             </>
           )}
-          <AuthModal />
+          {authModal && <AuthModal />}
           <AnimatePresence>
             {error && <Toaster message={message} success={false} />}
           </AnimatePresence>

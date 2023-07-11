@@ -23,7 +23,7 @@ function CommentForm({
   async function submitHandler(event) {
     event.preventDefault();
     if (!current_user) {
-      return document.getElementById('auth-backdrop').style.display = 'flex';
+      return dispatch(UIActions.toggleAuthModal(true));
     }
     if (postOwner._id !== current_user?._id && !activeReply) {
       socket.emit('comment', {

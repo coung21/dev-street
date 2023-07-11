@@ -3,7 +3,8 @@ import {createSlice} from '@reduxjs/toolkit'
 const initialState = {
   hamburger: false,
   dropdown: false,
-  confirm: false
+  confirm: false,
+  authModal: false
 }
 
 const UiSlice = createSlice({
@@ -18,6 +19,9 @@ const UiSlice = createSlice({
     },
     toggleConfirm : (state,action) => {
       state.confirm = action.payload
+    },
+    toggleAuthModal: (state, action) => {
+      state.authModal = action.payload
     }
   }
 })

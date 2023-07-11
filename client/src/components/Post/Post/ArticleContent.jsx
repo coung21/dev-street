@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AiFillHeart } from 'react-icons/ai';
 import ReactMarkdown from 'react-markdown';
 import SyntaxHighlight from '../../SyntaxHighlight/SyntaxHighlight';
 import gfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import SkeletonArticle from '../../Skeleton/SkeletonArticle';
 import { useSelector, useDispatch } from 'react-redux';
+import { UIActions } from '../../../store/slices/UiSlice';
 import ConfirmModal from '../../Modal/ConfirmModal';
 import Comments from '../../Comment/Comments';
-
 
 function ArticleContent({ data }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const { current_user } = useSelector((state) => state.auth);
-  function openConfirmDelete(){
-    document.getElementById('confirm-backdrop').style.display = 'flex';
+  const { confirm } = useSelector((state) => state.Ui);
+  function openConfirmDelete() {
+    dispatch(UIActions.toggleConfirm(true))
   }
   if (!data) {
     return (
@@ -90,8 +90,10 @@ function ArticleContent({ data }) {
           </div>
         </article>
       </main>
-      <Comments postId={data._id} postOwner={data.author}/>
-      <ConfirmModal userId={current_user?._id} postId={data?._id} />
+      <Comments postId={data._id} postOwner={data.author} />
+      {confirm && (
+        <ConfirmModal userId={current_user?._id} postId={data?._id} />
+      )}
     </div>
   );
 }

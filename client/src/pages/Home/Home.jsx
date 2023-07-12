@@ -4,6 +4,7 @@ import LeftSidebar from '../../components/Sidebar/LeftSidebar/LeftSidebar';
 import PostItem from '../../components/PostItem/PostItem';
 import { getAllPost } from '../../api/postApi';
 import SkeletonPostItem from '../../components/Skeleton/SkeletonPostItem';
+import About from '../../components/About/About';
 function Home() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
@@ -33,7 +34,9 @@ function Home() {
             </div>
           )}
         </div>
-        <div></div>
+        <div>
+          <About />
+        </div>
       </div>
     </>
   );

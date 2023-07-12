@@ -16,6 +16,7 @@ import Notifications from '../pages/Notifications/Notifications';
 import ReadingList from '../pages/ReadingList/ReadingList';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import SearchPage from '../pages/Search/SearchPage';
+import NotCompletedPage from '../pages/NotCompletedPage/NotCompletedPage';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -77,6 +78,10 @@ function Router() {
       {
         path: '/post/search',
         element: <SearchPage />
+      },
+      {
+        path: '/example',
+        element: <NotCompletedPage />
       }
     ];
   } else {
@@ -126,6 +131,10 @@ function Router() {
         path: '/user/readinglist',
         element: <ReadingList />,
       },
+      {
+        path: '/example',
+        element: <NotCompletedPage />
+      }
     ];
   }
   const router = createBrowserRouter([

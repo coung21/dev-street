@@ -18,7 +18,7 @@ function RootLayout() {
 
   useEffect(() => {
     const root = document.getElementById('root');
-    if (location.pathname === '/new' || location.pathname.endsWith('/edit')) {
+    if (location.pathname === '/new' || location.pathname.endsWith('/edit') || location.pathname === '/example') {
       root.style.paddingTop = '0';
     } else {
       root.style.paddingTop = '56px';
@@ -26,7 +26,7 @@ function RootLayout() {
     window.scrollTo(0, 0);
   }, [location]);
   // console.log(isLoading)
-  const {hamburger, authModal} = useSelector((state) => state.Ui);
+  const { hamburger, authModal } = useSelector((state) => state.Ui);
   return (
     <>
       {loading ? (
@@ -34,7 +34,9 @@ function RootLayout() {
       ) : (
         <>
           {hamburger && <PopupSidebar />}
-          {location.pathname !== '/new' && !location.pathname.endsWith('/edit') ? (
+          {location.pathname !== '/example' &&
+          (location.pathname !== '/new' &&
+            !location.pathname.endsWith('/edit')) ? (
             <>
               <Nav />
               <div className='layout'>

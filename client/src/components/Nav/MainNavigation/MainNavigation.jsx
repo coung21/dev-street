@@ -30,11 +30,7 @@ function MainNavigation() {
     <>
       <ul style={{ marginBottom: '1rem' }}>
         <li>
-          <Link
-            to={'/'}
-            className='sidebar-link'
-            onClick={handleNavigate}
-          >
+          <Link to={'/'} className='sidebar-link' onClick={handleNavigate}>
             <span className='sidebar-link__icon'>
               <FcHome size={20} />
             </span>
@@ -42,7 +38,11 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link to={'/user/readinglist'} className='sidebar-link' onClick={handleNavigate}>
+          <Link
+            to={'/user/readinglist'}
+            className='sidebar-link'
+            onClick={handleNavigate}
+          >
             <span className='sidebar-link__icon'>
               <FcRules size={20} />
             </span>
@@ -58,7 +58,11 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link className='sidebar-link' onClick={handleNavigate}>
+          <Link
+            to={'/example'}
+            className='sidebar-link'
+            onClick={handleNavigate}
+          >
             <span className='sidebar-link__icon'>
               <FcIdea size={20} />
             </span>
@@ -66,7 +70,11 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link className='sidebar-link' onClick={handleNavigate}>
+          <Link
+            to={'/example'}
+            className='sidebar-link'
+            onClick={handleNavigate}
+          >
             <span className='sidebar-link__icon'>
               <FcAbout size={20} />
             </span>
@@ -74,7 +82,11 @@ function MainNavigation() {
           </Link>
         </li>
         <li>
-          <Link className='sidebar-link' onClick={handleNavigate}>
+          <Link
+            to={'/example'}
+            className='sidebar-link'
+            onClick={handleNavigate}
+          >
             <span className='sidebar-link__icon'>
               <FcContacts size={20} />
             </span>
@@ -84,22 +96,22 @@ function MainNavigation() {
       </ul>
 
       <div className='social'>
-        <a href=''>
+        <a href='https://twitter.com/dcoung21'>
           <BsTwitter size={20} />
         </a>
-        <a href=''>
+        <a href='https://www.facebook.com/coung.wt/'>
           <BsFacebook size={20} />
         </a>
-        <a href=''>
+        <a href='https://github.com/coung21'>
           <BsGithub size={20} />
         </a>
-        <a href=''>
+        <a href='https://www.instagram.com/coung21/'>
           <BsInstagram size={20} />
         </a>
-        <a href=''>
+        <a href='https://www.reddit.com/user/Rich-Tomorrow-2948'>
           <BsReddit size={20} />
         </a>
-        <a href=''>
+        <a href='https://www.linkedin.com/in/cuong-cong-duong-613279262/'>
           <BsLinkedin size={20} />
         </a>
       </div>

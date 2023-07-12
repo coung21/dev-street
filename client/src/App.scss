@@ -46,7 +46,10 @@ body{
   place-items: center;
   min-height: 400px;
   @include mobile{
-    padding: 0;
+    padding: 0 !important;
+  }
+  @include small-moblie{
+    padding: 0 !important;
   }
 }
 

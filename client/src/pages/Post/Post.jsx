@@ -4,6 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { getPostDetail } from '../../api/postApi';
 import ArticleContent from '../../components/Post/Post/ArticleContent';
 import ArticleLeft from '../../components/Post/Post/ArticleLeft';
+import ArticleRight from '../../components/Post/Post/ArticleRight';
 
 
 function Post() {
@@ -25,6 +26,7 @@ function Post() {
     <div className='article-layout'>
       <ArticleLeft data={post}/>
       <ArticleContent data={post} />
+      <ArticleRight data={post?.author}/>
       <div></div>
     </div>
   );

@@ -80,7 +80,7 @@ class PostService {
     const foundPost = await Post.findOne({ url: slugUrl })
       .populate('comments')
       .populate('tags')
-      .populate({ path: 'author', select: '_id name username avatar' });
+      .populate({ path: 'author', select: '_id name username avatar bio location education work joinDate' });
     if (!foundPost) throw new BadRequest('POST FOUND ERROR');
     return foundPost;
   }

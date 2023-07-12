@@ -28,7 +28,7 @@ function ArticleContent({ data }) {
     );
   }
   return (
-    <div>
+    <div className='article__container'>
       <main className='article__content'>
         <article>
           <header className='article__header'>

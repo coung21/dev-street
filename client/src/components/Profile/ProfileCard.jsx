@@ -80,8 +80,7 @@ function ProfileCard({ data }) {
           )}
         </div>
       </div>
-      {data.education ||
-        (data.work && (
+     
           <div className='profile-card__bottom'>
             {data.work && (
               <div className='definition'>
@@ -96,7 +95,7 @@ function ProfileCard({ data }) {
               </div>
             )}
           </div>
-        ))}
+      
     </div>
   );
 }

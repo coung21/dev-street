@@ -27,13 +27,13 @@ router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: `${process.env.CLIENT_URL}oauth/google`,
-    failureRedirect: '/login',
+    failureRedirect: '/ok',
   }),
 );
 
 router.get('/auth/0auth/success',AuthController.googleAuth)
 
-router.get('/ok', verifyToken, (req, res) => {
+router.get('/ok', (req, res) => {
   res.send('ok');
 });
 

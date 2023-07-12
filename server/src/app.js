@@ -45,6 +45,10 @@ require('./db/db.mongo');
 // require('./models/comment.model')
 
 //init route
+app.get('/run', (req, res) => {
+  res.send('SERVER IS RUNNING')
+})
+
 app.use(clientSideSecurity);
 app.use('/', require('./routes/index'));
 const io = new Server(server, {

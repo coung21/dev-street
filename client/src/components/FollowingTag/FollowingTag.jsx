@@ -16,7 +16,7 @@ function FollowingTag() {
   }, [])
   return (
     <div>
-      <h3 className='subtitle'>Following Tags</h3>
+      <h3 className='subtitle'>My Tags</h3>
       <div className='follow-tag__container'>
         {tags.map((tag) => (
           <div className='follow-tag__item'>

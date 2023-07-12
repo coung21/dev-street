@@ -45,13 +45,13 @@ function Dropdown() {
           </Link>
         </li>
         <li onClick={handleItemClick}>
-          <Link>Create Post</Link>
+          <Link to={'/new'}>Create Post</Link>
         </li>
         <li onClick={handleItemClick}>
-          <Link>Reading List</Link>
+          <Link to={'/user/readinglist'}>Reading List</Link>
         </li>
         <li onClick={handleItemClick}>
-          <Link>Settings</Link>
+          <Link to={`/user/${current_user?._id}/settings`}>Settings</Link>
         </li>
         <li className='signout-link' onClick={handleItemClick}>
           <Link to={'/signout'}>Sign Out</Link>

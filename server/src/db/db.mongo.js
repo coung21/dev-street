@@ -10,7 +10,8 @@ class Database{
   connect(type = 'mongo'){
     // mongoose.set('debug', true)
     // mongoose.set('debug', {color: true})
-    mongoose.connect(`mongodb+srv://${host}:${port}/${name}`)
+    // mongoose.connect(`mongodb+srv://${host}:${port}/${name}`)
+    mongoose.connect(`mongodb://${host}:${port}/${name}`)
     .then(() => {
       console.log('Connect to MongoDB successfully')
       // checkOverload()

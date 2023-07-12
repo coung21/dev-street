@@ -1,0 +1,96 @@
+@use '../../scss/' as *;
+
+.forgot-layout {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .forgot-modal {
+    background-color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+
+    .forgot-icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2.5rem;
+
+      span {
+        color: $hover-darker-color;
+        font-size: 2rem;
+        padding: 1.5rem 1.75rem;
+        background-color: rgba($color: $primary-color, $alpha: 0.3);
+        border-radius: 50%;
+      }
+
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      display: inline-block;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      color: white;
+      background-color: $primary-color;
+      font-size: 18px;
+      font-weight: 500;
+      padding: 12px 20px 12px 12px;
+      border: none;
+      border-radius: 5px;
+      margin-top: 1.25rem;
+    }
+  }
+
+  input[type='email'] {
+    width: 100%;
+    font-size: 14px;
+    border-radius: 5px;
+
+    border: 1px solid $border-color;
+    padding: 10px;
+    margin-bottom: 0px !important;
+
+    &:focus-visible {
+      outline: none
+    }
+  }
+
+  input[type='text'] {
+    width: 100%;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    padding: 10px;
+    margin-bottom: 0px !important;
+
+    &:focus-visible {
+      outline: none
+    }
+  }
+
+  .feedback-error {
+    display: block;
+    color: #dc3545;
+    font-size: 12px;
+    width: 100%;
+    min-width: 100%;
+  }
+}

@@ -100,7 +100,7 @@ function SignIn() {
             Sign In
           </button>
           <span className='registration__actions--forgot'>
-            <Link to={'/password/new'}>I forgot my password</Link>
+            <Link to={'/password/new/reset'}>I forgot my password</Link>
           </span>
         </div>
       </div>

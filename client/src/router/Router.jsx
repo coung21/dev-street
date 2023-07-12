@@ -17,6 +17,8 @@ import ReadingList from '../pages/ReadingList/ReadingList';
 import EditProfile from '../pages/EditProfile/EditProfile';
 import SearchPage from '../pages/Search/SearchPage';
 import NotCompletedPage from '../pages/NotCompletedPage/NotCompletedPage';
+import Forgot from '../pages/ForgotPassword/Forgot';
+import OTP from '../pages/ForgotPassword/OTP';
 
 function Router() {
   const { current_user } = useSelector((state) => state.auth);
@@ -134,6 +136,14 @@ function Router() {
       {
         path: '/example',
         element: <NotCompletedPage />
+      },
+      {
+        path: '/password/new/reset',
+        element: <Forgot />
+      },
+      {
+        path: '/password/new/otp',
+        element: <OTP />
       }
     ];
   }

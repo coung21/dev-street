@@ -13,12 +13,13 @@ import {
   resetError,
   setMessage,
 } from '../../store/slices/loadingErrorSlice';
-import {authActions} from '../../store/slices/authSlice'
+import { authActions } from '../../store/slices/authSlice';
+import { HuePicker } from 'react-color';
 
 function EditProfile() {
   const { userid } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -30,6 +31,11 @@ function EditProfile() {
   const [skills, setSkills] = useState('');
   const [education, setEducation] = useState('');
   const [work, setWork] = useState('');
+  const [theme, setTheme] = useState('#000');
+
+  const handleThemeChange = (color) => {
+    setTheme(color.hex)
+  };
 
   const handleAvatarChange = (event) => {
     setAvatar(event.target.files[0]);
@@ -49,18 +55,19 @@ function EditProfile() {
       formData.append('skills', skills);
       formData.append('education', education);
       formData.append('work', work);
+      formData.append('theme', theme)
       dispatch(startLoading());
       const response = await editUserProfile(userid, formData);
-      const newData = JSON.parse(localStorage.getItem('current_user'))
+      const newData = JSON.parse(localStorage.getItem('current_user'));
       newData.name = response.data.name;
       newData.username = response.data.username;
       newData.email = newData.email;
       newData.avatar = response.data.avatar;
-      console.log(newData)
-      localStorage.setItem('current_user', JSON.stringify(newData))
-      dispatch(authActions.updateCurrentUser())
+      console.log(newData);
+      localStorage.setItem('current_user', JSON.stringify(newData));
+      dispatch(authActions.updateCurrentUser());
       dispatch(finishLoading());
-      navigate(`/${userid}`)
+      navigate(`/${userid}`);
     } else {
       dispatch(setMessage('username is too short - minimum 1 character'));
       dispatch(setError());
@@ -197,6 +204,15 @@ function EditProfile() {
             value={work}
             onChange={(e) => setWork(e.target.value)}
           />
+        </div>
+        <div className='setting-fields'>
+          <label htmlFor='theme' style={{ marginBottom: '0.5rem' }}>
+            Theme
+          </label>
+          <div className='color-picker'>
+            <span style={{backgroundColor: `${theme}`}}></span>
+              <HuePicker color={theme} onChangeComplete={handleThemeChange} />
+          </div>
         </div>
       </div>
 

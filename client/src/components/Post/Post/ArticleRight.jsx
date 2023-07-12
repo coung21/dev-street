@@ -5,7 +5,7 @@ function ArticleRight({ data }) {
   if (!data) return <></>;
   return (
     <div>
-      <Link to={`/${data?._id}`} className='card-visit'>
+      <Link to={`/${data?._id}`} className='card-visit' style={{borderTopColor: `${data.theme}`}}>
         <div className='card-visit__meta'>
           <img src={data.avatar} alt='' />
           <h2>{data.name || data.username}</h2>

@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema(
     location: { type: String, default: '' },
     work: { type: String, default: '' },
     education: { type: String, default: '' },
+    theme: {type: String, default: '#000'},
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
     followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],

@@ -11,7 +11,7 @@ class UserService {
     if (!id) throw BadRequest('Invalid id');
     const userProfile = await User.findOne(
       { _id: id },
-      '_id username name email avatar bio links joinDate skills location work education followers following'
+      '_id username name email avatar bio links joinDate skills location work theme education followers following'
     )
       .populate('followedTags')
       .populate({
@@ -38,7 +38,8 @@ class UserService {
     bio,
     skills,
     education,
-    work
+    work,
+    theme
   ) {
     if (!id) throw new BadRequest('Cant not find provided ID');
     try {
@@ -56,6 +57,7 @@ class UserService {
             skills,
             education,
             work,
+            theme
           }
         );
         if (checkCloudinary(editedUser.avatar)) {
@@ -66,7 +68,7 @@ class UserService {
         }
         const newUserProfile = await User.findOne(
           { _id: id },
-          '_id name username email avatar'
+          '_id name username email avatar theme'
         );
         return newUserProfile;
       } else {
@@ -81,6 +83,7 @@ class UserService {
             skills,
             education,
             work,
+            theme
           }
         );
         const newUserProfile = await User.findOne(

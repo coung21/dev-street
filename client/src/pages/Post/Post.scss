@@ -247,8 +247,8 @@
   color: $txt-color;
   box-shadow: rgba($color: #171717, $alpha: 0.5);
   border-radius: 5px;
-  border-top: 2rem solid $primary-color;
-  // max-height: 400px;
+  border-top: 2rem solid transparent;
+  max-height: 400px;
   @include desktops {
     display: block;
   }

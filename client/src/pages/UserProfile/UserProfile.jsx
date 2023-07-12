@@ -24,10 +24,15 @@ function UserProfile() {
   }, [location.pathname])
 
   return (
-    <div className='brand-bg'>
+    <div
+      className='brand-bg'
+      style={{
+        background: `linear-gradient(to bottom, ${user.theme} 8rem, transparent 8rem)`,
+      }}
+    >
       <div className='profile-layout'>
-        <ProfileCard data={user}/>
-        <ProfileFeeds data={user}/>
+        <ProfileCard data={user} />
+        <ProfileFeeds data={user} />
       </div>
     </div>
   );

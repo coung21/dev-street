@@ -21,7 +21,7 @@ function ProfileCard({ data }) {
   return (
     <div className='profile-card'>
       <div className='profile-card__top'>
-        <span className='profile-avatar'>
+        <span className='profile-avatar' style={{backgroundColor: `${data.theme}`}}>
           <img src={data.avatar} alt='' />
         </span>
         {/* tính năng follow & edit */}

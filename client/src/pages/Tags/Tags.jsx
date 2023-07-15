@@ -1,21 +1,30 @@
-import React, {useEffect, useState} from 'react'
-import './Tags.scss'
+import React, { useEffect, useState } from 'react';
+import './Tags.scss';
 import TagCard from '../../components/TagCard/TagCard';
-import api from '../../api/api'
+import api from '../../api/api';
+import SkeletonTags from '../../components/Skeleton/SkeletonTags';
 
 function Tags() {
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState([]);
   useEffect(() => {
-    async function getAllTags(){
+    async function getAllTags() {
       try {
-        const response = await api.get('/tag')
-        setTags([...response.data])
+        const response = await api.get('/tag');
+        setTags([...response.data]);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-    getAllTags()
-  }, [])
+    getAllTags();
+  }, []);
+
+  if (tags.length === 0) {
+    return (
+      <div className='tags-layout'>
+        <SkeletonTags />
+      </div>
+    );
+  }
 
   return (
     <>
@@ -29,4 +38,4 @@ function Tags() {
   );
 }
 
-export default Tags
+export default Tags;

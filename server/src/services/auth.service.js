@@ -92,7 +92,7 @@ class AuthService {
   }
 
   //FORGOT PASSWORD
-  static async forgotPassword(email) {
+  static async ForgotPassword(email) {
     if (!email) throw new BadRequest('You have to enter your email');
 
     const existingUser = await userModel.findOne({ email });
@@ -115,7 +115,7 @@ class AuthService {
   }
 
   //RESET PASSWORD
-  static async resetPassword(password, token) {
+  static async ResetPassword(password, token) {
     if (!password) throw new BadRequest('You have to enter new password');
 
     const resetUser = await userModel.findOne({
@@ -124,9 +124,7 @@ class AuthService {
     });
 
     if (!resetUser)
-      throw new BadRequest(
-        'Your token has expired. Please attempt to reset your password again.'
-      );
+      throw new BadRequest('Your token has expired. Please attempt to reset your password again.');
 
     const hashPassword = await bcrypt.hash(password, 10);
 

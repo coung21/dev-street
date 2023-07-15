@@ -3,6 +3,8 @@ import placeholderAvatar from '../../assets/DEV.png';
 import { postComment } from '../../api/postApi';
 import { SocketContext } from '../../contexts/SocketContext';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { UIActions } from '../../store/slices/UiSlice';
 
 function CommentForm({
   activeReply = false,
@@ -16,6 +18,8 @@ function CommentForm({
   const [text, setText] = useState('');
   const { current_user } = useSelector((state) => state.auth);
   const socket = useContext(SocketContext);
+  const dispatch = useDispatch();
+
   function inputHandler(event) {
     setText(event.target.value);
   }
@@ -63,7 +67,7 @@ function CommentForm({
       );
       setNewComment(response.data);
     }
-    if(activeReply) setActiveReply(false)
+    if (activeReply) setActiveReply(false);
     setText('');
   }
   return (

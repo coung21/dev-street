@@ -18,7 +18,13 @@ function RootLayout() {
 
   useEffect(() => {
     const root = document.getElementById('root');
-    if (location.pathname === '/new' || location.pathname.endsWith('/edit') || location.pathname === '/example') {
+    if (
+      location.pathname === '/new' ||
+      location.pathname.endsWith('/edit') ||
+      location.pathname === '/example' ||
+      location.pathname === '/password/new/reset' ||
+      location.pathname === '/password/new/otp'
+    ) {
       root.style.paddingTop = '0';
     } else {
       root.style.paddingTop = '56px';
@@ -35,8 +41,9 @@ function RootLayout() {
         <>
           {hamburger && <PopupSidebar />}
           {location.pathname !== '/example' &&
-          (location.pathname !== '/new' &&
-            !location.pathname.endsWith('/edit')) ? (
+          location.pathname !== '/new' &&
+          !location.pathname.includes('/password/new/') &&
+          !location.pathname.endsWith('/edit') ? (
             <>
               <Nav />
               <div className='layout'>

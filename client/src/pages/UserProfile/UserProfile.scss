@@ -31,6 +31,7 @@
     margin-bottom: 0.75rem;
     padding: 0 1rem;
     position: relative;
+
     @include tablet {
       margin-top: -2rem;
       margin-bottom: 1rem;
@@ -48,7 +49,6 @@
 
     @include mobile {
       flex-direction: column;
-      align-items: flex-start;
     }
 
     .definition {
@@ -89,6 +89,11 @@
 
         @include tablet {
           padding: 2px 6px;
+        }
+
+        @include mobile {
+          font-size: 12px;
+          gap: 3px;
         }
       }
     }
@@ -166,8 +171,13 @@
   width: 100%;
   max-width: 1024px;
   gap: 1rem;
-  @include tablet{
+
+  @include tablet {
     grid-template-columns: 1fr;
+  }
+
+  .feeds {
+    padding: 2rem 0;
   }
 }
 
@@ -201,12 +211,14 @@
     border-radius: 5px;
     background-color: rgb(250, 250, 250);
     display: inline-block;
-    span{
+
+    span {
       display: flex;
       align-items: center;
       margin-bottom: 1rem;
       gap: 0.8rem;
-      &:last-child{
+
+      &:last-child {
         margin-bottom: 0 !important;
       }
     }

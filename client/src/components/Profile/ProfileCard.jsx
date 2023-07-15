@@ -7,21 +7,24 @@ import {
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import FollowButton from '../Follow/FollowButton';
-import FollowingButton from '../Follow/followingButton';
+import FollowingButton from '../Follow/FollowingButton';
 
 function ProfileCard({ data }) {
-  if (!data.followers) {
-    return <p>Loading..</p>;
+  if (!data) {
+    return <></>;
   }
   const { current_user } = useSelector((state) => state.auth);
-  console.log(data)
+  console.log(data);
   const [isFollow, setIsFollow] = useState(
     data.followers?.includes(current_user?._id)
   );
   return (
     <div className='profile-card'>
       <div className='profile-card__top'>
-        <span className='profile-avatar' style={{backgroundColor: `${data.theme}`}}>
+        <span
+          className='profile-avatar'
+          style={{ backgroundColor: `${data.theme}` }}
+        >
           <img src={data.avatar} alt='' />
         </span>
         {/* tính năng follow & edit */}
@@ -80,22 +83,21 @@ function ProfileCard({ data }) {
           )}
         </div>
       </div>
-     
-          <div className='profile-card__bottom'>
-            {data.work && (
-              <div className='definition'>
-                <h5>Work</h5>
-                <p>{data.work}</p>
-              </div>
-            )}
-            {data.education && (
-              <div className='definition'>
-                <h5>Education</h5>
-                <p>{data.education}</p>
-              </div>
-            )}
+
+      <div className='profile-card__bottom'>
+        {data.work && (
+          <div className='definition'>
+            <h5>Work</h5>
+            <p>{data.work}</p>
           </div>
-      
+        )}
+        {data.education && (
+          <div className='definition'>
+            <h5>Education</h5>
+            <p>{data.education}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

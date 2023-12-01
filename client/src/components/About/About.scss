@@ -1,7 +1,10 @@
 @use '../../scss/' as *;
 
 .about {
-  display: flex;
+  display: none;
+  @include desktops{
+    display: flex;
+  }
   flex-direction: column;
   padding: 2rem;
   padding-bottom: 1rem;

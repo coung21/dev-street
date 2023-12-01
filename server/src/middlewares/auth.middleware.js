@@ -37,6 +37,7 @@ const verifyToken = async (req, res, next) => {
     const decodeToken = await jwt.verify(accessToken, publicKey);
     if(decodeToken.id !== userId) throw new Error('invalid signature')
     req.id = decodeToken.id;
+    req.role = decodeToken.role
     next();
   } catch (error) {
     if(error.message === 'invalid signature'){

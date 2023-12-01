@@ -46,7 +46,7 @@ function LoggedNavLink({ user }) {
         </button>
       </Link>
       <button className='btn--profile' onClick={handleToggleDropdown}>
-        <img id='profileRef' src={user.avatar} alt='' />
+        <img id='profileRef' src={user.avatar.url} alt='' />
       </button>
     </>
   );

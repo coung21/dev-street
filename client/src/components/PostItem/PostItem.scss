@@ -31,7 +31,7 @@ a {
     border-radius: 5px;
     margin-bottom: 1rem;
     border: $border-color solid 1px;
-
+    position: relative;
     &:hover {
       cursor: pointer;
     }

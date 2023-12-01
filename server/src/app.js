@@ -7,6 +7,7 @@ const compression = require('compression');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const passport = require('./config/passport');
+const {postScheduleTask} = require('./cron')
 const {socketHandler} = require('./utils/socket')
 const { clientSideSecurity } = require('./middlewares/auth.middleware');
 const app = express();
@@ -41,12 +42,14 @@ app.use(passport.session());
 //init database
 require('./db/db.mongo');
 
-//init models
-// require('./models/comment.model')
-
+//init mq
+// const produce = require('./mq/producer')
+const consume = require('./mq/consumer')
+consume().catch(console.error)
 //init route
 app.get('/run', (req, res) => {
   res.send('SERVER IS RUNNING')
+  // produce("HI MQ LALA")
 })
 
 app.use(clientSideSecurity);
@@ -59,6 +62,10 @@ const io = new Server(server, {
   },
 });
 socketHandler(io)
+
+
+//init cron jobs
+postScheduleTask.start()
 
 //handle error
 app.use((req, res, next) => {

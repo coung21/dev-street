@@ -13,4 +13,8 @@ router.use(BASE_ROUTE, require('./api/post'));
 //tag router
 router.use(BASE_ROUTE, require('./api/tag'))
 
+router.use(BASE_ROUTE, require('./api/upload'))
+
+router.use(BASE_ROUTE, require('./api/admin'))
+
 module.exports = router;

@@ -7,29 +7,35 @@ const cloudinary = require('../config/cloudinary');
 const { urlStringConvert } = require('../utils/index');
 const NotificationService = require('./notification.service');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
+const tagModel = require('../models/tag.model');
 
 class PostService {
-  static async getAllPost() {
+  static async getAllPost(page, limit = 5) {
+    const skip = (page - 1) * limit
     const allPost = await Post.find(
-      {},
-      '_id title image date url tags likes comments bookmarks author',
+      {published: true},
+      '_id title cover date url tags likes comments bookmarks author',
       { sort: { date: -1 } }
     )
       .populate({ path: 'tags', select: '_id name' })
-      .populate({ path: 'author', select: '_id name username avatar' });
+      .populate({ path: 'author', select: '_id name username avatar' })
+      .skip(skip)
+      .limit(limit);
     return allPost;
   }
-  static async CreatePost(file, title, body, tags, author) {
-    if (!file) throw new BadRequest('No file selected');
-    const result = await cloudinary.uploader.upload(file.path);
-    const tagList = await TagService.findOrCreateTags(tags);
+
+  static async CreatePost(cover, title, body, tags, author, publishedAt) {
+    if (!cover) throw new BadRequest('No file selected');
+    // const result = await cloudinary.uploader.upload(file.path);
     const newPost = await Post.create({
       title,
       body,
       url: urlStringConvert(title),
-      image: result.secure_url,
-      tags: [...tagList],
+      cover,
+      tags: [...tags],
       author: new ObjectId(author),
+      publishedAt,
+      published: !publishedAt ? true : false
     });
     await TagService.updateTagsPost(newPost.tags, newPost._id);
     const foundAuthor = await User.findById(author);
@@ -37,39 +43,47 @@ class PostService {
       throw new ConflictRequest('Could not find user by provided ID');
     foundAuthor.posts.push(newPost._id);
     foundAuthor.save();
+
+    if(newPost.published){
+      await NotificationService.publishNotification(foundAuthor._id, foundAuthor.followers, newPost._id)
+    } else {
+      await NotificationService.scheduleNotification(foundAuthor._id, foundAuthor.followers, newPost.publishedAt.toString())
+    }
+    
     return newPost;
   }
 
-  static async editPost(id, file, title, body, tags, author) {
+  static async editPost(id, cover, title, body, tags, author) {
     if (!id) throw new BadRequest('Cant not find provided ID');
     try {
-      if (file) {
-        const result = await cloudinary.uploader.upload(file.path);
-        const tagList = await TagService.findOrCreateTags(tags);
-        const editedPost = await Post.findOneAndUpdate(
-          { _id: id },
-          {
-            title,
-            body,
-            url: urlStringConvert(title),
-            image: result.secure_url,
-            tags: [...tagList],
-          }
-        );
-        const publicId = editedPost.image.match(/\/([^/]+)$/)[1].split('.')[0];
+      const editedPost = await Post.findOneAndUpdate(
+        { _id: id },
+        {
+          title,
+          body,
+          url: urlStringConvert(title),
+          cover,
+          tags: [...tags],
+        },
+      );
+      if (cover.public_id !== editedPost.cover.public_id) {
+        // const result = await cloudinary.uploader.upload(file.path);
+        const publicId = editedPost.cover.public_id;
         await cloudinary.uploader.destroy(publicId);
-      } else {
-        const tagList = await TagService.findOrCreateTags(tags);
-        await Post.findOneAndUpdate(
-          { _id: id },
-          {
-            title,
-            body,
-            url: urlStringConvert(title),
-            tags: [...tagList],
-          }
-        );
       }
+
+     tags.map(item => {
+      if(!editedPost.tags.includes(item)){
+        TagService.updateTagsPost(item, editedPost._id)
+      }
+     });
+      
+     editedPost.tags.map(item => {
+      if(!tags.includes(item)){
+        TagService.deleteTagsPost(editedPost._id)
+      }
+     })
+
     } catch (error) {
       throw new BadRequest('Can not edit post');
     }
@@ -85,29 +99,32 @@ class PostService {
     return foundPost;
   }
 
-  static async getPostsByTag(tagname) {
+  static async getPostsByTag(tagname, page, limit = 5) {
+    const skip = (page - 1) * limit;
+  
+    // Sử dụng `findOne` để lấy thông tin tag
+    const tag = await tagModel.findOne({ name: tagname });
+    // Sử dụng `populate` để lọc trực tiếp trong câu truy vấn
     const foundPosts = await Post.find(
-      {},
-      '_id title image date url tags likes comments bookmarks author',
-      { sort: { date: -1 } }
+      { tags:  tag._id.toString() },
+      '_id title cover date url tags likes comments bookmarks author'
     )
-      .populate({ path: 'tags', select: '_id name theme' })
-      .populate({ path: 'author', select: '_id name username avatar' });
-    const filteredPost = foundPosts.filter((post) => {
-      return post.tags.some((tag) => tag.name === tagname);
-    });
-
-    // if (filteredPost < 1) throw new BadRequest('Tag name error');
-    return filteredPost;
+      .populate({ path: 'author', select: '_id name username avatar' })
+      .populate({ path: 'tags', select: '_id name theme', match: { _id: tag._id } })
+      .skip(skip)
+      .limit(limit);
+      
+    return foundPosts;
   }
-
+  
+    
   static async deletePost(userId, secure_id, postId) {
     if (userId === secure_id) {
       const deletedPost = await Post.findOneAndDelete(
         { _id: postId },
         { new: true }
       );
-      const publicId = deletedPost.image.match(/\/([^/]+)$/)[1].split('.')[0];
+      const publicId = deletedPost.cover.public_id;
       await cloudinary.uploader.destroy(publicId);
       await TagService.deleteTagsPost(deletedPost._id);
       await User.updateOne(
@@ -222,7 +239,8 @@ class PostService {
     return comment;
   }
 
-  static async getSearchResults(keyword) {
+  static async getSearchResults(keyword, page, limit = 5) {
+    const skip = (page - 1) * limit
     if (keyword) {
       const query = {
         $or: [
@@ -233,10 +251,13 @@ class PostService {
 
       const post = await Post.find(
         query,
-        '_id title image date url tags likes comments bookmarks author'
+        '_id title cover date url tags likes comments bookmarks author'
       )
         .populate({ path: 'tags', select: '_id name' })
         .populate({ path: 'author', select: '_id name username avatar' })
+        .skip(skip)
+        .limit(limit)
+        console.log(post)
         return post;
     }
   }

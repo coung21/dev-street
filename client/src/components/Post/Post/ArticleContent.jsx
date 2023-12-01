@@ -33,14 +33,14 @@ function ArticleContent({ data }) {
         <article>
           <header className='article__header'>
             <div className='article__cover'>
-              <img src={data.image} alt='' />
+              <img src={data.cover.url} alt='' />
             </div>
             <div className='article__header__meta'>
               <div className='article__header__author-wrapper'>
                 <div className='article__header__author'>
                   <div className='article__header__author-pic'>
                     <img
-                      src={data.author.avatar}
+                      src={data.author.avatar.url}
                       alt=''
                       style={{ width: '40px', height: '40px' }}
                     />

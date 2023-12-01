@@ -46,7 +46,6 @@ function TagCard({ data }) {
           {data.name}
         </Link>
       </h2>
-      <p>{data.posts.length} posts published</p>
       <div>
         {isFollow ? (
           <button onClick={unFollowingTag}>Following</button>

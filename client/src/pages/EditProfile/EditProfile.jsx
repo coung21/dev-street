@@ -4,6 +4,7 @@ import { editUserProfile } from '../../api/userApi';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getUserProfile } from '../../api/userApi';
 import { useSelector, useDispatch } from 'react-redux';
+import api from '../../api/api';
 import {
   startLoading,
   finishLoading,
@@ -38,32 +39,42 @@ function EditProfile() {
   };
 
   const handleAvatarChange = (event) => {
-    setAvatar(event.target.files[0]);
-    setPreviewAvatar(URL.createObjectURL(event.target.files[0]));
+    async function handle(event) {
+      const formData = new FormData()
+      formData.append('image', event.target.files[0])
+      setPreviewAvatar(URL.createObjectURL(event.target.files[0]));
+      const resposne = await api.post('/upload', formData)
+      setAvatar(resposne.data);
+      console.log(resposne)
+    }
+    handle(event)
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (username) {
-      const formData = new FormData();
-      formData.append('name', name);
-      formData.append('username', username);
-      formData.append('avatar', avatar);
-      formData.append('links', links);
-      formData.append('location', location);
-      formData.append('bio', bio);
-      formData.append('skills', skills);
-      formData.append('education', education);
-      formData.append('work', work);
-      formData.append('theme', theme)
+      // const formData = new FormData();
+      // formData.append('name', name);
+      // formData.append('username', username);
+      // formData.append('avatar', avatar);
+      // formData.append('links', links);
+      // formData.append('location', location);
+      // formData.append('bio', bio);
+      // formData.append('skills', skills);
+      // formData.append('education', education);
+      // formData.append('work', work);
+      // formData.append('theme', theme)
+      const data = {
+        name, username, avatar, links, location, bio, skills, education, work, theme
+      }
       dispatch(startLoading());
-      const response = await editUserProfile(userid, formData);
+      const response = await editUserProfile(userid, data);
       const newData = JSON.parse(localStorage.getItem('current_user'));
       newData.name = response.data.name;
       newData.username = response.data.username;
       newData.email = newData.email;
       newData.avatar = response.data.avatar;
-      console.log(newData);
+      // console.log(newData);
       localStorage.setItem('current_user', JSON.stringify(newData));
       dispatch(authActions.updateCurrentUser());
       dispatch(finishLoading());
@@ -84,7 +95,7 @@ function EditProfile() {
       const data = response.data;
       setName(data.name);
       setUsername(data.username);
-      setPreviewAvatar(data.avatar);
+      setPreviewAvatar(data.avatar.url);
       setLinks(data.links);
       setLocation(data.location);
       setBio(data.bio);

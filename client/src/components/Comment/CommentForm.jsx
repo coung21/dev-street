@@ -73,7 +73,7 @@ function CommentForm({
   return (
     <div className='comment-form__container'>
       <div className='comment-form'>
-        <img src={current_user?.avatar || placeholderAvatar} alt='' />
+        <img src={current_user?.avatar.url || placeholderAvatar} alt='' />
         <textarea
           name='comment'
           placeholder='Add to the discussion'

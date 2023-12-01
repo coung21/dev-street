@@ -1,6 +1,7 @@
 const Notification = require('../models/notification.model')
 const Comment = require('../models/comment.model')
 const { ObjectId } = require('mongoose').Types;
+const produce = require('../mq/producer')
 
 class NotificationService {
   static async getAllNotification(userId) {
@@ -79,6 +80,15 @@ class NotificationService {
         comment: commentId
       });
     }
+    return;
+  }
+
+  static async publishNotification(senderId, followers, postId){
+    produce({type: "publish" ,senderId, followers, postId})
+    return;
+  }
+  static async scheduleNotification(senderId, followers, At){
+    produce({type: "schedule" ,senderId, followers, At})
     return;
   }
 }

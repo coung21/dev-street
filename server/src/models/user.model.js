@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const imageSchema = require('./image.model')
 
 const COLLECTION = 'users';
 const DOCUMENT = 'User';
@@ -16,9 +17,10 @@ const userSchema = new mongoose.Schema(
     name: { type: String, default: '' },
     email: { type: String, require: true, unique: true },
     password: { type: String, allowNull: true, default: null },
+    role : {type : String, enum: ['user', 'admin'], default: 'user'},
     avatar: {
-      type: String,
-      default: 'https://www.drupal.org/files/issues/default-avatar.png',
+      type: imageSchema,
+      default: {url: "https://www.drupal.org/files/issues/default-avatar.png"}
     },
     bio: { type: String, default: '404 bio not found' },
     links: { type: String, default: '' },

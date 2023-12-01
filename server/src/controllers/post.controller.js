@@ -3,7 +3,8 @@ const PostService = require('../services/post.service');
 class PostController {
   static async getAllPosts(req, res) {
     try {
-      const allPost = await PostService.getAllPost();
+      const {page} = req.query
+      const allPost = await PostService.getAllPost(page);
       return Response.success(res, allPost, 200, 'Get All Posts Successfully');
       // return res.json(allPost)
     } catch (error) {
@@ -12,17 +13,15 @@ class PostController {
   }
   static async createPost(req, res) {
     try {
-      const { body, title, tags, author } = req.body;
-      const tagsArray = tags.split(',');
-      const file = req.file;
+      const {title,  body, cover, tags, author, publishedAt } = req.body;
       const newPost = await PostService.CreatePost(
-        file,
+        cover,
         title,
         body,
-        tagsArray,
-        author
+        tags,
+        author,
+        publishedAt
       );
-      // console.log(newPost)
       return Response.success(res, newPost, 201, 'Create Post Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
@@ -32,15 +31,13 @@ class PostController {
   static async editPost(req, res) {
     try {
       const { postid } = req.params;
-      const { body, title, tags, author } = req.body;
-      const tagsArray = tags.split(',');
-      const file = req.file;
+      const { body, title, tags, author, cover } = req.body;
       const editedPost = await PostService.editPost(
         postid,
-        file,
+        cover,
         title,
         body,
-        tagsArray,
+        tags,
         author
       );
       return Response.success(res, editedPost, 201, 'Edit Post Successfully');
@@ -62,7 +59,8 @@ class PostController {
   static async getPostsByTag(req, res) {
     try {
       const { tagname } = req.params;
-      const posts = await PostService.getPostsByTag(tagname);
+      const { page } = req.query
+      const posts = await PostService.getPostsByTag(tagname, page);
       return Response.success(res, posts, 200, 'Find Post By Tag Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);
@@ -72,7 +70,7 @@ class PostController {
   static async deletePost(req, res) {
     try {
       const { userid, postid } = req.query;
-      console.log(userid, postid);
+      // console.log(userid, postid);
       const deletedPost = await PostService.deletePost(userid, req.id, postid);
       return Response.success(
         res,
@@ -149,7 +147,8 @@ class PostController {
   static async getSearchResults(req, res){
     try {
       const keyword = req.query.search;
-      const posts = await PostService.getSearchResults(keyword)
+      const page = req.query.page
+      const posts = await PostService.getSearchResults(keyword, page)
       return Response.success(res, posts, 200, 'Get Search Results Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);

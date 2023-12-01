@@ -18,9 +18,9 @@ class UserController {
   static async editUser(req, res){
     try {
       const { id } = req.params;
-      const {name, username, links, location, bio, skills, education, work, theme} = req.body;
-      const file = req.file
-      const newProfile = await UserService.editProfile(id, name, username, file, links, location, bio, skills, education, work, theme)
+      const {name, username, links, location, bio, skills, education, work, theme, avatar} = req.body;
+
+      const newProfile = await UserService.editProfile(id, name, username, avatar, links, location, bio, skills, education, work, theme)
       return Response.success(res, newProfile, 200, 'Edit User Profile Successfully');
     } catch (error) {
       return Response.fail(res, error.status, error.message);

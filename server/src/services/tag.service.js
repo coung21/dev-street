@@ -2,8 +2,14 @@ const Tag = require('../models/tag.model');
 const User = require('../models/user.model');
 const { getRandomHexColor } = require('../utils/index');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
+const tagModel = require('../models/tag.model');
 
 class TagService {
+  static async searchTags(query){
+    const tags = await tagModel.find({name: {$regex: query, $options: "i"}}).limit(10)
+    return tags
+  } 
+
   static async findOrCreateTags(tagNames) {
     const TagList = [];
     for (const tagName of tagNames) {

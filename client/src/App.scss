@@ -12,6 +12,12 @@ html{
     overflow-x: hidden;
   }
 }
+
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
 body{
   position: relative;
   scroll-behavior: smooth;
@@ -25,6 +31,10 @@ body{
 }
 #root{
   padding-top: 56px;
+  display: flex;
+  flex-direction: column;
+  // width: 300px;
+  height: 100%;
 }
 
 .card {
@@ -36,6 +46,7 @@ body{
 }
 
 .layout{
+  // flex-grow: 1;
   font-size: 1rem;
   width: 100%;
   margin: 0 auto;

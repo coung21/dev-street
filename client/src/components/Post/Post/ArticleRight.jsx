@@ -7,7 +7,7 @@ function ArticleRight({ data }) {
     <div>
       <Link to={`/${data?._id}`} className='card-visit' style={{borderTopColor: `${data.theme}`}}>
         <div className='card-visit__meta'>
-          <img src={data.avatar} alt='' />
+          <img src={data.avatar.url} alt='' />
           <h2>{data.name || data.username}</h2>
         </div>
         <p>{data.bio || '404 bio not found'}</p>

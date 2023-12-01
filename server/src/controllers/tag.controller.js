@@ -40,6 +40,15 @@ class TagController{
       return Response.fail(res, error.status, error.message);
     }
   }
+  static async seacrchTag(req, res){
+    try {
+      const { query } = req.query;
+      const tags = await TagService.searchTags(query)
+      return Response.success(res, tags, 200, '')
+    } catch (error) {
+      return Response.fail(res, error.status, error.message);
+    }
+  }
 }
 
 module.exports = TagController

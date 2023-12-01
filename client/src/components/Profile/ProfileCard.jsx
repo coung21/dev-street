@@ -14,7 +14,6 @@ function ProfileCard({ data }) {
     return <></>;
   }
   const { current_user } = useSelector((state) => state.auth);
-  console.log(data);
   const [isFollow, setIsFollow] = useState(
     data.followers?.includes(current_user?._id)
   );
@@ -25,7 +24,7 @@ function ProfileCard({ data }) {
           className='profile-avatar'
           style={{ backgroundColor: `${data.theme}` }}
         >
-          <img src={data.avatar} alt='' />
+          <img src={data.avatar.url} alt='' />
         </span>
         {/* tính năng follow & edit */}
         <div className='profile-actions'>

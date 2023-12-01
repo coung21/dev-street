@@ -18,7 +18,7 @@ passport.use(
         username: englishSUserNameFormatter(profile.displayName),
         name: profile.family_name || profile.displayName,
         email: profile.email,
-        avatar: resizeProfilePicture(profile.picture, 200),
+        avatar: {url: resizeProfilePicture(profile.picture, 200)},
       };
 
       //if user was exist

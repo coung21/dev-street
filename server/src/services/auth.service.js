@@ -72,7 +72,7 @@ class AuthService {
     //generate keys
     const { publicKey, privateKey } = generateKeyPair();
     const tokens = await generateTokenPair(
-      { id: foundUser._id, email },
+      { id: foundUser._id, role: foundUser.role },
       privateKey
     );
     if (!tokens) throw new IntervelServer('Someting went wrong - Server Error');
@@ -85,7 +85,7 @@ class AuthService {
     return {
       user: getData({
         object: foundUser,
-        fields: ['_id', 'username', 'name', 'email', 'avatar'],
+        fields: ['_id', 'username', 'name', 'email', 'avatar', 'followers'],
       }),
       tokens,
     };
@@ -162,6 +162,7 @@ class AuthService {
           'name',
           'email',
           'avatar',
+          'followers'
         ],
       }),
       tokens,

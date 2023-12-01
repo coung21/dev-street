@@ -11,15 +11,16 @@ function UserProfile() {
   const [user, setUser] = useState(null);
   const location = useLocation();
   useEffect(() => {
-    document.getElementsByClassName('layout')[0].style.padding = '0px';
+    // document.getElementsByClassName('layout')[0].style.padding = '0px';
     async function fetchUser() {
       const response = await getUserProfile(userid);
       setUser(response.data);
+      console.log(response.data)
     }
     fetchUser();
-    return () => {
-      document.getElementsByClassName('layout')[0].style.padding = '1rem';
-    };
+    // return () => {
+    //   document.getElementsByClassName('layout')[0].style.padding = '1rem';
+    // };
   }, [location.pathname]);
 
   if (!user) {

@@ -160,7 +160,78 @@ function socketHandler(io) {
         }
       }
     });
-
+    ///
+    socket.on('publish', ({ sender, followers, postId }) => {
+      followers.forEach((receiver) => {
+        const receiverSocket = findConnectedUser(receiver);
+        if (receiverSocket) {
+          io.to(receiverSocket.socketId).emit('notification', {
+            senderName: sender.username,
+            type: 'publish',
+            postId
+          });
+          unreadNotification.push({
+            id: receiver,
+            data: {
+              senderName: sender.username,
+              type: 'publish',
+              postId
+            },
+          });
+        } else {
+          const disconnectedIndex = disconnected.findIndex(
+            (item) => item.id === receiver
+          );
+          if (disconnectedIndex !== -1) {
+            unreadNotification.push({
+              id: disconnected[disconnectedIndex].id,
+              data: {
+                senderName: sender.username,
+                type: 'publish',
+                postId
+              },
+            });
+          }
+        }
+      })
+    });
+///
+    ///
+    socket.on('schedule', ({ sender, followers, At}) => {
+      followers.forEach((receiver) => {
+        const receiverSocket = findConnectedUser(receiver);
+        if (receiverSocket) {
+          io.to(receiverSocket.socketId).emit('notification', {
+            senderName: sender.username,
+            type: 'schedule',
+            At
+          });
+          unreadNotification.push({
+            id: receiver,
+            data: {
+              senderName: sender.username,
+              type: 'schedule',
+              At
+            },
+          });
+        } else {
+          const disconnectedIndex = disconnected.findIndex(
+            (item) => item.id === receiver
+          );
+          if (disconnectedIndex !== -1) {
+            unreadNotification.push({
+              id: disconnected[disconnectedIndex].id,
+              data: {
+                senderName: sender.username,
+                type: 'schedule',
+                At
+              },
+            });
+          }
+        }
+      })
+    });
+///
     socket.on('disconnect', () => {
       const disconnectingUser = users.find(
         (item) => item.socketId === socket.id

@@ -9,7 +9,8 @@ const notificationSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' },
   comment: { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' },
-  type: {type: String, enum: ['like', 'follow', 'comment', 'reply']}
+  At: {type: Date},
+  type: {type: String, enum: ['like', 'follow', 'comment', 'reply', 'publish', 'schedule']}
 }, {collection: COLLECTION});
 
 module.exports = mongoose.model(DOCUMENT, notificationSchema)

@@ -16,11 +16,12 @@ class UserService {
       .populate('followedTags')
       .populate({
         path: 'posts',
-        select: '_id title image date url tags likes comments bookmarks author',
+        select: '_id title image date url publishedAt published tags likes comments bookmarks author',
         populate: [
           { path: 'author', select: '_id name username avatar' },
           { path: 'tags', select: '_id name' },
         ],
+        options: {sort: {date: -1}}
       })
       .populate('comments');
 
@@ -32,7 +33,7 @@ class UserService {
     id,
     name,
     username,
-    file,
+    avatar,
     links,
     location,
     bio,
@@ -43,14 +44,13 @@ class UserService {
   ) {
     if (!id) throw new BadRequest('Cant not find provided ID');
     try {
-      if (file) {
-        const result = await cloudinary.uploader.upload(file.path);
+      if (avatar) {
         const editedUser = await User.findOneAndUpdate(
           { _id: id },
           {
             name,
             username,
-            avatar: result.secure_url,
+            avatar,
             links,
             location,
             bio,
@@ -60,10 +60,8 @@ class UserService {
             theme
           }
         );
-        if (checkCloudinary(editedUser.avatar)) {
-          const publicId = editedUser.image
-            .match(/\/([^/]+)$/)[1]
-            .split('.')[0];
+        if (editedUser.avatar.public_id) {
+          publicId = editedUser.avatar.public_id
           await cloudinary.uploader.destroy(publicId);
         }
         const newUserProfile = await User.findOne(

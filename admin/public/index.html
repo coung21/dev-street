@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="theme-color" content="#000000" />
+
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/apple-icon.png" />
+  <style>
+    /* Thêm hình tròn xung quanh số trong pagination */
+    .pagination {
+      padding-left: 1000px;
+    }
+
+    .pagination .page-item {
+      display: inline-block;
+      margin-right: 10px;
+      /* Khoảng cách giữa các số */
+    }
+
+    .pagination .page-item1 {
+      display: inline-block;
+      margin-right: 5px;
+      /* Khoảng cách giữa các số */
+    }
+
+    .pagination .page-link {
+      border-radius: 50%;
+      /* Tạo hình tròn */
+      width: 30px;
+      /* Chiều rộng của số */
+      height: 30px;
+      /* Chiều cao của số */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pagination .active .page-link {
+      background-color: #007bff;
+      /* Màu nền khi trang được chọn */
+      color: #fff;
+      /* Màu chữ khi trang được chọn */
+      border-color: #007bff;
+      /* Màu viền khi trang được chọn */
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <title>DevStreet Admin</title>
+</head>
+
+<body>
+  <noscript> You need to enable JavaScript to run this app. </noscript>
+  <div id="root"></div>
+
+</body>
+
+</html>

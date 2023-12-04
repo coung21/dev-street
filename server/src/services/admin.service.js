@@ -2,6 +2,7 @@ const postModel = require('../models/post.model');
 const userModel = require('../models/user.model');
 const tagModel = require('../models/tag.model')
 const moment = require('moment')
+const {getData} = require('../utils/getData')
 
 class AdminService{
     static async NewPostEachDay() {
@@ -122,18 +123,25 @@ class AdminService{
       return completeResult
     }
 
-    // static async getAllUser(){
-    //   const result = userModel.find()
-    //   return result
-    // }
+    static async getAllUser(page, limit = 10){
+      const skip = (page - 1) * limit
+      const result = await userModel.find().limit(limit).skip(skip)
+      return result.map(user => getData({object: user, fields: ['_id', 'name', 'username', 'email', 'joinDate']}))
+    }
 
     static async Createtag(name, theme){
       try {
-        await tagModel.create({name, theme})
-        return true
+        const newTag = await tagModel.create({name, theme})
+        return getData({object: newTag, fields: ['_id', 'name', 'theme', 'date']})
       } catch (error) {
         return error
       }
+    }
+
+    static async listAllTag(page, limit = 10){
+      const skip = (page - 1) * limit
+      const result = await tagModel.find().limit(limit).skip(skip).sort({date: -1})
+      return result.map(tag => getData({object: tag, fields: ['_id', 'name', 'theme' ,'date']}))
     }
 }
 

@@ -7,6 +7,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getPostDetail } from '../../api/postApi';
 import MarkdownEditor from '../../components/MarkdownEditor/MarkdownEditor';
 import InputTags from '../../components/InputElements/InputTags/InputTags';
+import Spinner from '../../components/Spinner/Spinner';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   startLoading,
@@ -20,6 +21,8 @@ import {
 
 function EditPost() {
   const { slug } = useParams();
+  const [isLoading, setIsLoading] = useState(false)
+
   const [postId, setPostId] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -36,8 +39,11 @@ function EditPost() {
       setSelectedFile(event.target.files[0]);
       // console.log(event.target.files[0]);
       const formData = new FormData()
+      setIsLoading(true)
+
       formData.append('image', event.target.files[0])
       const resposne = await api.post('/upload', formData)
+      setIsLoading(false)
       setCover(resposne.data)
       setPreviewImage(URL.createObjectURL(event.target.files[0]));
     }
@@ -162,6 +168,9 @@ function EditPost() {
                 onChange={handleFileChange}
                 style={{ display: 'none' }}
               />
+              {
+                isLoading && <Spinner />
+              }
               {previewImage && (
                 <img
                   src={previewImage}

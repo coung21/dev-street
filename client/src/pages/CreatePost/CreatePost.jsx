@@ -19,10 +19,12 @@ import {
 } from "../../store/slices/loadingErrorSlice";
 import { TbSettings2 } from "react-icons/tb";
 import PostOptions from "../../components/PostOptions/PostOptions";
+import Spinner from "../../components/Spinner/Spinner";
 
 function CreatePost() {
   //ui state
   const [optionOpen, setOptionOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   //data state
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
@@ -42,7 +44,9 @@ function CreatePost() {
       // console.log(event.target.files[0]);
       const formData = new FormData();
       formData.append("image", event.target.files[0]);
+      setIsLoading(true)
       const resposne = await api.post("/upload", formData);
+      setIsLoading(false)
       setCover(resposne.data);
       setPreviewImage(URL.createObjectURL(event.target.files[0]));
     }
@@ -157,6 +161,9 @@ function CreatePost() {
                 onChange={handleFileChange}
                 style={{ display: "none" }}
               />
+              {
+                isLoading && <Spinner />
+              }
               {previewImage && (
                 <img
                   src={previewImage}

@@ -41,8 +41,7 @@ function MarkdownEditor(props) {
         "side-by-side",
       ],
       hideIcons: ["image"],
-      sideBySideFullscreen: true,
-      fullScreen: true,
+      
 
       // New options
       uploadImage: true,

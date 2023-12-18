@@ -4,7 +4,7 @@ const Post = require('../models/post.model');
 const { ObjectId } = require('mongoose').Types;
 const TagService = require('./tag.service');
 const cloudinary = require('../config/cloudinary');
-const { urlStringConvert } = require('../utils/index');
+const { chuyenDoiChuoiThanhURL } = require('../utils/index');
 const NotificationService = require('./notification.service');
 const { BadRequest, ConflictRequest } = require('../utils/errResponse.utils');
 const tagModel = require('../models/tag.model');
@@ -30,7 +30,7 @@ class PostService {
     const newPost = await Post.create({
       title,
       body,
-      url: urlStringConvert(title),
+      url: chuyenDoiChuoiThanhURL(title),
       cover,
       tags: [...tags],
       author: new ObjectId(author),
@@ -91,6 +91,7 @@ class PostService {
 
   static async getPostDetail(slugUrl) {
     if (!slugUrl) throw new BadRequest('NO SUCH URL');
+    console.log(slugUrl)
     const foundPost = await Post.findOne({ url: slugUrl })
       .populate('comments')
       .populate('tags')

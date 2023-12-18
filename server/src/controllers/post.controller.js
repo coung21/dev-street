@@ -24,6 +24,7 @@ class PostController {
       );
       return Response.success(res, newPost, 201, 'Create Post Successfully');
     } catch (error) {
+      console.log(error)
       return Response.fail(res, error.status, error.message);
     }
   }

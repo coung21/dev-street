@@ -22,11 +22,32 @@ function MarkdownEditor(props) {
   const newOptions = useMemo(() => {
     return {
       spellChecker: false,
-      showIcons: ["strikethrough", "table", "code", "upload-image"],
+      showIcons: [
+        "strikethrough",
+        "heading",
+        "code",
+        "quote",
+        "unordered-list",
+        "ordered-list",
+        "link",
+        // "image",
+        "table",
+        "horizontal-rule",
+        "preview",
+        "side-by-side",
+        "fullscreen",
+        "guide",
+        "upload-image",
+        "side-by-side",
+      ],
       hideIcons: ["image"],
+      sideBySideFullscreen: true,
+      fullScreen: true,
+
       // New options
       uploadImage: true,
       imageUploadFunction: imageUpload,
+
     };
   }, []);
   return (

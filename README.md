@@ -40,11 +40,6 @@ Contributing
 
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
-License
--------
-
-This project is licensed under the [MIT License](https://chat.openai.com/c/LICENSE).
-
 * * * * *
 
 Thank you for checking out Dev Street! We hope you enjoy using the platform and connecting with fellow developers. Happy coding!

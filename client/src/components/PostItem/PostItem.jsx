@@ -17,6 +17,9 @@ function PostItem({ data, index, profileComp }) {
   }
   function navigateToPost(event) {
     event.stopPropagation();
+    if(profileComp && data.published == false && current_user?._id !== data.author._id){
+      return
+    }
     navigate(`/${data.author._id}/${data.url}`);
   }
 

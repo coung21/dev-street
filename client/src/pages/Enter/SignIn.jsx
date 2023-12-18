@@ -43,10 +43,10 @@ function SignIn() {
               <FcGoogle size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Google
             </button>
-            <button className='facebook'>
+            {/* <button className='facebook'>
               <AiFillFacebook size={17} style={{ marginRight: '0.5rem' }} />
               Continue with Facebook
-            </button>
+            </button> */}
           </div>
           <div className='registration__hr'>
             <span>Continue with your email address</span>

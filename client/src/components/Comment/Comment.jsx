@@ -13,7 +13,7 @@ function Comment({ data, child, comments, setNewComment, postId, postOwner }) {
       <div className='comment__container'>
         <div className='comment'>
           <span className='comment__avatar'>
-            <img src={data.author.avatar} alt='' />
+            <img src={data.author.avatar.url} alt='' />
             {child?.length > 0 && (
               <i onClick={() => setExpand((prev) => !prev)}>
                 <BiExpandVertical />

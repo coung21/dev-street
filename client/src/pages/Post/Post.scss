@@ -175,11 +175,16 @@
     @include mobile {
       padding: 32px;
     }
+
+    
   }
 
   &__main img {
     width: 100%;
     padding: 1rem 0;
+  }
+  &__main pre {
+    width: 100%;
   }
 
 

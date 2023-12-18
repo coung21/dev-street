@@ -49,7 +49,7 @@ function RootLayout() {
               <div className='layout'>
                 <Outlet />
               </div>
-              <Footer />
+              {/* <Footer /> */}
             </>
           ) : (
             <>

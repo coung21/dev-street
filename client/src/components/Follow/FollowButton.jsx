@@ -2,15 +2,17 @@ import React, { useContext } from 'react'
 import { SocketContext } from '../../contexts/SocketContext'
 import './FollowBtn.scss'
 import {followUser} from '../../api/userApi'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { UIActions } from '../../store/slices/UiSlice';
 
 
 function FollowButton({setIsFollow, follower, user}) {
   const socket = useContext(SocketContext)
   const { current_user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch()
   async function followHandler(){
     if (!current_user) {
-      return console.log('Chưa đăng nhập');
+      dispatch(UIActions.toggleAuthModal(true))
     }
     if(follower && socket &&  follower._id !== user._id){
       setIsFollow(true)

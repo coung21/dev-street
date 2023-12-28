@@ -13,7 +13,12 @@ function Notification({ data }) {
   }
   if (data.type === 'like' && data.post) {
     return (
-      <div className='notification-body' onClick={navigateToPost}>
+      <div className='notification-body' onClick={(event) => {
+     
+          event.stopPropagation();
+          navigate(`/${data.sender._id}/${data.post.url}`);
+  
+      }}>
         <div className='notification__main'>
           <div className='notification__meta'>
             <img src={data.sender.avatar.url} alt='' onClick={navigateToProfile} />
@@ -52,12 +57,15 @@ function Notification({ data }) {
         </div>
       </div>
     );
-  } else if (data.type === 'comment' && data.post) {
+  } else if (data.type === 'comment' && data.comment) {
     return (
-      <div className='notification-body' onClick={navigateToPost}>
+      <div className='notification-body' onClick={(event) => {
+          event.stopPropagation();
+          navigate(`/${data.sender._id}/${data.comment.post.url}`);
+      }}>
         <div className='notification__main'>
           <div className='notification__meta'>
-            <img src={data.sender.avatar} alt='' onClick={navigateToProfile} />
+            <img src={data.sender.avatar.url} alt='' onClick={navigateToProfile} />
             <h3>
               {data.sender.name || data.sender.username} just commented your
               post
@@ -74,9 +82,12 @@ function Notification({ data }) {
         <i className='notification__content'>{data?.comment.body}</i>
       </div>
     );
-  } else if (data.type === 'reply' && data.post) {
+  } else if (data.type === 'reply' && data.comment) {
     return (
-      <div className='notification-body' onClick={navigateToPost}>
+      <div className='notification-body' onClick={(event) => {
+        event.stopPropagation();
+        navigate(`/${data.sender._id}/${data.comment.post.url}`);
+    }}>
         <div className='notification__main'>
           <div className='notification__meta'>
             <img src={data.sender.avatar.url} alt='' onClick={navigateToProfile} />

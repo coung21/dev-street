@@ -3,6 +3,7 @@ import './Notifications.scss';
 import Notification from '../../components/Notification/Notification';
 import { getNotification } from '../../api/userApi';
 import {useSelector} from 'react-redux'
+import api from '../../api/api';
 
 function Notifications() {
   const [notifications, setNotifications] = useState([])
@@ -10,9 +11,10 @@ function Notifications() {
 
   useEffect(() => {
     async function getAllNotification(){
-      const response = await getNotification(current_user._id)
+      const response = await api.get(`/user/${current_user._id}/notifications`)
         setNotifications(response.data)
-    }
+        console.log(response.data)
+      }
     getAllNotification()
   }, [])
   return (

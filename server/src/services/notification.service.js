@@ -8,8 +8,8 @@ class NotificationService {
     const notifications = await Notification.find({ receiver: userId })
       .sort({ date: 'desc' })
       .populate({ path: 'sender', select: '_id name username avatar' })
-      .populate({ path: 'comment', select: '_id body' })
-      .populate({ path: 'post', select: '_id title url' })
+      .populate({ path: 'comment', select: '_id body post', populate: { path: 'post', select: 'url' } })
+      .populate({ path: 'post', select: '_id url' });
     return notifications;
   }
 

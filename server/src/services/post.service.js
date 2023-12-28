@@ -61,7 +61,7 @@ class PostService {
         {
           title,
           body,
-          url: urlStringConvert(title),
+          url: chuyenDoiChuoiThanhURL(title),
           cover,
           tags: [...tags],
         },
@@ -85,6 +85,7 @@ class PostService {
      })
 
     } catch (error) {
+      console.log(error);
       throw new BadRequest('Can not edit post');
     }
   }

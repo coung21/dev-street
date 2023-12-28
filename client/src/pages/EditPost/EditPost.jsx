@@ -198,9 +198,12 @@ function EditPost() {
             <InputTags tags={tags} addTag={addTag} removeTag={removeTag} />
           </div>
           <MarkdownEditor value={body} onChangeEvent={handleBodyChange} />
+          <div className="article-form__actions">
+
           <button className='submit-btn' type='submit'>
-            Publish
+            Save
           </button>
+          </div>
         </form>
       </div>
     </>

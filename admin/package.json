@@ -19,7 +19,7 @@
     "sass": "1.62.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -49,5 +49,8 @@
     "fsevents": "2.3.2",
     "chokidar": "3.5.3",
     "@babel/core": "7.18.6"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }

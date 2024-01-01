@@ -1,0 +1,20 @@
+version: '3'
+services:
+  admin:
+    build: ./admin
+    ports:
+      - '8080:3000'
+    env_file:
+      - ./admin/.env
+  client:
+    build: ./client
+    ports:
+      - '3033:5173'
+    env_file:
+      - ./client/.env
+  server:
+    build: ./server
+    ports:
+      - '5000:3045'
+    env_file:
+      - ./server/.env

@@ -1,5 +1,5 @@
 import React from 'react';
-import './LeftSidebar.scss';
+import './LeftSideBar.scss';
 import MainNavigation from '../../Nav/MainNavigation/MainNavigation';
 
 function LeftSidebar() {

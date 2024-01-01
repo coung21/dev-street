@@ -10,9 +10,9 @@ class Database{
   connect(type = 'mongo'){
     // mongoose.set('debug', true)
     // mongoose.set('debug', {color: true})
-    // mongoose.connect(`mongodb+srv://dchunter7771414:dc25072004@devstreet.ut78nad.mongodb.net/?retryWrites=true&w=majority`)
+    mongoose.connect(`mongodb+srv://dchunter7771414:dc25072004@devstreet.ut78nad.mongodb.net/?retryWrites=true&w=majority`)
     // console.log(`mongodb+srv://${host}:${port}/${name}`)
-    mongoose.connect(`mongodb://${host}:${port}/${name}`)
+    // mongoose.connect(`mongodb://${host}:${port}/${name}`)
     .then(() => {
       console.log('Connect to MongoDB successfully')
       // checkOverload()

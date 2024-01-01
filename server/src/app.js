@@ -44,8 +44,8 @@ require('./db/db.mongo');
 
 //init mq
 // const produce = require('./mq/producer')
-const consume = require('./mq/consumer')
-consume().catch(console.error)
+// const consume = require('./mq/consumer')
+// consume().catch(console.error)
 //init route
 app.get('/run', (req, res) => {
   res.send('SERVER IS RUNNING')

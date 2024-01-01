@@ -5,8 +5,7 @@ const {
   app: { port },
 } = require('./src/config/config');
 
-const PORT = port || 3045;
-
+const PORT = port;
 server.listen(PORT, () => {
   console.log(`Server is running on ${PORT}`);
 });

@@ -103,13 +103,17 @@ function CreatePost() {
 
         //push noti for followers
         if (current_user && socket && scheduleDate) {
+          socket.emit("schedule", {
+            sender: { id: current_user?._id, username: current_user?.username },
+            followers: current_user?.followers,
+            At: scheduleDate,
+          });
+        } else if (current_user && socket && !scheduleDate){
           socket.emit("publish", {
             sender: { id: current_user?._id, username: current_user?.username },
             followers: current_user?.followers,
             postId: response.data?._id,
           });
-        } else if (current_user && socket && !scheduleDate){
-          
         }
 
         navigate("/");

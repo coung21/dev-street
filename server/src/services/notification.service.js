@@ -88,7 +88,7 @@ class NotificationService {
       followers.forEach(async (receiverId) => {
          await Notification.create({
           type: 'publish',
-          sender: data.senderId,
+          sender: senderId,
           receiver: receiverId,
           post: postId
         })
@@ -97,7 +97,7 @@ class NotificationService {
     return;
   }
   static async scheduleNotification(senderId, followers, At){
-    if (!followers.includes(data.senderId)){
+    if (!followers.includes(senderId)){
       followers.forEach(async (receiverId) => {
          await Notification.create({
           type: 'schedule',

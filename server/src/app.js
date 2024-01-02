@@ -17,7 +17,7 @@ const server = require('http').createServer(app)
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ['http://localhost:5173', 'http://localhost:3000', 'http://192.168.1.6:5173'],
     methods: ['POST', 'GET', 'PUT', 'PATCH', 'DELETE'],
     credentials: true
   })
@@ -56,7 +56,7 @@ app.use(clientSideSecurity);
 app.use('/', require('./routes/index'));
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: ['http://localhost:5173', 'http://192.168.1.6:5173'],
     methods: ['GET', 'POST'],
     credentials: true
   },

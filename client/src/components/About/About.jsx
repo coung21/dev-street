@@ -9,7 +9,7 @@ function About() {
         <Link to={'/'} className='about__bold--co hvr-underline'>
           DEV Street
         </Link>{' '}
-        is a community of 743,999 amazing developers
+        is a community of amazing developers
       </p>
       <p>
         We're a place where coders share, stay up-to-date and grow their

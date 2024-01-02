@@ -245,10 +245,9 @@ class PostService {
     const skip = (page - 1) * limit
     if (keyword) {
       const query = {
-        $or: [
-          { title: { $regex: keyword, $options: 'i' } },
-          { body: { $regex: keyword, $options: 'i' } },
-        ],
+        // $or: [
+          title: { $regex: keyword, $options: 'i' } 
+        // ],
       };
 
       const post = await Post.find(
@@ -259,7 +258,6 @@ class PostService {
         .populate({ path: 'author', select: '_id name username avatar' })
         .skip(skip)
         .limit(limit)
-        console.log(post)
         return post;
     }
   }
